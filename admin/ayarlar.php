@@ -161,7 +161,6 @@ $all_permissions = [
                     <th>AD SOYAD</th>
                     <th>E-POSTA</th>
                     <th>YETKİ</th>
-                    <th>DURUM</th>
                     <th>SON GİRİŞ</th>
                     <th>İŞLEMLER</th>
                 </tr>
@@ -231,7 +230,6 @@ $all_permissions = [
                     <th>IP ADRESİ</th>
                     <th>AÇIKLAMA</th>
                     <th>EKLENME TARİHİ</th>
-                    <th>DURUM</th>
                     <th>İŞLEMLER</th>
                 </tr>
             </thead>
@@ -241,9 +239,6 @@ $all_permissions = [
                     <td>Ofis Bağlantısı</td>
                     <td>10.11.2025</td>
                     <td>
-                        <span class="status-badge active">
-                            <i class="fas fa-circle"></i> Aktif
-                        </span>
                     </td>
                     <td>
                         <button class="btn" onclick="editIP(1, 'whitelist')" style="color: #3b82f6; margin-right: 0.5rem;" title="Düzenle">
@@ -259,9 +254,6 @@ $all_permissions = [
                     <td>Ev Bağlantısı</td>
                     <td>08.11.2025</td>
                     <td>
-                        <span class="status-badge active">
-                            <i class="fas fa-circle"></i> Aktif
-                        </span>
                     </td>
                     <td>
                         <button class="btn" onclick="editIP(2, 'whitelist')" style="color: #3b82f6; margin-right: 0.5rem;" title="Düzenle">
@@ -301,7 +293,6 @@ $all_permissions = [
                     <th>IP ADRESİ</th>
                     <th>SEBEP</th>
                     <th>EKLENME TARİHİ</th>
-                    <th>DURUM</th>
                     <th>İŞLEMLER</th>
                 </tr>
             </thead>
@@ -959,6 +950,48 @@ $all_permissions = [
 </div>
 
 <!-- AI Agent Talimatları Modal -->
+
+<!-- İşlem Geçmişi Modal -->
+<div class="modal" id="adminHistoryModal">
+    <div class="modal-content" style="max-width: 800px;">
+        <div class="modal-header">
+            <h2><i class="fas fa-history"></i> İşlem Geçmişi</h2>
+            <button class="close-modal" onclick="closeModal('adminHistoryModal')">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div id="adminHistoryContent" style="max-height: 500px; overflow-y: auto;">
+            <div class="history-item" style="padding: 1rem; background: rgba(59, 130, 246, 0.05); border-left: 3px solid #3b82f6; border-radius: 8px; margin-bottom: 1rem;">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
+                    <strong style="color: #3b82f6;">Kullanıcı Eklendi</strong>
+                    <span style="color: #8b9cbc; font-size: 0.85rem;">12.11.2025 14:30</span>
+                </div>
+                <p style="color: var(--text-secondary); font-size: 0.9rem; margin: 0;">
+                    "Ahmet Yılmaz" adlı kullanıcı sisteme eklendi
+                </p>
+            </div>
+            <div class="history-item" style="padding: 1rem; background: rgba(16, 185, 129, 0.05); border-left: 3px solid #10b981; border-radius: 8px; margin-bottom: 1rem;">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
+                    <strong style="color: #10b981;">Ayarlar Güncellendi</strong>
+                    <span style="color: #8b9cbc; font-size: 0.85rem;">12.11.2025 11:15</span>
+                </div>
+                <p style="color: var(--text-secondary); font-size: 0.9rem; margin: 0;">
+                    SMS API ayarları güncellendi
+                </p>
+            </div>
+            <div class="history-item" style="padding: 1rem; background: rgba(239, 68, 68, 0.05); border-left: 3px solid #ef4444; border-radius: 8px; margin-bottom: 1rem;">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
+                    <strong style="color: #ef4444;">Kullanıcı Silindi</strong>
+                    <span style="color: #8b9cbc; font-size: 0.85rem;">11.11.2025 16:45</span>
+                </div>
+                <p style="color: var(--text-secondary); font-size: 0.9rem; margin: 0;">
+                    "Test User" adlı kullanıcı silindi
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="modal ai-agent-modal" id="aiAgentModal">
     <div class="modal-content">
         <div class="modal-header">
