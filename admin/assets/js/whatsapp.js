@@ -61,10 +61,24 @@ document.addEventListener('DOMContentLoaded', function() {
     }, 100);
 });
 
+// Check if mobile view
+function isMobileView() {
+    return window.innerWidth <= 992;
+}
+
+// Back to chats (mobile)
+function backToChats() {
+    const chatSidebar = document.querySelector('.chat-sidebar');
+    const chatContent = document.querySelector('.chat-content');
+
+    if (chatSidebar) chatSidebar.classList.remove('mobile-hidden');
+    if (chatContent) chatContent.classList.remove('mobile-visible');
+}
+
 // Sohbet seç
 function selectChat(chatId) {
     activeChat = chatId;
-    
+
     // Aktif sohbeti işaretle
     document.querySelectorAll('.chat-item').forEach(item => {
         item.classList.remove('active');
@@ -73,7 +87,7 @@ function selectChat(chatId) {
     if (selectedChat) {
         selectedChat.classList.add('active');
     }
-    
+
     // Okunmamış badge'i kaldır
     const chatItem = document.querySelector(`.chat-item[data-chat-id="${chatId}"]`);
     if (chatItem) {
@@ -81,21 +95,30 @@ function selectChat(chatId) {
         const badge = chatItem.querySelector('.chat-unread-badge');
         if (badge) badge.remove();
     }
-    
+
     // Boş durumu gizle, sohbet içeriğini göster
     const emptyState = document.querySelector('.chat-empty');
     const chatHeader = document.querySelector('.active-chat-header');
     const messagesContainer = document.querySelector('.messages-container');
     const inputContainer = document.querySelector('.message-input-container');
-    
+
     if (emptyState) emptyState.style.display = 'none';
     if (chatHeader) chatHeader.style.display = 'flex';
     if (messagesContainer) messagesContainer.style.display = 'flex';
     if (inputContainer) inputContainer.style.display = 'flex';
-    
+
+    // Mobile view: Hide sidebar, show content
+    if (isMobileView()) {
+        const chatSidebar = document.querySelector('.chat-sidebar');
+        const chatContent = document.querySelector('.chat-content');
+
+        if (chatSidebar) chatSidebar.classList.add('mobile-hidden');
+        if (chatContent) chatContent.classList.add('mobile-visible');
+    }
+
     // Sohbet içeriğini yükle
     loadChatContent(chatId);
-    
+
     // Mesaj inputunu focus et
     setTimeout(() => {
         const input = document.getElementById('messageInput');

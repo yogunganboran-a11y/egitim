@@ -131,6 +131,9 @@ document.body.classList.add('whatsapp-page');
         
         <!-- Aktif Sohbet Başlığı -->
         <div class="active-chat-header" style="display: none;">
+            <button class="mobile-back-btn" onclick="backToChats()">
+                <i class="fas fa-arrow-left"></i>
+            </button>
             <div class="active-chat-info">
                 <div class="chat-avatar">AY</div>
                 <div class="active-chat-details">

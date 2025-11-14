@@ -561,26 +561,171 @@
     transform: scale(1);
 }
 
+/* Mobile Back Button */
+.mobile-back-btn {
+    display: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: transparent;
+    border: none;
+    color: #e9edef;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    transition: all 0.3s ease;
+    margin-right: 0.5rem;
+}
+
+.mobile-back-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.mobile-back-btn:active {
+    transform: scale(0.95);
+}
+
 /* Responsive */
-@media (max-width: 968px) {
-    .whatsapp-container {
-        height: calc(100vh - 80px);
+@media (max-width: 992px) {
+    /* Sidebar adjustments for mobile */
+    body.whatsapp-page .sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
     }
-    
+
+    body.whatsapp-page .sidebar.expanded {
+        transform: translateX(0);
+    }
+
+    body.whatsapp-page .main-content {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    .whatsapp-container {
+        height: 100vh;
+        position: relative;
+    }
+
+    /* Chat sidebar takes full width on mobile */
     .chat-sidebar {
         width: 100%;
-        display: none;
-    }
-    
-    .chat-sidebar.mobile-visible {
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        z-index: 200;
         display: flex;
+        transition: transform 0.3s ease;
     }
-    
+
+    .chat-sidebar.mobile-hidden {
+        transform: translateX(-100%);
+    }
+
+    /* Chat content takes full width on mobile */
     .chat-content {
         width: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        z-index: 100;
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
     }
-    
-    .chat-content.mobile-hidden {
-        display: none;
+
+    .chat-content.mobile-visible {
+        transform: translateX(0);
+    }
+
+    /* Show back button on mobile */
+    .mobile-back-btn {
+        display: flex;
+    }
+
+    /* Adjust header spacing on mobile */
+    .sidebar-header {
+        padding: 1rem;
+        flex-wrap: nowrap;
+    }
+
+    .sidebar-header h2 {
+        font-size: 1.1rem;
+    }
+
+    .date-filter-select {
+        font-size: 0.8rem;
+        padding: 0.4rem 0.75rem;
+    }
+
+    /* Adjust chat items for mobile */
+    .chat-item {
+        padding: 0.875rem 1rem;
+    }
+
+    .chat-avatar {
+        width: 45px;
+        height: 45px;
+        font-size: 0.9rem;
+    }
+
+    .chat-name {
+        font-size: 0.95rem;
+    }
+
+    .chat-time {
+        font-size: 0.75rem;
+    }
+
+    .chat-last-message {
+        font-size: 0.85rem;
+    }
+
+    /* Message input adjustments */
+    .message-input-wrapper input {
+        font-size: 0.95rem;
+    }
+
+    .send-btn {
+        width: 42px;
+        height: 42px;
+    }
+
+    /* Bot control adjustments */
+    .bot-control {
+        flex-direction: column;
+        gap: 0.5rem;
+        align-items: flex-start;
+    }
+
+    .bot-toggle {
+        font-size: 0.8rem;
+        padding: 0.4rem 0.8rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .sidebar-header h2 {
+        font-size: 1rem;
+    }
+
+    #chatCount {
+        font-size: 0.85rem;
+    }
+
+    .active-chat-details h3 {
+        font-size: 1rem;
+    }
+
+    .message-input-wrapper {
+        gap: 0.5rem;
+    }
+
+    .emoji-btn,
+    .attach-btn {
+        width: 35px;
+        height: 35px;
     }
 }
