@@ -130,6 +130,7 @@ body {
 
 .sidebar.expanded .sidebar-header {
     justify-content: flex-start;
+    padding-left: 1.5rem;
 }
 
 .logo-container {
@@ -138,13 +139,16 @@ body {
     justify-content: center;
 }
 
-.logo-text {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--text-primary);
-    white-space: nowrap;
+.sidebar-logo {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
     transition: all 0.3s ease;
-    letter-spacing: 2px;
+}
+
+.sidebar.expanded .sidebar-logo {
+    width: 120px;
+    height: 48px;
 }
 
 .sidebar-divider {

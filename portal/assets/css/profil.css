@@ -144,6 +144,11 @@
     display: block;
     font-size: 1.1rem;
     font-weight: 600;
+    word-break: keep-all;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-decoration: none;
 }
 
 /* Education List */
@@ -525,6 +530,15 @@
     
     .info-value {
         font-size: 0.95rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-decoration: none;
+        word-break: keep-all;
+    }
+
+    .info-card {
+        min-width: 0;
     }
     
     .education-item {

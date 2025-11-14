@@ -14,7 +14,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title><?php echo $page_title ?? 'Admin Panel'; ?> - Eğitim Platformu</title>
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -28,7 +28,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
                 <div class="logo-container" id="logoContainer">
-                    <span class="logo-text">EĞİTİM</span>
+                    <img src="assets/img/logo.png" alt="Logo" class="sidebar-logo" onerror="this.style.display='none'">
                 </div>
             </div>
 
