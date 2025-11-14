@@ -311,15 +311,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <script>
         // Brute Force Koruması
         const MAX_ATTEMPTS = 5;
-        const LOCKOUT_TIME = 5 * 60 * 1000; // 5 dakika
+        const LOCKOUT_TIME = 30 * 1000; // 30 saniye (test için - production'da 5 * 60 * 1000 yapın)
 
         function checkLoginAttempts() {
             const attempts = JSON.parse(localStorage.getItem('loginAttempts') || '{"count": 0, "lockoutUntil": 0}');
             const now = Date.now();
 
             if (attempts.lockoutUntil > now) {
-                const remainingTime = Math.ceil((attempts.lockoutUntil - now) / 60000);
-                alert(`Çok fazla hatalı giriş denemesi yaptınız. ${remainingTime} dakika sonra tekrar deneyebilirsiniz.`);
+                const remainingTime = Math.ceil((attempts.lockoutUntil - now) / 1000);
+                alert(`Çok fazla hatalı giriş denemesi yaptınız. ${remainingTime} saniye sonra tekrar deneyebilirsiniz.`);
                 return false;
             }
 
@@ -337,7 +337,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             if (attempts.count >= MAX_ATTEMPTS) {
                 attempts.lockoutUntil = Date.now() + LOCKOUT_TIME;
-                alert('Çok fazla hatalı giriş denemesi yaptınız. 5 dakika boyunca giriş yapamazsınız.');
+                alert('Çok fazla hatalı giriş denemesi yaptınız. 30 saniye boyunca giriş yapamazsınız.');
             }
 
             localStorage.setItem('loginAttempts', JSON.stringify(attempts));

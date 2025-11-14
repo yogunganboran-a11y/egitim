@@ -152,34 +152,16 @@ $courses = [
             <div class="form-group">
                 <label>Sertifika Çıkış Zamanı *</label>
                 <div class="form-row">
-                    <div class="form-group" style="margin-bottom: 0;">
-                        <label style="font-size: 0.875rem; color: #8b9cbc;">İş Günü</label>
-                        <select id="certificateBusinessDays" class="form-select" required>
-                            <option value="">Seçin</option>
-                            <option value="0">0 İş Günü</option>
-                            <option value="1">1 İş Günü</option>
-                            <option value="2">2 İş Günü</option>
-                            <option value="3">3 İş Günü</option>
-                            <option value="5">5 İş Günü</option>
-                            <option value="7">7 İş Günü</option>
-                            <option value="10">10 İş Günü</option>
-                            <option value="15">15 İş Günü</option>
-                        </select>
+                    <div class="form-group" style="margin-bottom: 0; flex: 1;">
+                        <label style="font-size: 0.875rem; color: #8b9cbc;">Gün Sayısı</label>
+                        <input type="number" id="certificateDays" class="form-control" placeholder="0" min="0" max="365" required>
+                        <small style="color: #8b9cbc; font-size: 0.75rem; display: block; margin-top: 0.25rem;">0-365 gün</small>
                     </div>
 
-                    <div class="form-group" style="margin-bottom: 0;">
-                        <label style="font-size: 0.875rem; color: #8b9cbc;">Saat</label>
-                        <select id="certificateHours" class="form-select" required>
-                            <option value="">Seçin</option>
-                            <option value="0">0 Saat</option>
-                            <option value="1">1 Saat</option>
-                            <option value="2">2 Saat</option>
-                            <option value="3">3 Saat</option>
-                            <option value="4">4 Saat</option>
-                            <option value="6">6 Saat</option>
-                            <option value="12">12 Saat</option>
-                            <option value="24">24 Saat</option>
-                        </select>
+                    <div class="form-group" style="margin-bottom: 0; flex: 1;">
+                        <label style="font-size: 0.875rem; color: #8b9cbc;">Saat:Dakika</label>
+                        <input type="time" id="certificateTime" class="form-control" value="09:00" required>
+                        <small style="color: #8b9cbc; font-size: 0.75rem; display: block; margin-top: 0.25rem;">SS:DD formatında</small>
                     </div>
                 </div>
             </div>

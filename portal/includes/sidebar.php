@@ -22,7 +22,7 @@
         </a>
         
         <a href="sertifikalarim.php" class="nav-item <?php echo basename($_SERVER['PHP_SELF']) == 'sertifikalarim.php' ? 'active' : ''; ?>">
-            <i class="fas fa-file-alt"></i>
+            <i class="fas fa-file-certificate"></i>
             <span>Sertifikalarım</span>
         </a>
         

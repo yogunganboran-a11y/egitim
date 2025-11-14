@@ -493,53 +493,6 @@ body {
 }
 
 /* Bottom Navigation Bar (Mobil) */
-.bottom-nav {
-    display: none;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: linear-gradient(180deg, #1e2d44 0%, #1a2942 100%);
-    border-top: 1px solid rgba(59, 130, 246, 0.3);
-    padding: 0.75rem 0;
-    z-index: 1040;
-    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.5);
-}
-
-.bottom-nav-container {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    max-width: 100%;
-    margin: 0 auto;
-    padding: 0 1rem;
-}
-
-.bottom-nav-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.25rem;
-    color: #8b9cbc;
-    font-size: 0.7rem;
-    padding: 0.5rem;
-    border-radius: 10px;
-    transition: all 0.3s ease;
-    text-decoration: none;
-    flex: 1;
-    max-width: 80px;
-}
-
-.bottom-nav-item i {
-    font-size: 1.35rem;
-}
-
-.bottom-nav-item.active {
-    color: #60a5fa;
-    background: rgba(59, 130, 246, 0.15);
-}
-
-.bottom-nav-item:hover {
     color: #60a5fa;
 }
 
@@ -554,59 +507,65 @@ body {
 }
 
 @media (max-width: 992px) {
-    .bottom-nav {
-        display: block;
-    }
-    
-    /* Sidebar gizli mobilde */
-    .sidebar {
-        transform: translateX(-100%);
-    }
-    
-    /* Main content padding bottom bar için */
-    .main-content {
-        padding-bottom: 80px;
-    }
-    
-    /* Top bar'dan hamburger kaldır, bildirim kalsın */
-    .hamburger-btn {
-        display: none !important;
-    }
-    
-    /* Top bar sol tarafına çıkış butonu ekle */
-    .top-bar-left {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-    }
-    
-    .mobile-logout-btn {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 40px;
-        height: 40px;
-        background: rgba(239, 68, 68, 0.2);
-        border: 1px solid rgba(239, 68, 68, 0.4);
-        border-radius: 10px;
-        color: #ef4444;
-        font-size: 1.1rem;
-        transition: all 0.3s ease;
-    }
-    
-    .mobile-logout-btn:hover {
-        background: rgba(239, 68, 68, 0.3);
-        transform: scale(1.05);
-    }
+
+/* Bottom Navigation - Improved Design */
+.bottom-nav {
+    background: linear-gradient(180deg, rgba(30, 45, 68, 0.98) 0%, rgba(26, 41, 66, 0.98) 100%);
+    border-top: 2px solid rgba(59, 130, 246, 0.4);
+    padding: 0.5rem 0 calc(0.5rem + env(safe-area-inset-bottom));
+    backdrop-filter: blur(20px);
+    box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.6), 0 -2px 8px rgba(59, 130, 246, 0.1);
 }
 
-/* Desktop'ta çıkış butonu gizli */
-.mobile-logout-btn {
-    display: none;
+.bottom-nav-container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    max-width: 600px;
+    margin: 0 auto;
+    gap: 0.25rem;
 }
 
-@media (max-width: 992px) {
-    .mobile-logout-btn {
-        display: flex;
-    }
+.bottom-nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+    color: #8b9cbc;
+    font-size: 0.7rem;
+    font-weight: 500;
+    padding: 0.65rem 0.5rem;
+    border-radius: 12px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+}
+
+.bottom-nav-item i {
+    font-size: 1.5rem;
+    transition: transform 0.3s ease;
+}
+
+.bottom-nav-item.active {
+    color: #60a5fa;
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.25), rgba(59, 130, 246, 0.15));
+}
+
+.bottom-nav-item.active::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30px;
+    height: 3px;
+    background: linear-gradient(90deg, #3b82f6, #60a5fa);
+    border-radius: 0 0 3px 3px;
+}
+
+.bottom-nav-item.active i {
+    transform: scale(1.1);
+}
+
+.bottom-nav-item:active {
+    transform: scale(0.95);
 }

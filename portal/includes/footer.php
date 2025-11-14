@@ -22,7 +22,7 @@
                 <span>Yeni Eğitim</span>
             </a>
             <a href="sertifikalarim.php" class="bottom-nav-item <?php echo basename($_SERVER['PHP_SELF']) == 'sertifikalarim.php' ? 'active' : ''; ?>">
-                <i class="fas fa-certificate"></i>
+                <i class="fas fa-file-certificate"></i>
                 <span>Sertifikalar</span>
             </a>
             <a href="profil.php" class="bottom-nav-item <?php echo basename($_SERVER['PHP_SELF']) == 'profil.php' ? 'active' : ''; ?>">

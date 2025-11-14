@@ -448,3 +448,50 @@
         font-size: 0.875rem;
     }
 }
+/* Bildirim kartları yatay */
+.notification-card {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    padding: 1rem 1.5rem !important;
+    gap: 1rem !important;
+    min-height: auto !important;
+}
+
+.notification-icon-wrapper {
+    flex-shrink: 0 !important;
+}
+
+.notification-body {
+    flex: 1 !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+}
+
+.notification-text {
+    flex: 1 !important;
+}
+
+.notification-time {
+    flex-shrink: 0 !important;
+    margin-left: 1rem !important;
+}
+
+/* Mobilde de yatay */
+@media (max-width: 768px) {
+    .notification-card {
+        flex-direction: row !important;
+        padding: 0.875rem 1rem !important;
+    }
+    
+    .notification-body {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+    }
+    
+    .notification-time {
+        margin-left: 0 !important;
+        margin-top: 0.5rem !important;
+    }
+}
