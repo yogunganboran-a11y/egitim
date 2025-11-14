@@ -186,6 +186,61 @@ $buyers_visits = round($total_visitors * 0.18);
     </div>
 </div>
 
+<!-- Şüpheli IP'ler Bölümü -->
+<div class="suspicious-ips-section">
+    <div class="section-header">
+        <h2><i class="fas fa-exclamation-triangle"></i> Şüpheli IP'ler</h2>
+        <span class="info-text">Yüksek aktivite gösteren veya şüpheli davranış sergileyen IP adresleri</span>
+    </div>
+
+    <div class="suspicious-ips-list">
+        <div class="suspicious-ip-item">
+            <div class="ip-info">
+                <span class="ip-badge suspicious">203.0.113.142</span>
+                <span class="ip-reason">Çok fazla başarısız giriş denemesi (15 deneme / 10 dk)</span>
+            </div>
+            <div class="ip-actions">
+                <button class="btn-block" onclick="blockIP('203.0.113.142')">
+                    <i class="fas fa-ban"></i> Engelle
+                </button>
+                <button class="btn-ignore" onclick="ignoreIP('203.0.113.142')">
+                    <i class="fas fa-eye-slash"></i> Yoksay
+                </button>
+            </div>
+        </div>
+
+        <div class="suspicious-ip-item">
+            <div class="ip-info">
+                <span class="ip-badge suspicious">198.51.100.89</span>
+                <span class="ip-reason">Kısa sürede çok fazla sayfa ziyareti (50+ sayfa / 5 dk)</span>
+            </div>
+            <div class="ip-actions">
+                <button class="btn-block" onclick="blockIP('198.51.100.89')">
+                    <i class="fas fa-ban"></i> Engelle
+                </button>
+                <button class="btn-ignore" onclick="ignoreIP('198.51.100.89')">
+                    <i class="fas fa-eye-slash"></i> Yoksay
+                </button>
+            </div>
+        </div>
+
+        <div class="suspicious-ip-item">
+            <div class="ip-info">
+                <span class="ip-badge suspicious">192.0.2.77</span>
+                <span class="ip-reason">Farklı ülkelerden eşzamanlı erişim girişimi</span>
+            </div>
+            <div class="ip-actions">
+                <button class="btn-block" onclick="blockIP('192.0.2.77')">
+                    <i class="fas fa-ban"></i> Engelle
+                </button>
+                <button class="btn-ignore" onclick="ignoreIP('192.0.2.77')">
+                    <i class="fas fa-eye-slash"></i> Yoksay
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- IP Tablosu -->
 <div class="ip-table">
     <div class="table-container">
@@ -193,12 +248,18 @@ $buyers_visits = round($total_visitors * 0.18);
             <thead>
                 <tr>
                     <th>IP ADRESİ</th>
-                    <th>ZİYARET SAYISI</th>
+                    <th class="sortable" onclick="sortTable('visits')">
+                        ZİYARET SAYISI
+                        <i class="fas fa-sort sort-icon"></i>
+                    </th>
                     <th>LOKASYON</th>
                     <th>CİHAZ</th>
                     <th>TARAYICI</th>
-                    <th>SON ZİYARET</th>
-                    <th>DETAY</th>
+                    <th class="sortable" onclick="sortTable('lastVisit')">
+                        SON ZİYARET
+                        <i class="fas fa-sort sort-icon"></i>
+                    </th>
+                    <th>İŞLEMLER</th>
                 </tr>
             </thead>
             <tbody id="ipTableBody">
@@ -228,10 +289,15 @@ $buyers_visits = round($total_visitors * 0.18);
                             <?php echo $data['browser']; ?>
                         </span>
                     </td>
-                    <td><?php echo $data['last_visit']; ?></td>
+                    <td data-timestamp="<?php echo strtotime($data['last_visit']); ?>">
+                        <?php echo $data['last_visit']; ?>
+                    </td>
                     <td>
                         <button class="detail-btn" onclick='showIPDetails(<?php echo json_encode($data); ?>)'>
-                            <i class="fas fa-info-circle"></i> Detay
+                            <i class="fas fa-info-circle"></i>
+                        </button>
+                        <button class="block-btn" onclick='confirmBlockIP("<?php echo $data['ip']; ?>")' title="IP'yi Engelle">
+                            <i class="fas fa-ban"></i>
                         </button>
                     </td>
                 </tr>

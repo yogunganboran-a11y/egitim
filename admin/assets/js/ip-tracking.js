@@ -3,6 +3,10 @@
 let currentPage = 1;
 let itemsPerPage = 25;
 let allRows = [];
+let sortDirection = {
+    visits: 'desc',
+    lastVisit: 'desc'
+};
 
 // Sayfa yüklendiğinde
 document.addEventListener('DOMContentLoaded', function() {
@@ -307,5 +311,98 @@ function updatePaginationButtons(totalPages) {
         btn.textContent = i;
         btn.onclick = () => changePage(i);
         paginationNumbers.appendChild(btn);
+    }
+}
+
+// Tablo sıralama
+function sortTable(column) {
+    const tbody = document.getElementById('ipTableBody');
+    const rows = Array.from(allRows);
+
+    // Sıralama yönünü değiştir
+    sortDirection[column] = sortDirection[column] === 'asc' ? 'desc' : 'asc';
+
+    // Sırala
+    rows.sort((a, b) => {
+        let aValue, bValue;
+
+        if (column === 'visits') {
+            aValue = parseInt(a.querySelector('.visit-count').textContent);
+            bValue = parseInt(b.querySelector('.visit-count').textContent);
+        } else if (column === 'lastVisit') {
+            aValue = parseInt(a.querySelector('td[data-timestamp]').getAttribute('data-timestamp'));
+            bValue = parseInt(b.querySelector('td[data-timestamp]').getAttribute('data-timestamp'));
+        }
+
+        if (sortDirection[column] === 'asc') {
+            return aValue - bValue;
+        } else {
+            return bValue - aValue;
+        }
+    });
+
+    // Tabloyu güncelle
+    tbody.innerHTML = '';
+    rows.forEach(row => tbody.appendChild(row));
+    allRows = rows;
+
+    // Sıralama ikonlarını güncelle
+    document.querySelectorAll('.sortable .sort-icon').forEach(icon => {
+        icon.className = 'fas fa-sort sort-icon';
+    });
+
+    const activeIcon = document.querySelector(`.sortable[onclick="sortTable('${column}')"] .sort-icon`);
+    if (activeIcon) {
+        activeIcon.className = `fas fa-sort-${sortDirection[column] === 'asc' ? 'up' : 'down'} sort-icon active`;
+    }
+
+    // Sayfayı güncelle
+    updatePagination();
+    showNotification(`${column === 'visits' ? 'Ziyaret sayısı' : 'Son ziyaret'} tarihine göre sıralandı`, 'success');
+}
+
+// IP'yi engelle
+function blockIP(ip) {
+    // Gerçek uygulamada backend'e istek gönderilecek
+    showNotification(`${ip} adresi engellendi`, 'success');
+
+    // Şüpheli IP'ler listesinden kaldır
+    const suspiciousItem = event.target.closest('.suspicious-ip-item');
+    if (suspiciousItem) {
+        suspiciousItem.style.animation = 'fadeOut 0.3s ease';
+        setTimeout(() => {
+            suspiciousItem.remove();
+            if (document.querySelectorAll('.suspicious-ip-item').length === 0) {
+                document.querySelector('.suspicious-ips-list').innerHTML = '<p style="text-align: center; color: #8b9cbc; padding: 2rem;">Şüpheli IP bulunamadı</p>';
+            }
+        }, 300);
+    }
+
+    console.log('IP engellendi:', ip);
+}
+
+// IP'yi yoksay
+function ignoreIP(ip) {
+    showNotification(`${ip} adresi yoksayıldı`, 'info');
+
+    // Şüpheli IP'ler listesinden kaldır
+    const suspiciousItem = event.target.closest('.suspicious-ip-item');
+    if (suspiciousItem) {
+        suspiciousItem.style.animation = 'fadeOut 0.3s ease';
+        setTimeout(() => {
+            suspiciousItem.remove();
+            if (document.querySelectorAll('.suspicious-ip-item').length === 0) {
+                document.querySelector('.suspicious-ips-list').innerHTML = '<p style="text-align: center; color: #8b9cbc; padding: 2rem;">Şüpheli IP bulunamadı</p>';
+            }
+        }, 300);
+    }
+
+    console.log('IP yoksayıldı:', ip);
+}
+
+// IP engelleme onayı
+function confirmBlockIP(ip) {
+    if (confirm(`${ip} adresini engellemek istediğinizden emin misiniz?\n\nBu IP adresi tüm sayfalara erişim engeli alacaktır.`)) {
+        blockIP(ip);
     }
 }

@@ -5,6 +5,11 @@ let itemsPerPage = 25;
 
 // Sayfa yüklendiğinde
 document.addEventListener('DOMContentLoaded', function() {
+    // Tüm satırları başlangıçta filtrelenmiş olarak işaretle
+    const rows = document.querySelectorAll('.invoices-table tbody tr');
+    rows.forEach(row => {
+        row.setAttribute('data-filtered', 'true');
+    });
     loadInvoices();
 });
 
@@ -13,16 +18,58 @@ function loadInvoices() {
     updatePagination();
 }
 
+// Türkçe karakter normalizasyonu
+function normalizeTurkish(text) {
+    const map = {
+        'ı': 'i', 'İ': 'i', 'ş': 's', 'Ş': 's',
+        'ğ': 'g', 'Ğ': 'g', 'ü': 'u', 'Ü': 'u',
+        'ö': 'o', 'Ö': 'o', 'ç': 'c', 'Ç': 'c'
+    };
+    return text.toLowerCase().split('').map(char => map[char] || char).join('');
+}
+
+// Telefon numarasını normalize et (boşluk ve başındaki 0'ı kaldır)
+function normalizePhone(phone) {
+    return phone.replace(/\s/g, '').replace(/^0/, '');
+}
+
 // Fatura ara
 function searchInvoices() {
-    const searchTerm = document.getElementById('invoiceSearch').value.toLowerCase();
+    const searchTerm = document.getElementById('invoiceSearch').value.trim();
+    if (!searchTerm) {
+        const rows = document.querySelectorAll('.invoices-table tbody tr');
+        rows.forEach(row => {
+            row.setAttribute('data-filtered', 'true');
+        });
+        currentPage = 1;
+        updatePagination();
+        return;
+    }
+
+    const normalizedSearch = normalizeTurkish(searchTerm);
+    const normalizedPhoneSearch = normalizePhone(searchTerm);
     const rows = document.querySelectorAll('.invoices-table tbody tr');
-    
+
     rows.forEach(row => {
-        const text = row.textContent.toLowerCase();
-        row.style.display = text.includes(searchTerm) ? '' : 'none';
+        const cells = row.querySelectorAll('td');
+        const name = cells[1].textContent;
+        const surname = cells[2].textContent;
+        const tckn = cells[3].textContent;
+        const phone = cells[4].textContent;
+
+        const normalizedName = normalizeTurkish(name);
+        const normalizedSurname = normalizeTurkish(surname);
+        const normalizedPhone = normalizePhone(phone);
+
+        const matches = normalizedName.includes(normalizedSearch) ||
+                       normalizedSurname.includes(normalizedSearch) ||
+                       tckn.includes(searchTerm) ||
+                       normalizedPhone.includes(normalizedPhoneSearch);
+
+        row.setAttribute('data-filtered', matches ? 'true' : 'false');
     });
-    
+
+    currentPage = 1;
     updatePagination();
 }
 
@@ -30,29 +77,31 @@ function searchInvoices() {
 function filterByDate() {
     const dateFrom = document.getElementById('dateFrom').value;
     const dateTo = document.getElementById('dateTo').value;
-    
+
     if (!dateFrom || !dateTo) {
         showNotification('Lütfen başlangıç ve bitiş tarihlerini seçin', 'error');
         return;
     }
-    
+
     const fromDate = new Date(dateFrom);
     const toDate = new Date(dateTo);
-    
+    toDate.setHours(23, 59, 59, 999); // Bitiş gününü tamamen dahil et
+
     const rows = document.querySelectorAll('.invoices-table tbody tr');
-    
+
     rows.forEach(row => {
         const dateText = row.querySelector('td:first-child').textContent;
         const [day, month, year] = dateText.split(' ')[0].split('.');
         const rowDate = new Date(year, month - 1, day);
-        
+
         if (rowDate >= fromDate && rowDate <= toDate) {
-            row.style.display = '';
+            row.setAttribute('data-filtered', 'true');
         } else {
-            row.style.display = 'none';
+            row.setAttribute('data-filtered', 'false');
         }
     });
-    
+
+    currentPage = 1;
     updatePagination();
 }
 
@@ -60,12 +109,14 @@ function filterByDate() {
 function clearFilter() {
     document.getElementById('dateFrom').value = '';
     document.getElementById('dateTo').value = '';
-    
+    document.getElementById('invoiceSearch').value = '';
+
     const rows = document.querySelectorAll('.invoices-table tbody tr');
     rows.forEach(row => {
-        row.style.display = '';
+        row.setAttribute('data-filtered', 'true');
     });
-    
+
+    currentPage = 1;
     updatePagination();
 }
 
@@ -77,32 +128,41 @@ function viewInvoice(invoiceUrl) {
 // Pagination güncelle
 function updatePagination() {
     const rows = document.querySelectorAll('.invoices-table tbody tr');
-    const visibleRows = Array.from(rows).filter(row => row.style.display !== 'none');
-    const totalItems = visibleRows.length;
-    const totalPages = Math.ceil(totalItems / itemsPerPage);
-    
+
+    // Filtrelenmiş satırları al
+    const filteredRows = Array.from(rows).filter(row => {
+        return row.getAttribute('data-filtered') !== 'false';
+    });
+
+    const totalItems = filteredRows.length;
+    const totalPages = Math.max(1, Math.ceil(totalItems / itemsPerPage));
+
     // Toplam sayfa sayısını güncelle
     document.getElementById('totalPages').textContent = totalPages;
-    
+
     // Mevcut sayfa sınırını kontrol et
     if (currentPage > totalPages) {
-        currentPage = Math.max(1, totalPages);
+        currentPage = totalPages;
     }
-    
+
     document.getElementById('currentPage').textContent = currentPage;
-    
+
     // Satırları sayfalara göre göster/gizle
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
-    
-    visibleRows.forEach((row, index) => {
+
+    // Önce tüm satırları gizle
+    rows.forEach(row => {
+        row.style.display = 'none';
+    });
+
+    // Sadece filtrelenmiş ve sayfalamadaki satırları göster
+    filteredRows.forEach((row, index) => {
         if (index >= startIndex && index < endIndex) {
             row.style.display = '';
-        } else {
-            row.style.display = 'none';
         }
     });
-    
+
     // Pagination butonlarını güncelle
     updatePaginationButtons();
 }

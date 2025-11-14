@@ -5,7 +5,8 @@ let supportRequests = {
     toplu: [],
     havale: [],
     iptal: [],
-    teknik: []
+    teknik: [],
+    iletisim: []
 };
 let selectedStatus = null;
 
@@ -46,7 +47,7 @@ function loadSupportRequests() {
 function updateTableHeaders(category) {
     const tableHead = document.getElementById('supportTableHead');
     let headers = '';
-    
+
     if (category === 'toplu') {
         headers = `
             <th>TARİH</th>
@@ -91,8 +92,17 @@ function updateTableHeaders(category) {
             <th>SORUN DETAYI</th>
             <th>DURUM</th>
         `;
+    } else if (category === 'iletisim') {
+        headers = `
+            <th>TARİH</th>
+            <th>KAYNAK</th>
+            <th>TELEFON</th>
+            <th>AD SOYAD</th>
+            <th>TALEP DETAYI</th>
+            <th>DURUM</th>
+        `;
     }
-    
+
     tableHead.innerHTML = headers;
 }
 
@@ -111,7 +121,7 @@ function renderTable() {
     requests.forEach(request => {
         const isNew = request.isNew ? 'new-request' : '';
         html += '<tr class="' + isNew + '" data-request-id="' + request.id + '">';
-        
+
         if (currentCategory === 'toplu') {
             html += '<td>' + request.date + '</td>';
             html += '<td>' + renderSourceIcon(request.source, request.phone) + '</td>';
@@ -148,8 +158,15 @@ function renderTable() {
             html += '<td>' + request.tckn + '</td>';
             html += '<td>' + request.issueDetail + '</td>';
             html += '<td><button class="status-btn ' + request.statusClass + '" onclick="openStatusModal(' + request.id + ')">' + request.status + '</button></td>';
+        } else if (currentCategory === 'iletisim') {
+            html += '<td>' + request.date + '</td>';
+            html += '<td>' + renderSourceIcon(request.source, request.phone) + '</td>';
+            html += '<td>' + request.phone + '</td>';
+            html += '<td>' + request.fullName + '</td>';
+            html += '<td>' + request.requestDetail + '</td>';
+            html += '<td><button class="status-btn ' + request.statusClass + '" onclick="openStatusModal(' + request.id + ')">' + request.status + '</button></td>';
         }
-        
+
         html += '</tr>';
     });
     
@@ -364,19 +381,19 @@ function playNotificationSound() {
 // Bildirim badge'lerini güncelle
 function updateNotificationBadges() {
     let totalNew = 0;
-    
-    ['toplu', 'havale', 'iptal', 'teknik'].forEach(category => {
+
+    ['toplu', 'havale', 'iptal', 'teknik', 'iletisim'].forEach(category => {
         const newCount = supportRequests[category].filter(r => r.isNew).length;
         const badge = document.querySelector('[data-category="' + category + '"] .tab-badge');
-        
+
         if (badge) {
             badge.textContent = newCount;
             badge.style.display = newCount > 0 ? 'inline-flex' : 'none';
         }
-        
+
         totalNew += newCount;
     });
-    
+
     const sidebarBadge = document.querySelector('.sidebar a[href="destek.php"] .notification-badge');
     if (sidebarBadge) {
         sidebarBadge.textContent = totalNew;
@@ -403,18 +420,24 @@ function loadDemoData() {
         { id: 1, date: '12.11.2025 15:30', phone: '0532 123 4567', source: 'whatsapp', fullName: 'Ahmet Yılmaz', companyName: 'ABC Denizcilik', documentCount: 15, status: 'Beklemede', statusClass: 'pending', isNew: true, history: [] },
         { id: 2, date: '11.11.2025 14:20', phone: '0533 234 5678', source: 'phone', fullName: 'Mehmet Demir', companyName: 'XYZ Maritime', documentCount: 8, status: 'Onaylandı', statusClass: 'approved', isNew: false, history: [] }
     ];
-    
+
     supportRequests.havale = [
         { id: 3, date: '12.11.2025 16:45', phone: '0534 345 6789', source: 'whatsapp', firstName: 'Ayşe', lastName: 'Kaya', tckn: '12345678901', birthDate: '15.03.1990', price: 1500, dekontUrl: '#', documentType: 'Temel Denizcilik', status: 'Beklemede', statusClass: 'pending', isNew: true, history: [] },
         { id: 4, date: '10.11.2025 10:15', phone: '0535 456 7890', source: 'phone', firstName: 'Fatma', lastName: 'Şahin', tckn: '98765432109', birthDate: '22.07.1985', price: 2000, dekontUrl: '#', documentType: 'İleri Navigasyon', status: 'Onaylandı', statusClass: 'approved', isNew: false, history: [] }
     ];
-    
+
     supportRequests.iptal = [
         { id: 5, date: '11.11.2025 09:30', phone: '0536 567 8901', source: 'whatsapp', fullName: 'Ali Öztürk', tckn: '11122233344', cancelReason: 'Yanlış bilgi girişi', status: 'Beklemede', statusClass: 'pending', isNew: true, history: [] }
     ];
-    
+
     supportRequests.teknik = [
         { id: 6, date: '12.11.2025 11:20', phone: '0537 678 9012', source: 'phone', fullName: 'Zeynep Aydın', tckn: '55566677788', issueDetail: 'Video oynatma sorunu', status: 'Beklemede', statusClass: 'pending', isNew: true, history: [] }
+    ];
+
+    supportRequests.iletisim = [
+        { id: 7, date: '13.11.2025 09:15', phone: '0538 789 0123', source: 'web', fullName: 'Can Yılmaz', requestDetail: 'Eğitim programları hakkında detaylı bilgi almak istiyorum', status: 'Beklemede', statusClass: 'pending', isNew: true, history: [] },
+        { id: 8, date: '12.11.2025 18:30', phone: '0539 890 1234', source: 'web', fullName: 'Selin Demir', requestDetail: 'Toplu eğitim fiyat teklifi talebi', status: 'İletişime Geçildi', statusClass: 'approved', isNew: false, history: [] },
+        { id: 9, date: '12.11.2025 14:45', phone: '0530 901 2345', source: 'whatsapp', fullName: 'Emre Kaya', requestDetail: 'Sertifika geçerlilik süresi hakkında soru', status: 'Beklemede', statusClass: 'pending', isNew: true, history: [] }
     ];
 }
 
@@ -427,6 +450,10 @@ function renderSourceIcon(source, phone) {
     } else if (source === 'phone') {
         return '<button class="source-btn phone" onclick="openPhoneHistory(\'' + phone + '\')" title="Telefondan geldi - Geçmişi görüntüle">' +
                '<i class="fas fa-phone"></i>' +
+               '</button>';
+    } else if (source === 'web') {
+        return '<button class="source-btn web" onclick="showNotification(\'Web sitesi form talebi\', \'info\')" title="Web sitesinden geldi">' +
+               '<i class="fas fa-globe"></i>' +
                '</button>';
     }
     return '<span style="color: #8b9cbc;">-</span>';

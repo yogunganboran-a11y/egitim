@@ -260,6 +260,18 @@
     box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
 }
 
+.source-btn.web {
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(139, 92, 246, 0.1));
+    color: #8b5cf6;
+    border: 1px solid rgba(139, 92, 246, 0.3);
+}
+
+.source-btn.web:hover {
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.3), rgba(139, 92, 246, 0.2));
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+}
+
 /* Dekont Görüntüleme */
 .dekont-btn {
     padding: 0.5rem 1rem;
