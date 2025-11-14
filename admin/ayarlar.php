@@ -554,6 +554,50 @@ $all_permissions = [
     </div>
     
     <!-- Telefon Ayarları -->
+    
+    <!-- Meta (Facebook/Instagram) API -->
+    <div class="settings-card">
+        <div class="settings-card-header">
+            <h3><i class="fab fa-facebook"></i> Meta (Facebook/Instagram) API</h3>
+        </div>
+        <div id="metaSettings">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Facebook App ID <span class="required">*</span></label>
+                    <input type="text" id="metaAppId" placeholder="Facebook App ID">
+                </div>
+                <div class="form-group">
+                    <label>Facebook App Secret <span class="required">*</span></label>
+                    <input type="password" id="metaAppSecret" placeholder="Facebook App Secret">
+                </div>
+                <div class="form-group">
+                    <label>Access Token <span class="required">*</span></label>
+                    <input type="password" id="metaAccessToken" placeholder="Meta Access Token">
+                </div>
+                <div class="form-group">
+                    <label>Page ID</label>
+                    <input type="text" id="metaPageId" placeholder="Facebook Page ID">
+                </div>
+                <div class="form-group">
+                    <label>Instagram Business Account ID</label>
+                    <input type="text" id="metaIgAccountId" placeholder="Instagram Business Account ID">
+                </div>
+                <div class="form-group">
+                    <label>Webhook Verify Token</label>
+                    <input type="text" id="metaWebhookToken" placeholder="Webhook doğrulama token">
+                </div>
+            </div>
+            <div style="margin-top: 1.5rem; display: flex; gap: 1rem;">
+                <button class="btn-save" onclick="saveAPISettings('meta')">
+                    <i class="fas fa-save"></i> Kaydet
+                </button>
+                <button class="btn-test" onclick="testAPI('meta')">
+                    <i class="fas fa-vial"></i> Bağlantıyı Test Et
+                </button>
+            </div>
+            <div class="test-result" id="metaTestResult"></div>
+        </div>
+    </div>
     <div class="settings-card">
         <div class="settings-card-header">
             <h3><i class="fas fa-phone-volume"></i> Telefon Ayarları</h3>
