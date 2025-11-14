@@ -31,6 +31,41 @@
     position: relative;
 }
 
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.modal-header h2 {
+    color: #ffffff;
+    font-size: 1.5rem;
+    margin: 0;
+}
+
+.close-modal {
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    color: #ef4444;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1.25rem;
+}
+
+.close-modal:hover {
+    background: rgba(239, 68, 68, 0.2);
+    transform: scale(1.05);
+}
+
 /* Sayfa Başlığı */
 .page-header {
     display: flex;
@@ -68,94 +103,99 @@
     gap: 1.5rem;
 }
 
-/* Eğitim Kartı */
+/* Eğitim Kartı - kayit.php stiline uygun */
 .course-card {
     background: linear-gradient(135deg, rgba(30, 45, 68, 0.95) 0%, rgba(26, 41, 66, 0.9) 100%);
     backdrop-filter: blur(10px);
     border-radius: 16px;
-    overflow: hidden;
-    border: 1px solid rgba(59, 130, 246, 0.1);
+    padding: 2rem;
+    border: 1px solid rgba(59, 130, 246, 0.2);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
     transition: all 0.3s ease;
-    cursor: pointer;
 }
 
 .course-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
-    border-color: rgba(59, 130, 246, 0.3);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(59, 130, 246, 0.2);
+    border-color: rgba(59, 130, 246, 0.4);
 }
 
-.course-thumbnail {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+.card-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.education-icon {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.3) 0%, rgba(37, 99, 235, 0.2) 100%);
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
-    font-size: 3rem;
+    font-size: 2.5rem;
+    color: #3b82f6;
+    margin: 0 auto 1rem;
 }
 
-.course-thumbnail img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.course-content {
-    padding: 1.5rem;
-}
-
-.course-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 1rem;
-}
-
-.course-title {
+.card-header h3 {
+    font-size: 1.35rem;
+    margin: 0;
     color: #ffffff;
-    font-size: 1.25rem;
-    font-weight: 600;
-    margin-bottom: 0.5rem;
 }
 
-.course-duration {
+.education-features {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    padding: 1.5rem 0;
+    border-top: 1px solid rgba(59, 130, 246, 0.2);
+    border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.feature {
     display: flex;
+    flex-direction: column;
     align-items: center;
     gap: 0.5rem;
+}
+
+.feature i {
+    font-size: 1.5rem;
+    color: #3b82f6;
+}
+
+.feature span {
     color: #8b9cbc;
     font-size: 0.875rem;
+    text-align: center;
 }
 
-.course-pricing {
-    margin-top: 1rem;
+.card-footer {
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    gap: 0.75rem;
+    gap: 1rem;
 }
 
-.course-price {
-    color: #10b981;
-    font-size: 1.5rem;
-    font-weight: 700;
+.price-section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
 }
 
-.course-old-price {
-    color: #8b9cbc;
-    font-size: 1rem;
+.old-price {
+    color: #6b7280;
+    font-size: 0.875rem;
     text-decoration: line-through;
 }
 
-.course-discount {
-    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-    color: white;
-    padding: 0.25rem 0.75rem;
-    border-radius: 20px;
-    font-size: 0.875rem;
-    font-weight: 600;
+.price {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #10b981;
 }
 
 .course-actions {
@@ -291,7 +331,9 @@
 }
 
 .form-group input,
-.form-group textarea {
+.form-group textarea,
+.form-group select,
+.form-select {
     width: 100%;
     padding: 0.875rem;
     background: rgba(255, 255, 255, 0.05);
@@ -302,10 +344,17 @@
 }
 
 .form-group input:focus,
-.form-group textarea:focus {
+.form-group textarea:focus,
+.form-group select:focus,
+.form-select:focus {
     outline: none;
     border-color: rgba(59, 130, 246, 0.5);
     background: rgba(255, 255, 255, 0.08);
+}
+
+.form-select option {
+    background: #1e2d44;
+    color: #ffffff;
 }
 
 .form-row {
@@ -441,6 +490,13 @@
     cursor: pointer;
 }
 
+.answer-label {
+    color: #3b82f6;
+    font-weight: 600;
+    font-size: 0.95rem;
+    min-width: 30px;
+}
+
 .add-answer-btn {
     background: rgba(16, 185, 129, 0.1);
     border: 1px solid rgba(16, 185, 129, 0.3);
@@ -546,13 +602,40 @@
     .courses-grid {
         grid-template-columns: 1fr;
     }
-    
+
+    .course-card {
+        padding: 1.5rem;
+    }
+
+    .education-icon {
+        width: 70px;
+        height: 70px;
+        font-size: 2rem;
+    }
+
+    .card-header h3 {
+        font-size: 1.25rem;
+    }
+
+    .price {
+        font-size: 1.5rem;
+    }
+
     .form-row {
         grid-template-columns: 1fr;
     }
-    
+
     .modal-steps {
         font-size: 0.75rem;
+    }
+
+    .modal .modal-content {
+        width: 95%;
+        padding: 1.5rem;
+    }
+
+    .modal-header h2 {
+        font-size: 1.25rem;
     }
 }
 

@@ -69,27 +69,32 @@ $courses = [
 <div class="courses-grid">
     <?php foreach ($courses as $course): ?>
     <div class="course-card" data-course-id="<?php echo $course['id']; ?>">
-        <div class="course-thumbnail">
-            <img src="<?php echo $course['thumbnail']; ?>" alt="<?php echo $course['title']; ?>">
+        <div class="card-header">
+            <div class="education-icon">
+                <i class="fas fa-graduation-cap"></i>
+            </div>
+            <h3><?php echo $course['title']; ?></h3>
         </div>
-        
-        <div class="course-content">
-            <div class="course-header">
-                <div>
-                    <h3 class="course-title"><?php echo $course['title']; ?></h3>
-                    <div class="course-duration">
-                        <i class="far fa-clock"></i>
-                        <?php echo $course['duration']; ?>
-                    </div>
-                </div>
+
+        <div class="education-features">
+            <div class="feature">
+                <i class="far fa-clock"></i>
+                <span><?php echo $course['duration']; ?></span>
             </div>
-            
-            <div class="course-pricing">
-                <span class="course-price"><?php echo $course['price']; ?></span>
-                <span class="course-old-price"><?php echo $course['old_price']; ?></span>
-                <span class="course-discount"><?php echo $course['discount']; ?></span>
+            <div class="feature">
+                <i class="fas fa-users"></i>
+                <span><?php echo $course['students']; ?> Öğrenci</span>
             </div>
-            
+        </div>
+
+        <div class="card-footer">
+            <div class="price-section">
+                <?php if($course['old_price']): ?>
+                <span class="old-price"><?php echo $course['old_price']; ?></span>
+                <?php endif; ?>
+                <span class="price"><?php echo $course['price']; ?></span>
+            </div>
+
             <div class="course-actions">
                 <button class="course-action-btn" onclick="editCourse(<?php echo $course['id']; ?>)">
                     <i class="fas fa-edit"></i>
@@ -130,34 +135,61 @@ $courses = [
         <!-- Adım 1: Temel Bilgiler -->
         <div class="form-step active" id="step1">
             <div class="form-group">
-                <label>Kapak Görseli</label>
-                <div class="file-upload" onclick="document.getElementById('thumbnailUpload').click()">
-                    <i class="fas fa-image"></i>
-                    <p>Kapak görseli yüklemek için tıklayın</p>
-                    <small style="color: #8b9cbc;">Önerilen boyut: 400x250px</small>
-                    <input type="file" id="thumbnailUpload" accept="image/*" onchange="handleThumbnailUpload(event)">
-                </div>
-                <div class="file-preview" id="thumbnailPreviewContainer">
-                    <div id="thumbnailPreview"></div>
-                </div>
-            </div>
-            
-            <div class="form-group">
                 <label>Eğitim Adı *</label>
                 <input type="text" id="courseTitle" placeholder="Örn: Python ile Web Geliştirme" required>
             </div>
-            
+
             <div class="form-group">
-                <label>Eğitim Süresi *</label>
-                <input type="text" id="courseDuration" placeholder="Örn: 12 Saat" required>
+                <label>Eğitim Adı Kısaltması *</label>
+                <input type="text" id="courseShortName" placeholder="Örn: Python Web" required>
             </div>
-            
+
+            <div class="form-group">
+                <label>Eğitim Süresi (Saat) *</label>
+                <input type="number" id="courseDuration" placeholder="12" min="1" required>
+            </div>
+
+            <div class="form-group">
+                <label>Sertifika Çıkış Zamanı *</label>
+                <div class="form-row">
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label style="font-size: 0.875rem; color: #8b9cbc;">İş Günü</label>
+                        <select id="certificateBusinessDays" class="form-select" required>
+                            <option value="">Seçin</option>
+                            <option value="0">0 İş Günü</option>
+                            <option value="1">1 İş Günü</option>
+                            <option value="2">2 İş Günü</option>
+                            <option value="3">3 İş Günü</option>
+                            <option value="5">5 İş Günü</option>
+                            <option value="7">7 İş Günü</option>
+                            <option value="10">10 İş Günü</option>
+                            <option value="15">15 İş Günü</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label style="font-size: 0.875rem; color: #8b9cbc;">Saat</label>
+                        <select id="certificateHours" class="form-select" required>
+                            <option value="">Seçin</option>
+                            <option value="0">0 Saat</option>
+                            <option value="1">1 Saat</option>
+                            <option value="2">2 Saat</option>
+                            <option value="3">3 Saat</option>
+                            <option value="4">4 Saat</option>
+                            <option value="6">6 Saat</option>
+                            <option value="12">12 Saat</option>
+                            <option value="24">24 Saat</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
             <div class="form-row">
                 <div class="form-group">
                     <label>Fiyat (₺) *</label>
                     <input type="number" id="coursePrice" placeholder="499" required>
                 </div>
-                
+
                 <div class="form-group">
                     <label>İndirimli Fiyat (₺)</label>
                     <input type="number" id="courseOldPrice" placeholder="799">
@@ -179,14 +211,7 @@ $courses = [
                     <div id="videoPreview"></div>
                 </div>
             </div>
-            
-            <div class="form-group">
-                <label class="custom-checkbox">
-                    <input type="checkbox" id="preventSeek">
-                    <span>Videoyu ileri sarmayı engelle</span>
-                </label>
-            </div>
-            
+
             <div class="form-group">
                 <label>Test Soruları</label>
                 <div class="questions-container" id="questionsContainer">
