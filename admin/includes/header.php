@@ -60,6 +60,10 @@ $current_page = basename($_SERVER['PHP_SELF']);
                     <i class="fab fa-whatsapp"></i>
                     <span>WhatsApp</span>
                 </a>
+                <a href="meta-mesajlari.php" class="nav-item <?php echo $current_page == 'meta-mesajlari.php' ? 'active' : ''; ?>">
+                    <i class="fab fa-facebook-messenger"></i>
+                    <span>Meta Mesajları</span>
+                </a>
                 <a href="telefon.php" class="nav-item <?php echo $current_page == 'telefon.php' ? 'active' : ''; ?>">
                     <i class="fas fa-phone"></i>
                     <span>Telefon</span>
