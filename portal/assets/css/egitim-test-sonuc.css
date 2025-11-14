@@ -1,0 +1,270 @@
+/* Test Result Page - Horizontal */
+
+.result-container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.result-card {
+    background: linear-gradient(135deg, rgba(30, 45, 68, 0.95) 0%, rgba(26, 41, 66, 0.9) 100%);
+    border-radius: 20px;
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.result-card.success {
+    border: 2px solid rgba(16, 185, 129, 0.3);
+}
+
+.result-card.failed {
+    border: 2px solid rgba(239, 68, 68, 0.3);
+}
+
+.result-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.result-left {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.result-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(5, 150, 105, 0.15) 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    color: #10b981;
+    flex-shrink: 0;
+}
+
+.result-card.failed .result-icon {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.2) 0%, rgba(220, 38, 38, 0.15) 100%);
+    color: #ef4444;
+}
+
+.result-text h1 {
+    font-size: 2rem;
+    margin-bottom: 0.35rem;
+}
+
+.result-message {
+    color: #8b9cbc;
+    font-size: 1.1rem;
+    margin: 0;
+}
+
+.score-display {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.score-number {
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: #10b981;
+    line-height: 1;
+}
+
+.result-card.failed .score-number {
+    color: #ef4444;
+}
+
+.score-label {
+    font-size: 1rem;
+    color: #8b9cbc;
+    margin-top: 0.5rem;
+}
+
+.certificate-info {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.15) 0%, rgba(217, 119, 6, 0.1) 100%);
+    border: 1px solid rgba(245, 158, 11, 0.3);
+    border-radius: 12px;
+    padding: 1.5rem;
+    display: flex;
+    gap: 1rem;
+    text-align: left;
+}
+
+.certificate-icon {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.3) 0%, rgba(217, 119, 6, 0.2) 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: #f59e0b;
+    flex-shrink: 0;
+}
+
+.certificate-text h3 {
+    color: #f59e0b;
+    margin-bottom: 0.5rem;
+    font-size: 1.15rem;
+}
+
+.certificate-text p {
+    color: #8b9cbc;
+    line-height: 1.5;
+    font-size: 0.95rem;
+    margin: 0;
+}
+
+.certificate-text strong {
+    color: #f59e0b;
+}
+
+.retry-info {
+    background: rgba(59, 130, 246, 0.1);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    border-radius: 12px;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.retry-info i {
+    font-size: 1.25rem;
+    color: #3b82f6;
+}
+
+.retry-info p {
+    color: #8b9cbc;
+    margin: 0;
+    font-size: 0.95rem;
+}
+
+.result-actions {
+    display: flex;
+    gap: 1.25rem;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-home,
+.btn-retry,
+.btn-certificate {
+    padding: 0.875rem 2rem;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.65rem;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.btn-home {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(37, 99, 235, 0.15) 100%);
+    border: 1px solid rgba(59, 130, 246, 0.4);
+    color: #60a5fa;
+}
+
+.btn-home:hover {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.3) 0%, rgba(37, 99, 235, 0.25) 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.btn-retry {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    color: white;
+    border: none;
+}
+
+.btn-retry:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(59, 130, 246, 0.4);
+}
+
+.btn-certificate {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    color: white;
+    border: none;
+}
+
+.btn-certificate:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(245, 158, 11, 0.4);
+}
+
+@media (max-width: 768px) {
+    .result-card {
+        padding: 1.5rem;
+    }
+    
+    .result-top {
+        gap: 1.25rem;
+    }
+    
+    .result-left {
+        gap: 1rem;
+    }
+    
+    .result-icon {
+        width: 70px;
+        height: 70px;
+        font-size: 2rem;
+    }
+    
+    .result-text h1 {
+        font-size: 1.5rem;
+    }
+    
+    .result-message {
+        font-size: 0.95rem;
+    }
+    
+    .score-number {
+        font-size: 2.75rem;
+    }
+    
+    .score-label {
+        font-size: 0.9rem;
+    }
+    
+    .certificate-info {
+        padding: 1.25rem;
+    }
+    
+    .certificate-icon {
+        width: 45px;
+        height: 45px;
+        font-size: 1.35rem;
+    }
+    
+    .certificate-text h3 {
+        font-size: 1.05rem;
+    }
+    
+    .certificate-text p {
+        font-size: 0.875rem;
+    }
+    
+    .result-actions {
+        flex-direction: column;
+    }
+    
+    .btn-home,
+    .btn-retry,
+    .btn-certificate {
+        width: 100%;
+        justify-content: center;
+    }
+}

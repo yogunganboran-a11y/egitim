@@ -1,0 +1,352 @@
+/* Payment Result Pages */
+
+.result-container {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.result-card {
+    background: linear-gradient(135deg, rgba(30, 45, 68, 0.95) 0%, rgba(26, 41, 66, 0.9) 100%);
+    border-radius: 20px;
+    padding: 2rem;
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.result-card.success {
+    border: 2px solid rgba(16, 185, 129, 0.3);
+}
+
+.result-card.failed {
+    border: 2px solid rgba(239, 68, 68, 0.3);
+}
+
+.result-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 1.25rem;
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(5, 150, 105, 0.15) 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    color: #10b981;
+}
+
+.result-card.failed .result-icon {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.2) 0%, rgba(220, 38, 38, 0.15) 100%);
+    color: #ef4444;
+}
+
+.result-card h1 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.result-message {
+    color: #8b9cbc;
+    font-size: 1.05rem;
+    margin-bottom: 1.5rem;
+}
+
+.payment-details {
+    background: rgba(59, 130, 246, 0.05);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    border-radius: 12px;
+    padding: 1.25rem;
+    margin-bottom: 1.5rem;
+    text-align: left;
+}
+
+.detail-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid rgba(59, 130, 246, 0.1);
+}
+
+.detail-row:last-child {
+    border-bottom: none;
+}
+
+.detail-label {
+    color: #8b9cbc;
+    font-size: 0.95rem;
+}
+
+.detail-value {
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.detail-value.amount {
+    color: #10b981;
+    font-size: 1.25rem;
+}
+
+.success-info {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(5, 150, 105, 0.1) 100%);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    border-radius: 12px;
+    padding: 1.25rem;
+    display: flex;
+    gap: 1rem;
+    text-align: left;
+}
+
+.success-info .info-icon {
+    width: 45px;
+    height: 45px;
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.3) 0%, rgba(5, 150, 105, 0.2) 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.35rem;
+    color: #10b981;
+    flex-shrink: 0;
+}
+
+.success-info h3 {
+    color: #10b981;
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+}
+
+.success-info p {
+    color: #8b9cbc;
+    line-height: 1.6;
+    margin: 0;
+    font-size: 0.95rem;
+}
+
+.error-details {
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    border-radius: 12px;
+    padding: 1.25rem;
+    display: flex;
+    gap: 1rem;
+    text-align: left;
+    margin-bottom: 1.25rem;
+    align-items: flex-start;
+}
+
+.error-details .error-icon {
+    width: 45px;
+    height: 45px;
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.3) 0%, rgba(220, 38, 38, 0.2) 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.35rem;
+    color: #ef4444;
+    flex-shrink: 0;
+}
+
+.error-details h3 {
+    color: #ef4444;
+    margin-bottom: 0.35rem;
+    font-size: 1.05rem;
+}
+
+.error-details p {
+    color: #8b9cbc;
+    line-height: 1.5;
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+.error-code {
+    color: #6b7280;
+    font-size: 0.875rem;
+    font-style: italic;
+}
+
+.help-info-compact {
+    background: rgba(59, 130, 246, 0.1);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    border-radius: 12px;
+    padding: 0.875rem 1rem;
+    text-align: left;
+}
+
+.help-info-compact p {
+    color: #8b9cbc;
+    line-height: 1.5;
+    margin: 0;
+    font-size: 0.875rem;
+}
+
+.help-info-compact strong {
+    color: #60a5fa;
+}
+
+.help-info {
+    background: rgba(59, 130, 246, 0.1);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: left;
+}
+
+.help-info h3 {
+    color: #60a5fa;
+    margin-bottom: 1rem;
+    font-size: 1.15rem;
+}
+
+.help-info ul {
+    list-style: none;
+    padding: 0;
+}
+
+.help-info li {
+    padding: 0.5rem 0;
+    color: #8b9cbc;
+    padding-left: 1.5rem;
+    position: relative;
+}
+
+.help-info li::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    color: #3b82f6;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 1.25rem;
+    justify-content: center;
+}
+
+.btn-primary,
+.btn-secondary {
+    padding: 1rem 2.25rem;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.65rem;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-decoration: none;
+    white-space: nowrap;
+    min-width: 180px;
+    will-change: transform;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    color: white;
+    border: none;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(59, 130, 246, 0.4);
+}
+
+.btn-secondary {
+    background: linear-gradient(135deg, rgba(107, 114, 128, 0.2) 0%, rgba(75, 85, 99, 0.15) 100%);
+    border: 1px solid rgba(107, 114, 128, 0.4);
+    color: #9ca3af;
+}
+
+.btn-secondary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(107, 114, 128, 0.3);
+}
+
+@media (max-width: 768px) {
+    .result-card {
+        padding: 1.5rem;
+    }
+    
+    .result-icon {
+        width: 70px;
+        height: 70px;
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+    }
+    
+    .result-card h1 {
+        font-size: 1.5rem;
+        margin-bottom: 0.35rem;
+    }
+    
+    .result-message {
+        font-size: 0.95rem;
+        margin-bottom: 1.25rem;
+    }
+    
+    .payment-details {
+        padding: 1rem;
+        margin-bottom: 1.25rem;
+    }
+    
+    .detail-row {
+        padding: 0.5rem 0;
+    }
+    
+    .detail-label {
+        font-size: 0.875rem;
+    }
+    
+    .detail-value {
+        font-size: 0.95rem;
+    }
+    
+    .detail-value.amount {
+        font-size: 1.15rem;
+    }
+    
+    .success-info {
+        padding: 1rem;
+        gap: 0.75rem;
+    }
+    
+    .success-info .info-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+    }
+    
+    .success-info h3 {
+        font-size: 1rem;
+        margin-bottom: 0.35rem;
+    }
+    
+    .success-info p {
+        font-size: 0.875rem;
+    }
+    
+    .error-details {
+        padding: 1rem;
+        gap: 0.75rem;
+        margin-bottom: 1.25rem;
+    }
+    
+    .error-details .error-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+    }
+    
+    .action-buttons {
+        flex-direction: row;
+        gap: 1rem;
+    }
+    
+    .btn-primary,
+    .btn-secondary {
+        flex: 1;
+        padding: 0.875rem 1rem;
+        font-size: 0.875rem;
+    }
+}

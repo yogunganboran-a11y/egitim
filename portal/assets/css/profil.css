@@ -1,0 +1,642 @@
+/* Profil Page - Modern Design */
+
+/* Profile Header */
+.profile-header {
+    background: linear-gradient(135deg, rgba(30, 45, 68, 0.95) 0%, rgba(26, 41, 66, 0.9) 100%);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    border-radius: 16px;
+    padding: 2.5rem;
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.profile-avatar-large {
+    width: 120px;
+    height: 120px;
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(139, 92, 246, 0.15) 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 4px solid #3b82f6;
+    box-shadow: 0 8px 24px rgba(59, 130, 246, 0.4);
+    flex-shrink: 0;
+}
+
+.profile-avatar-large i {
+    font-size: 4rem;
+    color: #3b82f6;
+}
+
+.profile-avatar-large img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.profile-info h1 {
+    font-size: 2.25rem;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+}
+
+.profile-subtitle {
+    color: #8b9cbc;
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+}
+
+.profile-badges {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.badge-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.25rem;
+    background: rgba(59, 130, 246, 0.15);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    border-radius: 20px;
+    color: #60a5fa;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+/* Section */
+.section {
+    margin-bottom: 2.5rem;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.section-header h2 {
+    font-size: 1.6rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-weight: 700;
+}
+
+.section-header h2 i {
+    color: #3b82f6;
+}
+
+/* Info Grid */
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;
+}
+
+.info-card {
+    background: linear-gradient(135deg, rgba(30, 45, 68, 0.95) 0%, rgba(26, 41, 66, 0.9) 100%);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    border-radius: 14px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    transition: all 0.3s ease;
+}
+
+.info-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(59, 130, 246, 0.3);
+    border-color: #3b82f6;
+}
+
+.info-icon {
+    width: 55px;
+    height: 55px;
+    background: rgba(59, 130, 246, 0.2);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: #3b82f6;
+    flex-shrink: 0;
+}
+
+.info-content {
+    flex: 1;
+}
+
+.info-label {
+    display: block;
+    font-size: 0.875rem;
+    color: #8b9cbc;
+    margin-bottom: 0.35rem;
+}
+
+.info-value {
+    display: block;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+/* Education List */
+.education-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.education-item {
+    background: linear-gradient(135deg, rgba(30, 45, 68, 0.95) 0%, rgba(26, 41, 66, 0.9) 100%);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    border-radius: 14px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    transition: all 0.3s ease;
+}
+
+.education-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.3);
+    border-color: #3b82f6;
+}
+
+.education-item-icon {
+    width: 60px;
+    height: 60px;
+    background: rgba(59, 130, 246, 0.2);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.75rem;
+    color: #3b82f6;
+    flex-shrink: 0;
+}
+
+.education-item-content {
+    flex: 1;
+}
+
+.education-item-content h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.education-date {
+    color: #8b9cbc;
+    font-size: 0.95rem;
+}
+
+.education-item-status {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.65rem 1.25rem;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    flex-shrink: 0;
+}
+
+.education-item-status.completed {
+    background: rgba(16, 185, 129, 0.2);
+    color: #10b981;
+}
+
+.education-item-status.in-progress {
+    background: rgba(59, 130, 246, 0.2);
+    color: #3b82f6;
+}
+
+/* Certificates Grid */
+.certificates-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+}
+
+.certificate-card {
+    background: linear-gradient(135deg, rgba(30, 45, 68, 0.95) 0%, rgba(26, 41, 66, 0.9) 100%);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    border-radius: 16px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    transition: all 0.3s ease;
+}
+
+.certificate-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(59, 130, 246, 0.3);
+    border-color: #3b82f6;
+}
+
+.certificate-icon {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.3) 0%, rgba(217, 119, 6, 0.2) 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.75rem;
+    color: #f59e0b;
+    flex-shrink: 0;
+}
+
+.certificate-content {
+    flex: 1;
+}
+
+.certificate-content h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+}
+
+.certificate-date {
+    color: #8b9cbc;
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+.certificate-actions {
+    display: flex;
+    gap: 0.65rem;
+    flex-shrink: 0;
+}
+
+.btn-download,
+.btn-view {
+    padding: 0.7rem 1rem;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.btn-download {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+}
+
+.btn-download:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(16, 185, 129, 0.4);
+}
+
+.btn-view {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(37, 99, 235, 0.15) 100%);
+    border: 1px solid rgba(59, 130, 246, 0.4);
+    color: #60a5fa;
+}
+
+.btn-view:hover {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.3) 0%, rgba(37, 99, 235, 0.25) 100%);
+    transform: translateY(-2px);
+}
+
+/* Payment Table */
+.table-responsive {
+    background: linear-gradient(135deg, rgba(30, 45, 68, 0.95) 0%, rgba(26, 41, 66, 0.9) 100%);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    border-radius: 14px;
+    padding: 1.5rem;
+    overflow-x: auto;
+}
+
+.payment-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.payment-table thead tr {
+    border-bottom: 2px solid rgba(59, 130, 246, 0.2);
+}
+
+.payment-table th {
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+    color: #8b9cbc;
+    font-size: 0.95rem;
+}
+
+.payment-table td {
+    padding: 1.25rem 1rem;
+    border-bottom: 1px solid rgba(59, 130, 246, 0.1);
+    font-size: 0.95rem;
+}
+
+.payment-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.payment-table tbody tr:hover {
+    background: rgba(59, 130, 246, 0.05);
+}
+
+.btn-invoice {
+    padding: 0.6rem 1.1rem;
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(37, 99, 235, 0.15) 100%);
+    border: 1px solid rgba(59, 130, 246, 0.4);
+    color: #60a5fa;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.875rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.btn-invoice:hover {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.3) 0%, rgba(37, 99, 235, 0.25) 100%);
+    transform: translateY(-2px);
+}
+
+/* Documents List */
+.documents-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+}
+
+.document-card {
+    background: linear-gradient(135deg, rgba(30, 45, 68, 0.95) 0%, rgba(26, 41, 66, 0.9) 100%);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    border-radius: 14px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    transition: all 0.3s ease;
+}
+
+.document-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.3);
+    border-color: #3b82f6;
+}
+
+.document-icon {
+    width: 55px;
+    height: 55px;
+    background: rgba(239, 68, 68, 0.2);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: #ef4444;
+    flex-shrink: 0;
+}
+
+.document-content {
+    flex: 1;
+}
+
+.document-content h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.document-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    color: #8b9cbc;
+    font-size: 0.85rem;
+}
+
+.document-education {
+    color: #60a5fa;
+    font-weight: 500;
+}
+
+.btn-download-doc {
+    padding: 0.65rem 1.1rem;
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.875rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.btn-download-doc:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(16, 185, 129, 0.4);
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+    .info-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .certificates-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .profile-header {
+        flex-direction: column;
+        text-align: center;
+        padding: 1.5rem;
+    }
+    
+    .profile-avatar-large {
+        width: 90px;
+        height: 90px;
+    }
+    
+    .profile-avatar-large i {
+        font-size: 2.75rem;
+    }
+    
+    .profile-info h1 {
+        font-size: 1.5rem;
+    }
+    
+    .profile-subtitle {
+        font-size: 0.95rem;
+    }
+    
+    .profile-badges {
+        justify-content: center;
+    }
+    
+    .badge-item {
+        font-size: 0.85rem;
+        padding: 0.5rem 1rem;
+    }
+    
+    .section {
+        margin-bottom: 2rem;
+    }
+    
+    .section-header h2 {
+        font-size: 1.15rem;
+    }
+    
+    .info-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
+    }
+    
+    .info-card {
+        padding: 1rem;
+        gap: 0.85rem;
+    }
+    
+    .info-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1.15rem;
+    }
+    
+    .info-label {
+        font-size: 0.8rem;
+    }
+    
+    .info-value {
+        font-size: 0.95rem;
+    }
+    
+    .education-item {
+        padding: 1.15rem;
+        gap: 1rem;
+    }
+    
+    .education-item-icon {
+        width: 48px;
+        height: 48px;
+        font-size: 1.5rem;
+    }
+    
+    .education-item-content h3 {
+        font-size: 1.1rem;
+    }
+    
+    .education-date {
+        font-size: 0.875rem;
+    }
+    
+    .education-item-status {
+        padding: 0.55rem 1rem;
+        font-size: 0.85rem;
+    }
+    
+    .table-responsive {
+        padding: 1rem;
+    }
+    
+    .payment-table {
+        font-size: 0.8rem;
+    }
+    
+    .payment-table th,
+    .payment-table td {
+        padding: 0.7rem 0.4rem;
+    }
+    
+    .btn-invoice {
+        padding: 0.55rem 0.9rem;
+        font-size: 0.8rem;
+    }
+    
+    .certificates-grid {
+        gap: 1rem;
+    }
+    
+    .certificate-card {
+        padding: 1.25rem;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .certificate-icon {
+        width: 55px;
+        height: 55px;
+        font-size: 1.65rem;
+    }
+    
+    .certificate-content {
+        width: 100%;
+    }
+    
+    .certificate-content h3 {
+        font-size: 1.1rem;
+        margin-bottom: 0.4rem;
+    }
+    
+    .certificate-date {
+        font-size: 0.875rem;
+        margin-bottom: 1rem;
+    }
+    
+    .certificate-actions {
+        width: 100%;
+        gap: 0.75rem;
+    }
+    
+    .btn-download,
+    .btn-view {
+        flex: 1;
+        padding: 0.7rem;
+        font-size: 0.85rem;
+    }
+    
+    .documents-list {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .document-card {
+        padding: 1.15rem;
+        gap: 1rem;
+    }
+    
+    .document-icon {
+        width: 48px;
+        height: 48px;
+        font-size: 1.35rem;
+    }
+    
+    .document-content h3 {
+        font-size: 1rem;
+    }
+    
+    .document-info {
+        font-size: 0.8rem;
+    }
+    
+    .btn-download-doc {
+        padding: 0.6rem 0.95rem;
+        font-size: 0.8rem;
+    }
+}

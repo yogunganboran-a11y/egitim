@@ -1,0 +1,305 @@
+/* Registration/Purchase Page */
+
+.page-header {
+    background: linear-gradient(135deg, rgba(30, 45, 68, 0.95) 0%, rgba(26, 41, 66, 0.9) 100%);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.page-header h1 {
+    font-size: 1.75rem;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+}
+
+.education-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.education-card {
+    background: linear-gradient(135deg, rgba(30, 45, 68, 0.95) 0%, rgba(26, 41, 66, 0.9) 100%);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    border-radius: 16px;
+    padding: 2rem;
+    transition: all 0.3s ease;
+}
+
+.education-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(59, 130, 246, 0.2);
+    border-color: rgba(59, 130, 246, 0.4);
+}
+
+.card-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.education-icon {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.3) 0%, rgba(37, 99, 235, 0.2) 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    color: #3b82f6;
+    margin: 0 auto 1rem;
+}
+
+.discount-badge {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    color: white;
+    padding: 0.5rem 1.25rem;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: 700;
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+    z-index: 10;
+}
+
+.card-header h3 {
+    font-size: 1.35rem;
+    margin: 0;
+}
+
+.education-features {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    padding: 1.5rem 0;
+    border-top: 1px solid rgba(59, 130, 246, 0.2);
+    border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.feature {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.feature i {
+    font-size: 1.5rem;
+    color: #3b82f6;
+}
+
+.feature span {
+    color: #8b9cbc;
+    font-size: 0.875rem;
+    text-align: center;
+}
+
+.card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
+
+.btn-buy-wrapper {
+    position: relative;
+}
+
+.discount-badge {
+    position: absolute;
+    top: -12px;
+    right: -6px;
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    color: white;
+    padding: 0.3rem 0.65rem;
+    border-radius: 10px;
+    font-size: 0.65rem;
+    font-weight: 700;
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.5);
+    z-index: 10;
+    white-space: nowrap;
+    text-transform: lowercase;
+}
+
+@media (max-width: 768px) {
+    .discount-badge {
+        top: -10px;
+        right: 20px;
+        padding: 0.25rem 0.45rem;
+        font-size: 0.55rem;
+    }
+}
+
+.price-section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    position: relative;
+}
+
+.discount-badge-mobile {
+    display: none;
+}
+
+.old-price {
+    color: #6b7280;
+    font-size: 0.875rem;
+    text-decoration: line-through;
+}
+
+.old-price {
+    color: #6b7280;
+    font-size: 0.875rem;
+    text-decoration: line-through;
+}
+
+.price {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #10b981;
+}
+
+.btn-buy {
+    padding: 0.875rem 1.75rem;
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    text-decoration: none;
+}
+
+.btn-buy:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(16, 185, 129, 0.4);
+}
+
+.info-box {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(139, 92, 246, 0.1) 100%);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    border-radius: 16px;
+    padding: 2rem;
+    display: flex;
+    gap: 1.5rem;
+}
+
+.info-box .info-icon {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.3) 0%, rgba(37, 99, 235, 0.2) 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.75rem;
+    color: #3b82f6;
+    flex-shrink: 0;
+}
+
+.info-box h3 {
+    font-size: 1.35rem;
+    margin-bottom: 1rem;
+    color: #60a5fa;
+}
+
+.info-box ul {
+    list-style: none;
+    padding: 0;
+}
+
+.info-box li {
+    padding: 0.5rem 0;
+    color: #8b9cbc;
+    padding-left: 1.5rem;
+    position: relative;
+}
+
+.info-box li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: #10b981;
+    font-weight: bold;
+}
+
+.info-box strong {
+    color: #60a5fa;
+}
+
+@media (max-width: 768px) {
+    .page-header h1 {
+        font-size: 1.5rem;
+    }
+    
+    .education-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .education-card {
+        padding: 1.5rem;
+    }
+    
+    .education-icon {
+        width: 70px;
+        height: 70px;
+        font-size: 2rem;
+    }
+    
+    .discount-badge {
+        width: 35px;
+        height: 35px;
+        font-size: 0.7rem;
+    }
+    
+    .card-header h3 {
+        font-size: 1.25rem;
+    }
+    
+    .card-footer {
+        justify-content: space-between;
+    }
+    
+    .price-section {
+        position: relative;
+    }
+    
+    .btn-buy-wrapper .discount-badge {
+        display: none;
+    }
+    
+    .price-section .discount-badge-mobile {
+        display: none;
+    }
+    
+    .price {
+        font-size: 1.5rem;
+    }
+    
+    .btn-buy {
+        padding: 0.75rem 1.5rem;
+        font-size: 0.9rem;
+    }
+    
+    .info-box {
+        flex-direction: column;
+    }
+}

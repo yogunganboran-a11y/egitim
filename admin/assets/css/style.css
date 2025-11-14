@@ -1,0 +1,610 @@
+/* Admin Panel - Ana Stil Dosyası */
+
+/* Genel Ayarlar */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    /* Ana Renkler */
+    --primary-bg: #0f1c2e;
+    --secondary-bg: #1a2942;
+    --card-bg: #1e2d44;
+    --sidebar-bg: #0a1628;
+    --text-primary: #ffffff;
+    --text-secondary: #8b9cbc;
+    --border-color: #2a3f5f;
+    
+    /* Renk Paleti */
+    --blue: #3b82f6;
+    --blue-glow: rgba(59, 130, 246, 0.4);
+    --purple: #8b5cf6;
+    --purple-glow: rgba(139, 92, 246, 0.4);
+    --teal: #14b8a6;
+    --teal-glow: rgba(20, 184, 166, 0.4);
+    --orange: #f97316;
+    --orange-glow: rgba(249, 115, 22, 0.4);
+    --cyan: #06b6d4;
+    --cyan-glow: rgba(6, 182, 212, 0.4);
+    --yellow: #facc15;
+    --yellow-glow: rgba(250, 204, 21, 0.4);
+    --red: #ef4444;
+    --red-glow: rgba(239, 68, 68, 0.4);
+    --green: #10b981;
+    --green-glow: rgba(16, 185, 129, 0.4);
+    
+    /* Efektler */
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --border-radius: 16px;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background: linear-gradient(135deg, #0f1c2e 0%, #1a2942 50%, #0f1c2e 100%);
+    background-attachment: fixed;
+    color: var(--text-primary);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* Layout */
+.admin-wrapper {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 80px;
+    background: linear-gradient(180deg, #0a1628 0%, #0f1c2e 100%);
+    display: flex;
+    flex-direction: column;
+    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.5);
+    position: fixed;
+    height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    z-index: 1000;
+    border-right: 1px solid rgba(59, 130, 246, 0.1);
+    transition: all 0.3s ease;
+}
+
+.sidebar.expanded {
+    width: 280px;
+}
+
+/* Hide text when collapsed */
+.sidebar .logo-text,
+.sidebar .nav-item span,
+.sidebar .logout-btn span,
+.sidebar .badge {
+    opacity: 0;
+    width: 0;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+/* Notification badge should always be visible */
+.sidebar .notification-badge {
+    opacity: 1 !important;
+    width: auto !important;
+    overflow: visible !important;
+}
+
+/* Show text when expanded */
+.sidebar.expanded .logo-text,
+.sidebar.expanded .nav-item span,
+.sidebar.expanded .logout-btn span,
+.sidebar.expanded .badge {
+    opacity: 1;
+    width: auto;
+}
+
+/* Backdrop when sidebar is expanded */
+.sidebar-backdrop {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    backdrop-filter: blur(2px);
+}
+
+.sidebar-backdrop.active {
+    display: block;
+}
+
+.sidebar-header {
+    padding: 1.5rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sidebar.expanded .sidebar-header {
+    justify-content: flex-start;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo-text {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    white-space: nowrap;
+    transition: all 0.3s ease;
+    letter-spacing: 2px;
+}
+
+.sidebar-divider {
+    height: 1px;
+    background-color: var(--border-color);
+    margin: 1.5rem 1rem;
+}
+
+.sidebar-nav {
+    flex: 1;
+    padding: 1rem;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    padding: 0.875rem 1rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+    transition: var(--transition);
+    font-weight: 500;
+    position: relative;
+    justify-content: center;
+}
+
+.sidebar.expanded .nav-item {
+    justify-content: flex-start;
+}
+
+.nav-item i {
+    width: 24px;
+    margin-right: 0;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+}
+
+.sidebar.expanded .nav-item i {
+    margin-right: 1rem;
+}
+
+.nav-item .badge {
+    position: absolute;
+    right: 1rem;
+    background: var(--red);
+    color: white;
+    font-size: 0.7rem;
+    padding: 0.2rem 0.5rem;
+    border-radius: 10px;
+    font-weight: 600;
+}
+
+.nav-item:hover {
+    background: linear-gradient(90deg, rgba(59, 130, 246, 0.15) 0%, rgba(59, 130, 246, 0.05) 100%);
+    color: var(--text-primary);
+    transform: translateX(6px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+}
+
+.nav-item.active {
+    background: linear-gradient(90deg, var(--blue) 0%, rgba(59, 130, 246, 0.8) 100%);
+    color: var(--text-primary);
+    box-shadow: 0 4px 16px var(--blue-glow);
+}
+
+.sidebar-footer {
+    padding: 1rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.logout-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.875rem 1rem;
+    color: #ef4444;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: var(--transition);
+    font-weight: 500;
+}
+
+.sidebar.expanded .logout-btn {
+    justify-content: flex-start;
+}
+
+.logout-btn i {
+    width: 24px;
+    margin-right: 0;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+}
+
+.sidebar.expanded .logout-btn i {
+    margin-right: 1rem;
+}
+
+.logout-btn:hover {
+    background-color: rgba(239, 68, 68, 0.1);
+}
+
+/* Main Content */
+.main-content {
+    flex: 1;
+    margin-left: 80px;
+    padding: 2rem;
+    background: transparent;
+    min-height: 100vh;
+    transition: all 0.3s ease;
+}
+
+.sidebar-toggle {
+    position: fixed;
+    top: 1.5rem;
+    left: 1.5rem;
+    width: 45px;
+    height: 45px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(30, 45, 68, 0.95) 0%, rgba(26, 41, 66, 0.9) 100%);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    color: var(--blue);
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 1001;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sidebar-toggle:hover {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(59, 130, 246, 0.1) 100%);
+    border-color: var(--blue);
+    transform: scale(1.1);
+}
+
+/* Page Header */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.page-title h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.page-subtitle {
+    font-size: 1rem;
+    color: var(--text-secondary);
+}
+
+.page-actions {
+    display: flex;
+    gap: 1rem;
+}
+
+/* Buttons */
+.btn {
+    padding: 0.75rem 1.5rem;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+}
+
+.btn-sm {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--blue) 0%, #2563eb 100%);
+    color: white;
+    box-shadow: 0 4px 12px var(--blue-glow);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px var(--blue-glow);
+}
+
+.btn-primary.active {
+    background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+}
+
+.btn-success {
+    background: linear-gradient(135deg, var(--green) 0%, #059669 100%);
+    color: white;
+    box-shadow: 0 4px 12px var(--green-glow);
+}
+
+.btn-success:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px var(--green-glow);
+}
+
+.btn-danger {
+    background: linear-gradient(135deg, var(--red) 0%, #dc2626 100%);
+    color: white;
+    box-shadow: 0 4px 12px var(--red-glow);
+}
+
+.btn-danger:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px var(--red-glow);
+}
+
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+/* Cards */
+.card {
+    background: linear-gradient(135deg, rgba(30, 45, 68, 0.95) 0%, rgba(26, 41, 66, 0.9) 100%);
+    backdrop-filter: blur(10px);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    box-shadow: var(--shadow);
+    border: 1px solid rgba(59, 130, 246, 0.1);
+    margin-bottom: 1.5rem;
+}
+
+/* Tables */
+.table-container {
+    overflow-x: auto;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table thead {
+    background: rgba(59, 130, 246, 0.1);
+    border-bottom: 2px solid var(--blue);
+}
+
+.table th {
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.table td {
+    padding: 1rem;
+    color: var(--text-secondary);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.table tbody tr {
+    transition: var(--transition);
+}
+
+.table tbody tr:hover {
+    background: rgba(59, 130, 246, 0.05);
+}
+
+/* Form Elements */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    transition: var(--transition);
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--blue);
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 0 0 4px var(--blue-glow);
+}
+
+/* Badges */
+.badge {
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.badge-success {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(16, 185, 129, 0.1) 100%);
+    color: var(--green);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.badge-danger {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.2) 0%, rgba(239, 68, 68, 0.1) 100%);
+    color: var(--red);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.badge-warning {
+    background: linear-gradient(135deg, rgba(250, 204, 21, 0.2) 0%, rgba(250, 204, 21, 0.1) 100%);
+    color: var(--yellow);
+    border: 1px solid rgba(250, 204, 21, 0.3);
+}
+
+.badge-info {
+    background: linear-gradient(135deg, rgba(6, 182, 212, 0.2) 0%, rgba(6, 182, 212, 0.1) 100%);
+    color: var(--cyan);
+    border: 1px solid rgba(6, 182, 212, 0.3);
+}
+
+/* Animations */
+@keyframes pulse {
+    0%, 100% {
+        opacity: 0.3;
+    }
+    50% {
+        opacity: 0.6;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .main-content {
+        margin-left: 0;
+        padding: 1rem;
+        padding-top: 5rem;
+    }
+    
+    .sidebar {
+        transform: translateX(-100%);
+        width: 280px;
+    }
+    
+    .sidebar.expanded {
+        transform: translateX(0);
+    }
+    
+    .sidebar-toggle {
+        top: 1rem;
+        left: auto;
+        right: 1rem;
+    }
+    
+    .page-header {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: flex-start;
+    }
+    
+    .page-actions {
+        width: 100%;
+        flex-wrap: wrap;
+    }
+}
+
+@media (max-width: 576px) {
+    .stats-grid {
+        grid-template-columns: 1fr !important;
+    }
+    
+    .table-container {
+        overflow-x: auto;
+    }
+    
+    .btn {
+        padding: 0.6rem 1rem;
+        font-size: 0.875rem;
+    }
+}
+
+/* Bildirim Badge (Sidebar) - Tüm Sayfalarda Görünür */
+.notification-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 0.35rem;
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    border-radius: 9px;
+    color: white;
+    font-size: 0.65rem;
+    font-weight: 700;
+    animation: badgePulse 2s ease-in-out infinite;
+    position: absolute;
+    right: 5px;
+    top: 5px;
+}
+
+/* Sidebar açıkken badge pozisyonu */
+.sidebar.expanded .notification-badge {
+    position: relative;
+    right: auto;
+    top: auto;
+    margin-left: auto;
+    min-width: 20px;
+    height: 20px;
+    padding: 0 0.4rem;
+    font-size: 0.7rem;
+}
+
+@keyframes badgePulse {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+    }
+    50% {
+        transform: scale(1.1);
+        box-shadow: 0 0 0 5px rgba(239, 68, 68, 0);
+    }
+}

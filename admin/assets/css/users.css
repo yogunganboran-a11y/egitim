@@ -1,0 +1,742 @@
+/* Kullanıcılar Sayfası - Özel Stiller */
+
+/* User Count Badge */
+.user-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.25rem 0.75rem;
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(59, 130, 246, 0.1));
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #3b82f6;
+    margin-left: 0.75rem;
+    vertical-align: middle;
+    position: relative;
+    top: -2px;
+}
+
+/* Firma Dropdown */
+.dropdown-wrapper {
+    position: relative;
+    display: inline-block;
+    z-index: 100;
+}
+
+.firma-dropdown {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    left: 0;
+    background: linear-gradient(135deg, #1e2d44 0%, #1a2942 100%);
+    border: 2px solid rgba(59, 130, 246, 0.5);
+    border-radius: 12px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(59, 130, 246, 0.3);
+    min-width: 250px;
+    z-index: 99999;
+    overflow: visible;
+    backdrop-filter: blur(15px);
+}
+
+.firma-dropdown-item {
+    padding: 1rem 1.5rem;
+    color: #e9edef;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.95rem;
+    white-space: nowrap;
+    background: transparent;
+}
+
+.firma-dropdown-item:first-child {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.firma-dropdown-item:last-child {
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.firma-dropdown-item:hover {
+    background: rgba(59, 130, 246, 0.25);
+    color: #60a5fa;
+}
+
+.firma-dropdown-item i {
+    width: 20px;
+    text-align: center;
+    color: #3b82f6;
+    font-size: 1.1rem;
+}
+
+.firma-dropdown-divider {
+    height: 1px;
+    background: rgba(59, 130, 246, 0.3);
+    margin: 0.5rem 0;
+}
+
+/* Excel Download Button */
+#excelDownloadBtn {
+    padding: 0.875rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    border: 2px solid #10b981;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    transition: all 0.3s ease;
+}
+
+#excelDownloadBtn:hover {
+    background: linear-gradient(135deg, #059669 0%, #047857 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4);
+}
+
+#excelDownloadBtn i {
+    font-size: 1.1rem;
+    margin-right: 0.5rem;
+}
+
+.excel-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 28px;
+    height: 28px;
+    padding: 0 0.5rem;
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 14px;
+    margin-left: 0.5rem;
+    font-weight: 700;
+    font-size: 0.9rem;
+}
+
+.filters-container {
+    background: linear-gradient(135deg, rgba(30, 45, 68, 0.95) 0%, rgba(26, 41, 66, 0.9) 100%);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    padding: 1.5rem;
+    border: 1px solid rgba(59, 130, 246, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    margin-bottom: 1.5rem;
+    position: relative;
+    overflow: visible;
+    z-index: 1;
+}
+
+.search-filter-row {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    align-items: center;
+}
+
+.search-box {
+    flex: 1;
+    position: relative;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 0.75rem 1rem 0.75rem 3rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    border-radius: 10px;
+    color: #ffffff;
+    font-size: 0.95rem;
+}
+
+.search-box i {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #8b9cbc;
+}
+
+.date-filter {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.date-filter .form-control {
+    padding: 0.75rem 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    border-radius: 10px;
+    color: #ffffff;
+    font-size: 0.95rem;
+}
+
+.filter-buttons-row {
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 10;
+}
+
+.btn-group {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.btn-excel-export {
+    padding: 0.5rem 1rem !important;
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(16, 185, 129, 0.1)) !important;
+    border: 1px solid rgba(16, 185, 129, 0.3) !important;
+    color: #10b981 !important;
+    font-size: 0.875rem !important;
+    font-weight: 600 !important;
+    border-radius: 8px !important;
+    transition: all 0.3s ease !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 0.5rem !important;
+}
+
+.btn-excel-export:hover {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.25), rgba(16, 185, 129, 0.15)) !important;
+    border-color: rgba(16, 185, 129, 0.4) !important;
+    transform: translateY(-2px) !important;
+}
+
+.btn-excel-export i {
+    font-size: 1rem;
+}
+
+.excel-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(16, 185, 129, 0.2);
+    padding: 0.25rem 0.5rem;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    min-width: 28px;
+}
+
+.filter-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.filter-buttons .btn-group {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.company-tags {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+}
+
+.company-tag {
+    padding: 0.5rem 1rem;
+    background: rgba(139, 92, 246, 0.1);
+    border: 2px solid;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.company-tag:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.company-tag.active {
+    font-weight: 600;
+}
+
+.company-tag i {
+    font-size: 0.75rem;
+}
+
+/* Firma Renkleri */
+.company-color-1 { border-color: #3b82f6; color: #3b82f6; }
+.company-color-1.active { background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); color: white; }
+.company-color-2 { border-color: #10b981; color: #10b981; }
+.company-color-2.active { background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; }
+.company-color-3 { border-color: #f59e0b; color: #f59e0b; }
+.company-color-3.active { background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); color: white; }
+.company-color-4 { border-color: #8b5cf6; color: #8b5cf6; }
+.company-color-4.active { background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%); color: white; }
+.company-color-5 { border-color: #ef4444; color: #ef4444; }
+.company-color-5.active { background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); color: white; }
+
+/* Kullanıcı satırı firma renkleri */
+.user-row-company-1 { border-left: 3px solid #3b82f6; background: linear-gradient(90deg, rgba(59, 130, 246, 0.1) 0%, transparent 100%); }
+.user-row-company-2 { border-left: 3px solid #10b981; background: linear-gradient(90deg, rgba(16, 185, 129, 0.1) 0%, transparent 100%); }
+.user-row-company-3 { border-left: 3px solid #f59e0b; background: linear-gradient(90deg, rgba(245, 158, 11, 0.1) 0%, transparent 100%); }
+.user-row-company-4 { border-left: 3px solid #8b5cf6; background: linear-gradient(90deg, rgba(139, 92, 246, 0.1) 0%, transparent 100%); }
+.user-row-company-5 { border-left: 3px solid #ef4444; background: linear-gradient(90deg, rgba(239, 68, 68, 0.1) 0%, transparent 100%); }
+
+.users-table {
+    background: linear-gradient(135deg, rgba(30, 45, 68, 0.95) 0%, rgba(26, 41, 66, 0.9) 100%);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    padding: 1.5rem;
+    border: 1px solid rgba(59, 130, 246, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    overflow-x: auto;
+}
+
+/* Pagination */
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.pagination-btn {
+    min-width: 40px;
+    height: 40px;
+    padding: 0.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    border-radius: 8px;
+    color: #8b9cbc;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pagination-btn:hover {
+    background: rgba(59, 130, 246, 0.1);
+    border-color: rgba(59, 130, 246, 0.4);
+    color: #3b82f6;
+}
+
+.pagination-btn.active {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    border-color: #3b82f6;
+    color: white;
+}
+
+.pagination-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.pagination-numbers {
+    display: flex;
+    gap: 0.25rem;
+}
+
+.pagination-info {
+    margin-left: 1rem;
+    color: #8b9cbc;
+    font-size: 0.9rem;
+}
+
+.pagination-info span {
+    color: #3b82f6;
+    font-weight: 600;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table thead {
+    background: rgba(59, 130, 246, 0.1);
+    border-bottom: 2px solid var(--blue);
+}
+
+.table th {
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+    color: var(--text-primary);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+}
+
+.table td {
+    padding: 1rem;
+    color: var(--text-secondary);
+    border-bottom: 1px solid var(--border-color);
+    white-space: nowrap;
+}
+
+.table tbody tr {
+    transition: var(--transition);
+}
+
+.table tbody tr:hover {
+    background: rgba(59, 130, 246, 0.05);
+}
+
+/* PDF İkonu */
+.pdf-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(220, 38, 38, 0.1));
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    border-radius: 8px;
+    color: #ef4444;
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.pdf-link:hover {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.3), rgba(220, 38, 38, 0.2));
+    transform: translateY(-2px);
+}
+
+.pdf-link i {
+    font-size: 1.2rem;
+}
+
+/* Upload Button */
+.upload-btn {
+    padding: 0.5rem 1rem;
+    background: rgba(59, 130, 246, 0.1);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    border-radius: 8px;
+    color: #3b82f6;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.upload-btn:hover {
+    background: rgba(59, 130, 246, 0.2);
+    transform: translateY(-2px);
+}
+
+/* Status Icons */
+.status-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    font-size: 0.9rem;
+}
+
+.status-icon.success {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(16, 185, 129, 0.1));
+    color: #10b981;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.status-icon.error {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(239, 68, 68, 0.1));
+    color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+/* Action Buttons */
+.action-buttons {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.btn-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+    font-size: 0.85rem;
+}
+
+.btn-icon.edit {
+    background: rgba(250, 204, 21, 0.1);
+    color: #facc15;
+    border: 1px solid rgba(250, 204, 21, 0.3);
+}
+
+.btn-icon.edit:hover {
+    background: rgba(250, 204, 21, 0.2);
+    transform: scale(1.1);
+}
+
+.btn-icon.delete {
+    background: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.btn-icon.delete:hover {
+    background: rgba(239, 68, 68, 0.2);
+    transform: scale(1.1);
+}
+
+.btn-icon.remove {
+    background: rgba(139, 92, 246, 0.1);
+    color: #8b5cf6;
+    border: 1px solid rgba(139, 92, 246, 0.3);
+}
+
+.btn-icon.remove:hover {
+    background: rgba(139, 92, 246, 0.2);
+    transform: scale(1.1);
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-content {
+    background: linear-gradient(135deg, #1e2d44 0%, #1a2942 100%);
+    border-radius: 20px;
+    padding: 2rem;
+    max-width: 600px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+.modal-content.large {
+    max-width: 800px;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.modal-header h2 {
+    font-size: 1.5rem;
+    color: #ffffff;
+}
+
+.close-modal {
+    width: 35px;
+    height: 35px;
+    border-radius: 8px;
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    color: #ef4444;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+}
+
+.close-modal:hover {
+    background: rgba(239, 68, 68, 0.2);
+    transform: scale(1.1);
+}
+
+/* Upload Area */
+.upload-area {
+    border: 2px dashed rgba(59, 130, 246, 0.3);
+    border-radius: 12px;
+    padding: 2rem;
+    text-align: center;
+    background: rgba(59, 130, 246, 0.05);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 1rem;
+}
+
+.upload-area:hover {
+    border-color: rgba(59, 130, 246, 0.5);
+    background: rgba(59, 130, 246, 0.1);
+}
+
+.upload-area.dragover {
+    border-color: #3b82f6;
+    background: rgba(59, 130, 246, 0.15);
+}
+
+.upload-area i {
+    font-size: 3rem;
+    color: #3b82f6;
+    margin-bottom: 1rem;
+}
+
+.upload-area p {
+    color: #8b9cbc;
+    margin-bottom: 0.5rem;
+}
+
+.upload-area .file-info {
+    font-size: 0.875rem;
+    color: #8b9cbc;
+}
+
+.upload-tabs {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.upload-tab {
+    padding: 1rem;
+    color: #8b9cbc;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.upload-tab.active {
+    color: #3b82f6;
+    border-bottom-color: #3b82f6;
+}
+
+.upload-progress {
+    display: none;
+    margin-top: 1rem;
+}
+
+.upload-progress.active {
+    display: block;
+}
+
+.progress-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+}
+
+.progress-item i {
+    color: #10b981;
+}
+
+.progress-item .filename {
+    flex: 1;
+    color: #ffffff;
+    font-size: 0.875rem;
+}
+
+.progress-item .status {
+    font-size: 0.875rem;
+    color: #10b981;
+}
+
+/* Download Sample Button */
+.download-sample {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    border-radius: 8px;
+    color: #10b981;
+    text-decoration: none;
+    font-size: 0.875rem;
+    transition: all 0.3s ease;
+    margin-bottom: 1rem;
+}
+
+.download-sample:hover {
+    background: rgba(16, 185, 129, 0.2);
+    transform: translateY(-2px);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .search-filter-row {
+        flex-direction: column;
+    }
+    
+    .date-filter {
+        width: 100%;
+        flex-direction: column;
+    }
+    
+    .date-filter .form-control {
+        width: 100%;
+    }
+    
+    .filter-buttons-row {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .filter-buttons .btn-group {
+        flex-direction: column;
+    }
+    
+    .table-container {
+        overflow-x: auto;
+    }
+    
+    .table th,
+    .table td {
+        font-size: 0.75rem;
+        padding: 0.75rem 0.5rem;
+    }
+    
+    .pagination {
+        flex-wrap: wrap;
+    }
+    
+    .pagination-numbers {
+        order: -1;
+        width: 100%;
+        justify-content: center;
+        margin-bottom: 0.5rem;
+    }
+}
