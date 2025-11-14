@@ -136,15 +136,19 @@ function openAddCourseModal() {
     currentStep = 1;
     courseData = {
         title: '',
+        shortName: '',
         duration: '',
-        thumbnail: null,
+        certificateBusinessDays: '',
+        certificateHours: '',
         price: '',
         oldPrice: '',
         video: null,
-        preventSeek: false,
         questions: []
     };
-    
+
+    // Modal başlığını "Yeni Eğitim Ekle" olarak ayarla
+    document.querySelector('#addCourseModal .modal-header h2').textContent = 'Yeni Eğitim Ekle';
+
     document.getElementById('addCourseModal').classList.add('active');
     updateStepIndicator();
     showStep(1);
@@ -204,31 +208,52 @@ function prevStep() {
 function validateCurrentStep() {
     if (currentStep === 1) {
         const title = document.getElementById('courseTitle').value.trim();
+        const shortName = document.getElementById('courseShortName').value.trim();
         const duration = document.getElementById('courseDuration').value.trim();
+        const certificateBusinessDays = document.getElementById('certificateBusinessDays').value;
+        const certificateHours = document.getElementById('certificateHours').value;
         const price = document.getElementById('coursePrice').value.trim();
-        
+
         if (!title) {
             showNotification('Lütfen eğitim adını girin', 'error');
             return false;
         }
-        
+
+        if (!shortName) {
+            showNotification('Lütfen eğitim adı kısaltması girin', 'error');
+            return false;
+        }
+
         if (!duration) {
             showNotification('Lütfen eğitim süresini girin', 'error');
             return false;
         }
-        
+
+        if (!certificateBusinessDays) {
+            showNotification('Lütfen sertifika çıkış zamanı (iş günü) seçin', 'error');
+            return false;
+        }
+
+        if (!certificateHours) {
+            showNotification('Lütfen sertifika çıkış zamanı (saat) seçin', 'error');
+            return false;
+        }
+
         if (!price) {
             showNotification('Lütfen fiyat girin', 'error');
             return false;
         }
-        
+
         // Verileri kaydet
         courseData.title = title;
+        courseData.shortName = shortName;
         courseData.duration = duration;
+        courseData.certificateBusinessDays = certificateBusinessDays;
+        courseData.certificateHours = certificateHours;
         courseData.price = price;
         courseData.oldPrice = document.getElementById('courseOldPrice').value.trim();
     }
-    
+
     return true;
 }
 
@@ -285,30 +310,34 @@ function addQuestion() {
                     <i class="fas fa-trash"></i> Sil
                 </button>
             </div>
-            
+
             <div class="form-group">
                 <label>Soru Metni</label>
                 <input type="text" class="question-text" placeholder="Sorunuzu yazın..." required>
             </div>
-            
+
             <div class="form-group">
                 <label>Cevap Şıkları (Doğru cevabı işaretleyin)</label>
                 <div class="answers-list" id="answers-${questionIndex}">
                     <div class="answer-item">
                         <input type="radio" name="correct-${questionIndex}" value="0" required>
-                        <input type="text" placeholder="A) Şık" required>
+                        <span class="answer-label">A)</span>
+                        <input type="text" placeholder="Şık metni" required>
                     </div>
                     <div class="answer-item">
                         <input type="radio" name="correct-${questionIndex}" value="1" required>
-                        <input type="text" placeholder="B) Şık" required>
+                        <span class="answer-label">B)</span>
+                        <input type="text" placeholder="Şık metni" required>
                     </div>
                     <div class="answer-item">
                         <input type="radio" name="correct-${questionIndex}" value="2" required>
-                        <input type="text" placeholder="C) Şık" required>
+                        <span class="answer-label">C)</span>
+                        <input type="text" placeholder="Şık metni" required>
                     </div>
                     <div class="answer-item">
                         <input type="radio" name="correct-${questionIndex}" value="3" required>
-                        <input type="text" placeholder="D) Şık" required>
+                        <span class="answer-label">D)</span>
+                        <input type="text" placeholder="Şık metni" required>
                     </div>
                 </div>
                 <button type="button" class="add-answer-btn" onclick="addAnswer(${questionIndex})">
@@ -317,7 +346,7 @@ function addQuestion() {
             </div>
         </div>
     `;
-    
+
     document.getElementById('questionsContainer').insertAdjacentHTML('beforeend', questionHtml);
     courseData.questions.push({ text: '', answers: [], correctAnswer: 0 });
 }
@@ -345,19 +374,20 @@ function addAnswer(questionIndex) {
     const answersList = document.getElementById(`answers-${questionIndex}`);
     const answerCount = answersList.querySelectorAll('.answer-item').length;
     const letters = ['A', 'B', 'C', 'D', 'E', 'F'];
-    
+
     if (answerCount >= 6) {
         showNotification('Maksimum 6 şık ekleyebilirsiniz', 'warning');
         return;
     }
-    
+
     const answerHtml = `
         <div class="answer-item">
             <input type="radio" name="correct-${questionIndex}" value="${answerCount}" required>
-            <input type="text" placeholder="${letters[answerCount]}) Şık" required>
+            <span class="answer-label">${letters[answerCount]})</span>
+            <input type="text" placeholder="Şık metni" required>
         </div>
     `;
-    
+
     answersList.insertAdjacentHTML('beforeend', answerHtml);
 }
 
@@ -411,8 +441,7 @@ function completeCourse() {
     }
     
     courseData.questions = questions;
-    courseData.preventSeek = document.getElementById('preventSeek').checked;
-    
+
     // Backend'e gönder
     saveCourse();
 }
@@ -456,9 +485,9 @@ function editCourse(courseId) {
     document.getElementById('addCourseModal').classList.add('active');
     updateStepIndicator();
     showStep(1);
-    
+
     // Modal başlığını değiştir
-    document.querySelector('#addCourseModal .modal-header h2').textContent = 'Eğitimi Düzenle';
+    document.querySelector('#addCourseModal .modal-header h2').textContent = 'Eğitim Düzenle';
     
     // Backend'den eğitim verilerini al
     // Geçici olarak demo veri

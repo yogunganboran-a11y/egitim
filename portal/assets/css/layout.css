@@ -491,3 +491,122 @@ body {
         padding: 1rem 1.25rem;
     }
 }
+
+/* Bottom Navigation Bar (Mobil) */
+.bottom-nav {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(180deg, #1e2d44 0%, #1a2942 100%);
+    border-top: 1px solid rgba(59, 130, 246, 0.3);
+    padding: 0.75rem 0;
+    z-index: 1040;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.bottom-nav-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.bottom-nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    color: #8b9cbc;
+    font-size: 0.7rem;
+    padding: 0.5rem;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    flex: 1;
+    max-width: 80px;
+}
+
+.bottom-nav-item i {
+    font-size: 1.35rem;
+}
+
+.bottom-nav-item.active {
+    color: #60a5fa;
+    background: rgba(59, 130, 246, 0.15);
+}
+
+.bottom-nav-item:hover {
+    color: #60a5fa;
+}
+
+/* Logout button special styling */
+.bottom-nav-item.logout-item {
+    color: #ef4444;
+}
+
+.bottom-nav-item.logout-item:hover {
+    color: #fca5a5;
+    background: rgba(239, 68, 68, 0.1);
+}
+
+@media (max-width: 992px) {
+    .bottom-nav {
+        display: block;
+    }
+    
+    /* Sidebar gizli mobilde */
+    .sidebar {
+        transform: translateX(-100%);
+    }
+    
+    /* Main content padding bottom bar için */
+    .main-content {
+        padding-bottom: 80px;
+    }
+    
+    /* Top bar'dan hamburger kaldır, bildirim kalsın */
+    .hamburger-btn {
+        display: none !important;
+    }
+    
+    /* Top bar sol tarafına çıkış butonu ekle */
+    .top-bar-left {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+    
+    .mobile-logout-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        background: rgba(239, 68, 68, 0.2);
+        border: 1px solid rgba(239, 68, 68, 0.4);
+        border-radius: 10px;
+        color: #ef4444;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+    }
+    
+    .mobile-logout-btn:hover {
+        background: rgba(239, 68, 68, 0.3);
+        transform: scale(1.05);
+    }
+}
+
+/* Desktop'ta çıkış butonu gizli */
+.mobile-logout-btn {
+    display: none;
+}
+
+@media (max-width: 992px) {
+    .mobile-logout-btn {
+        display: flex;
+    }
+}

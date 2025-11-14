@@ -24,22 +24,28 @@ include 'includes/header.php';
         <span>Toplu</span>
         <span class="tab-badge" style="display: none;">0</span>
     </div>
-    
+
     <div class="support-tab" data-category="havale" onclick="changeCategory('havale', event)">
         <i class="fas fa-money-bill-wave"></i>
         <span>Havale</span>
         <span class="tab-badge" style="display: none;">0</span>
     </div>
-    
+
     <div class="support-tab" data-category="iptal" onclick="changeCategory('iptal', event)">
         <i class="fas fa-times-circle"></i>
         <span>İptal</span>
         <span class="tab-badge" style="display: none;">0</span>
     </div>
-    
+
     <div class="support-tab" data-category="teknik" onclick="changeCategory('teknik', event)">
         <i class="fas fa-tools"></i>
         <span>Teknik</span>
+        <span class="tab-badge" style="display: none;">0</span>
+    </div>
+
+    <div class="support-tab" data-category="iletisim" onclick="changeCategory('iletisim', event)">
+        <i class="fas fa-comment-dots"></i>
+        <span>İletişim Talepleri</span>
         <span class="tab-badge" style="display: none;">0</span>
     </div>
 </div>

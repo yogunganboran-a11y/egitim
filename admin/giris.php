@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Admin Giriş - Eğitim Platformu</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -63,21 +63,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         .login-container {
             width: 100%;
-            max-width: 900px;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
+            max-width: 450px;
+            display: flex;
+            flex-direction: column;
             align-items: center;
+            gap: 2rem;
         }
 
-        .left-side {
+        .logo-container {
             text-align: center;
+            margin-bottom: 1rem;
         }
 
         .logo-placeholder {
             width: 120px;
             height: 120px;
-            margin: 0 auto 2rem;
+            margin: 0 auto;
             background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(139, 92, 246, 0.2));
             border-radius: 20px;
             display: flex;
@@ -88,19 +89,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             box-shadow: 0 8px 32px var(--blue-glow);
         }
 
-        .brand-title {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 0.5rem;
-        }
-
-        .brand-subtitle {
-            font-size: 1.1rem;
-            color: var(--text-secondary);
+        .logo-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 20px;
         }
 
         .login-box {
+            width: 100%;
             background: linear-gradient(135deg, rgba(30, 45, 68, 0.95) 0%, rgba(26, 41, 66, 0.9) 100%);
             backdrop-filter: blur(20px);
             border-radius: 20px;
@@ -219,28 +216,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         @media (max-width: 768px) {
             .login-container {
-                grid-template-columns: 1fr;
-                gap: 2rem;
+                padding: 1rem;
             }
-            
-            .left-side {
-                display: none;
+
+            .login-box {
+                padding: 2rem 1.5rem;
+            }
+
+            .logo-placeholder {
+                width: 100px;
+                height: 100px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 1rem;
+            }
+
+            .login-box {
+                padding: 1.5rem 1rem;
             }
         }
     </style>
 </head>
 <body>
     <div class="login-container">
-        <!-- Left Side -->
-        <div class="left-side">
+        <!-- Logo -->
+        <div class="logo-container">
             <div class="logo-placeholder">
+                <!-- Logo admin panelden yüklenecek -->
                 <i class="fas fa-graduation-cap"></i>
             </div>
-            <h1 class="brand-title">Site Adı</h1>
-            <p class="brand-subtitle">Yönetim Platformu</p>
         </div>
 
-        <!-- Right Side - Login Form -->
+        <!-- Login Form -->
         <div class="login-box">
             <div class="login-header">
                 <h2>Admin Girişi</h2>
@@ -297,5 +307,62 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
         </div>
     </div>
+
+    <script>
+        // Brute Force Koruması
+        const MAX_ATTEMPTS = 5;
+        const LOCKOUT_TIME = 5 * 60 * 1000; // 5 dakika
+
+        function checkLoginAttempts() {
+            const attempts = JSON.parse(localStorage.getItem('loginAttempts') || '{"count": 0, "lockoutUntil": 0}');
+            const now = Date.now();
+
+            if (attempts.lockoutUntil > now) {
+                const remainingTime = Math.ceil((attempts.lockoutUntil - now) / 60000);
+                alert(`Çok fazla hatalı giriş denemesi yaptınız. ${remainingTime} dakika sonra tekrar deneyebilirsiniz.`);
+                return false;
+            }
+
+            if (attempts.lockoutUntil > 0 && attempts.lockoutUntil <= now) {
+                // Reset attempts after lockout period
+                localStorage.setItem('loginAttempts', JSON.stringify({"count": 0, "lockoutUntil": 0}));
+            }
+
+            return true;
+        }
+
+        function recordFailedAttempt() {
+            const attempts = JSON.parse(localStorage.getItem('loginAttempts') || '{"count": 0, "lockoutUntil": 0}');
+            attempts.count++;
+
+            if (attempts.count >= MAX_ATTEMPTS) {
+                attempts.lockoutUntil = Date.now() + LOCKOUT_TIME;
+                alert('Çok fazla hatalı giriş denemesi yaptınız. 5 dakika boyunca giriş yapamazsınız.');
+            }
+
+            localStorage.setItem('loginAttempts', JSON.stringify(attempts));
+        }
+
+        // Form submit kontrolü
+        const loginForm = document.querySelector('form');
+        if (loginForm) {
+            loginForm.addEventListener('submit', function(e) {
+                if (!checkLoginAttempts()) {
+                    e.preventDefault();
+                    return false;
+                }
+            });
+        }
+
+        // Sayfa yüklendiğinde hatalı girişi kontrol et
+        <?php if (isset($error)): ?>
+        recordFailedAttempt();
+        <?php endif; ?>
+
+        // Başarılı giriş durumunda attempts'i sıfırla
+        <?php if (isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in'] === true): ?>
+        localStorage.removeItem('loginAttempts');
+        <?php endif; ?>
+    </script>
 </body>
 </html>

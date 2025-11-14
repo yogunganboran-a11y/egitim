@@ -45,6 +45,9 @@ $users = [
         <p class="page-subtitle">Tüm kullanıcıları ve sertifikaları yönetin</p>
     </div>
     <div class="page-actions">
+        <button class="btn btn-secondary" onclick="openSMSModal()">
+            <i class="fas fa-sms"></i> SMS Gönder
+        </button>
         <button class="btn btn-success" onclick="openAddUserModal()">
             <i class="fas fa-user-plus"></i> Müşteri Ekle
         </button>
@@ -75,7 +78,7 @@ $users = [
                 <i class="fas fa-users"></i> Tümü
             </button>
             <button class="btn btn-secondary btn-sm" onclick="setFilter('no-certificate', event)">
-                <i class="fas fa-certificate"></i> Sertifikasız
+                <i class="fas fa-file-alt"></i> Sertifikasız
             </button>
             <button class="btn btn-secondary btn-sm" onclick="openBulkCertificateModal()">
                 <i class="fas fa-upload"></i> Toplu Sertifika Yükle
@@ -206,6 +209,9 @@ $users = [
                     <td><?php echo $user['document_type']; ?></td>
                     <td>
                         <div class="action-buttons">
+                            <button class="btn-icon info" onclick="openUserDetailModal(<?php echo $user['id']; ?>)" title="Detay">
+                                <i class="fas fa-info-circle"></i>
+                            </button>
                             <button class="btn-icon edit" onclick="editUser(<?php echo $user['id']; ?>)" title="Düzenle">
                                 <i class="fas fa-edit"></i>
                             </button>
@@ -266,41 +272,41 @@ $users = [
         </div>
         
         <div class="form-group">
-            <label class="form-label">Belge Türü</label>
-            <select class="form-control" id="bulkDocumentType" required>
-                <option value="">Seçiniz</option>
+            <label class="form-label">Belge Türü (Birden fazla seçilebilir)</label>
+            <select class="form-control" id="bulkDocumentType" multiple size="3" required style="height: auto;">
                 <option value="Temel Denizcilik">Temel Denizcilik</option>
                 <option value="İleri Navigasyon">İleri Navigasyon</option>
                 <option value="Güvenlik Eğitimi">Güvenlik Eğitimi</option>
             </select>
+            <small style="color: #8b9cbc; margin-top: 0.5rem; display: block;">Ctrl/Cmd tuşu ile birden fazla seçim yapabilirsiniz</small>
         </div>
-        
+
         <div class="upload-tabs">
-            <div class="upload-tab active" onclick="switchUploadTab('tckn', event)">
-                <i class="fas fa-id-card"></i> Dosya Adı TCKN
-            </div>
-            <div class="upload-tab" onclick="switchUploadTab('pdf', event)">
+            <div class="upload-tab active" onclick="switchUploadTab('pdf', event)">
                 <i class="fas fa-file-pdf"></i> PDF İçeriğinden
             </div>
+            <div class="upload-tab" onclick="switchUploadTab('tckn', event)">
+                <i class="fas fa-id-card"></i> Dosya Adı TCKN
+            </div>
         </div>
-        
-        <!-- TCKN Upload -->
-        <div id="tcknUploadArea" class="upload-area" onclick="selectTcknFiles()">
-            <i class="fas fa-cloud-upload-alt"></i>
-            <p>Dosyaları buraya sürükleyip bırakın veya tıklayın</p>
-            <p class="file-info">Dosya adı TCKN olmalı (örnek: 12345678901.pdf)</p>
-            <p class="file-info">Maksimum dosya boyutu: 10MB</p>
-        </div>
-        <input type="file" id="tcknFileInput" multiple accept=".pdf" style="display: none;" onchange="handleTcknFiles(this.files)">
-        
-        <!-- PDF Upload -->
-        <div id="pdfUploadArea" class="upload-area" onclick="selectPdfFiles()" style="display: none;">
+
+        <!-- PDF Upload (Varsayılan) -->
+        <div id="pdfUploadArea" class="upload-area" onclick="selectPdfFiles()">
             <i class="fas fa-cloud-upload-alt"></i>
             <p>Dosyaları buraya sürükleyip bırakın veya tıklayın</p>
             <p class="file-info">PDF içeriğinden TCKN okunacak</p>
             <p class="file-info">Maksimum dosya boyutu: 10MB</p>
         </div>
         <input type="file" id="pdfFileInput" multiple accept=".pdf" style="display: none;" onchange="handlePdfFiles(this.files)">
+
+        <!-- TCKN Upload -->
+        <div id="tcknUploadArea" class="upload-area" onclick="selectTcknFiles()" style="display: none;">
+            <i class="fas fa-cloud-upload-alt"></i>
+            <p>Dosyaları buraya sürükleyip bırakın veya tıklayın</p>
+            <p class="file-info">Dosya adı TCKN olmalı (örnek: 12345678901.pdf)</p>
+            <p class="file-info">Maksimum dosya boyutu: 10MB</p>
+        </div>
+        <input type="file" id="tcknFileInput" multiple accept=".pdf" style="display: none;" onchange="handleTcknFiles(this.files)">
         
         <!-- Upload Progress -->
         <div id="uploadProgress" class="upload-progress"></div>
@@ -317,41 +323,57 @@ $users = [
             </button>
         </div>
         <form onsubmit="saveUser(event)">
-            <div class="form-group">
-                <label class="form-label">Ad</label>
-                <input type="text" class="form-control" id="userName" required>
+            <!-- Ad ve Soyad yan yana -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <div class="form-group">
+                    <label class="form-label">Ad</label>
+                    <input type="text" class="form-control" id="userName" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Soyad</label>
+                    <input type="text" class="form-control" id="userSurname" required>
+                </div>
             </div>
-            
-            <div class="form-group">
-                <label class="form-label">Soyad</label>
-                <input type="text" class="form-control" id="userSurname" required>
+
+            <!-- Doğum Tarihi ve Telefon yan yana -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <div class="form-group">
+                    <label class="form-label">Doğum Tarihi</label>
+                    <input type="text" class="form-control" id="userBirthDate" placeholder="GG.AA.YYYY" maxlength="10" inputmode="numeric" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Telefon</label>
+                    <input type="tel" class="form-control" id="userPhone" placeholder="5XX XXX XX XX" maxlength="13" inputmode="numeric" required>
+                </div>
             </div>
-            
-            <div class="form-group">
-                <label class="form-label">Belge Türü</label>
-                <select class="form-control" id="userDocumentType" required>
-                    <option value="">Seçiniz</option>
-                    <option value="Temel Denizcilik">Temel Denizcilik</option>
-                    <option value="İleri Navigasyon">İleri Navigasyon</option>
-                    <option value="Güvenlik Eğitimi">Güvenlik Eğitimi</option>
-                </select>
+
+            <!-- Belge Türü ve Firma toggle yan yana -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <div class="form-group">
+                    <label class="form-label">Belge Türü</label>
+                    <select class="form-control" id="userDocumentType" required>
+                        <option value="">Seçiniz</option>
+                        <option value="Temel Denizcilik">Temel Denizcilik</option>
+                        <option value="İleri Navigasyon">İleri Navigasyon</option>
+                        <option value="Güvenlik Eğitimi">Güvenlik Eğitimi</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Firma</label>
+                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                        <label class="checkbox-toggle" style="flex-shrink: 0;">
+                            <input type="checkbox" id="isCompanyToggle" onchange="toggleCompanyField()">
+                            <span class="checkbox-slider"></span>
+                        </label>
+                        <span style="font-size: 0.9rem; color: #8b9cbc;">Firma mı?</span>
+                    </div>
+                    <input type="text" class="form-control" id="userCompany" placeholder="Firma adı" style="display: none; margin-top: 0.5rem;">
+                </div>
             </div>
-            
-            <div class="form-group">
-                <label class="form-label">Firma Adı (Opsiyonel)</label>
-                <input type="text" class="form-control" id="userCompany">
-            </div>
-            
-            <div class="form-group">
-                <label class="form-label">Fiyat</label>
-                <input type="number" class="form-control" id="userPrice" required>
-            </div>
-            
-            <div class="form-group">
-                <label class="form-label">Telefon</label>
-                <input type="tel" class="form-control" id="userPhone" required>
-            </div>
-            
+
             <div style="display: flex; gap: 1rem; margin-top: 2rem;">
                 <button type="submit" class="btn btn-primary" style="flex: 1;">
                     <i class="fas fa-save"></i> Kaydet

@@ -106,9 +106,18 @@ playOverlayBtn.addEventListener('click', () => {
     playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
 });
 
-// Video click
+// Video click - always toggle play/pause
 video.addEventListener('click', togglePlay);
-playPauseBtn.addEventListener('click', togglePlay);
+playPauseBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    togglePlay();
+});
+
+videoWrapper.addEventListener('click', (e) => {
+    if (e.target === videoWrapper || e.target === video) {
+        togglePlay();
+    }
+});
 
 function togglePlay() {
     if (video.paused) {
@@ -122,11 +131,11 @@ function togglePlay() {
 }
 
 video.addEventListener('pause', () => {
-    playOverlayBtn.innerHTML = '<i class="fas fa-play"></i>';
-    playOverlay.style.display = 'flex';
+    playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
 });
 
 video.addEventListener('play', () => {
+    playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
     playOverlay.style.display = 'none';
 });
 

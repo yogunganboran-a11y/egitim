@@ -91,7 +91,7 @@ include 'includes/header.php';
             </div>
             
             <div class="education-status-list">
-                <div class="status-item completed">
+                <a href="egitim-video.php?id=1" class="status-item completed" style="text-decoration: none; color: inherit; cursor: pointer;">
                     <div class="status-icon">
                         <i class="fas fa-video"></i>
                     </div>
@@ -100,9 +100,9 @@ include 'includes/header.php';
                         <span class="status-value">İzlendi</span>
                     </div>
                     <i class="fas fa-check-circle status-check"></i>
-                </div>
-                
-                <div class="status-item pending">
+                </a>
+
+                <a href="egitim-test.php?id=1" class="status-item pending" style="text-decoration: none; color: inherit; cursor: pointer;">
                     <div class="status-icon">
                         <i class="fas fa-clipboard-check"></i>
                     </div>
@@ -112,9 +112,9 @@ include 'includes/header.php';
                         <span class="status-info">Testi çözmek için tıklayın</span>
                     </div>
                     <i class="fas fa-times-circle status-check"></i>
-                </div>
-                
-                <div class="status-item waiting">
+                </a>
+
+                <div class="status-item waiting" style="opacity: 0.6; cursor: not-allowed;">
                     <div class="status-icon">
                         <i class="fas fa-file-alt"></i>
                     </div>

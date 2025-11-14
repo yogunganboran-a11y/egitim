@@ -14,7 +14,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title><?php echo $page_title ?? 'Admin Panel'; ?> - Eğitim Platformu</title>
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -28,7 +28,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
                 <div class="logo-container" id="logoContainer">
-                    <span class="logo-text">EĞİTİM</span>
+                    <img src="assets/img/logo.png" alt="Logo" class="sidebar-logo" onerror="this.style.display='none'">
                 </div>
             </div>
 
@@ -60,9 +60,17 @@ $current_page = basename($_SERVER['PHP_SELF']);
                     <i class="fab fa-whatsapp"></i>
                     <span>WhatsApp</span>
                 </a>
+                <a href="meta-mesajlari.php" class="nav-item <?php echo $current_page == 'meta-mesajlari.php' ? 'active' : ''; ?>">
+                    <i class="fab fa-facebook-messenger"></i>
+                    <span>Meta Mesajları</span>
+                </a>
                 <a href="telefon.php" class="nav-item <?php echo $current_page == 'telefon.php' ? 'active' : ''; ?>">
                     <i class="fas fa-phone"></i>
                     <span>Telefon</span>
+                </a>
+                <a href="geri-arama-listesi.php" class="nav-item <?php echo $current_page == 'geri-arama-listesi.php' ? 'active' : ''; ?>">
+                    <i class="fas fa-phone-volume"></i>
+                    <span>Geri Arama Listesi</span>
                 </a>
                 <a href="egitimler.php" class="nav-item <?php echo $current_page == 'egitimler.php' ? 'active' : ''; ?>">
                     <i class="fas fa-graduation-cap"></i>
@@ -84,6 +92,11 @@ $current_page = basename($_SERVER['PHP_SELF']);
 
         <!-- Main Content -->
         <main class="main-content" id="mainContent">
-            <button class="sidebar-toggle" id="sidebarToggle">
-                <i class="fas fa-bars"></i>
-            </button>
+            <div class="header-top">
+                <button class="sidebar-toggle" id="sidebarToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="header-logo" id="headerLogo">
+                    <img src="assets/img/logo.png" alt="Logo" class="header-logo-img" onerror="this.style.display='none'">
+                </div>
+            </div>

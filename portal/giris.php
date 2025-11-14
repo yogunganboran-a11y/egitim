@@ -11,7 +11,7 @@ if (isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] === true) 
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Giriş Yap - Eğitim Portalı</title>
     <link rel="stylesheet" href="assets/css/variables.css">
     <link rel="stylesheet" href="assets/css/login.css">
@@ -23,7 +23,6 @@ if (isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] === true) 
             <!-- Logo -->
             <div class="logo">
                 <img src="assets/img/logo.png" alt="Logo" onerror="this.style.display='none'">
-                <h1>Eğitim Portalı</h1>
             </div>
 
             <!-- Başlık -->
@@ -42,14 +41,16 @@ if (isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] === true) 
                     <label for="tckn">
                         <i class="fas fa-id-card"></i> TCKN
                     </label>
-                    <input 
-                        type="text" 
-                        id="tckn" 
-                        name="tckn" 
+                    <input
+                        type="text"
+                        id="tckn"
+                        name="tckn"
                         placeholder="11 haneli TCKN giriniz"
                         maxlength="11"
                         required
                         autocomplete="off"
+                        inputmode="numeric"
+                        pattern="[0-9]*"
                     >
                     <span class="input-error" id="tcknError"></span>
                 </div>
@@ -95,19 +96,9 @@ if (isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] === true) 
 
             <!-- Alt Bilgi -->
             <div class="login-footer">
-                <div class="demo-info">
-                    <h4><i class="fas fa-info-circle"></i> Demo Giriş Bilgileri</h4>
-                    <p><strong>TCKN:</strong> 12345678901 (Ahmet Yılmaz)</p>
-                    <p><strong>TCKN:</strong> 98765432109 (Ayşe Kaya)</p>
-                </div>
-                <p>
-                    <i class="fas fa-shield-alt"></i>
-                    Güvenli bağlantı ile korunmaktasınız.
-                </p>
-                <p class="support">
-                    <i class="fas fa-headset"></i>
-                    Destek: <a href="tel:08503334455">0850 333 44 55</a>
-                </p>
+                <a href="https://wa.me/905XXXXXXXXX" target="_blank" class="whatsapp-support-btn">
+                    <i class="fab fa-whatsapp"></i> WhatsApp Destek
+                </a>
             </div>
         </div>
     </div>

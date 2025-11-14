@@ -1,9 +1,9 @@
-/* WhatsApp Sayfası - WhatsApp Web Tarzı */
+/* Meta Mesajları Sayfası - Facebook & Instagram Messenger Tarzı */
 
-.whatsapp-container {
+.meta-container {
     display: flex;
     height: 100vh;
-    background: #111b21;
+    background: #0f1419;
     border-radius: 0;
     overflow: hidden;
     box-shadow: none;
@@ -12,8 +12,8 @@
 /* Sol Panel - Sohbet Listesi */
 .chat-sidebar {
     width: 400px;
-    background: #111b21;
-    border-right: 1px solid #2a3942;
+    background: #0f1419;
+    border-right: 1px solid #1e2732;
     display: flex;
     flex-direction: column;
     position: relative;
@@ -22,8 +22,8 @@
 
 .sidebar-header {
     padding: 1rem 1.5rem;
-    background: #202c33;
-    border-bottom: 1px solid #2a3942;
+    background: #1a1d29;
+    border-bottom: 1px solid #1e2732;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -41,25 +41,26 @@
 }
 
 .sidebar-header h2 i {
-    color: #25d366;
+    color: #0084ff;
     font-size: 1.5rem;
 }
 
 #chatCount {
     font-size: 1rem;
-    color: #8696a0;
+    color: #8b9cbc;
     font-weight: 400;
 }
 
-.date-filter {
+.header-filters {
     display: flex;
     align-items: center;
+    gap: 0.5rem;
 }
 
-.date-filter-select {
+.filter-select {
     padding: 0.5rem 1rem;
-    background: #2a3942;
-    border: 1px solid #374248;
+    background: #1e2732;
+    border: 1px solid #2a3442;
     border-radius: 8px;
     color: #e9edef;
     font-size: 0.875rem;
@@ -68,49 +69,27 @@
     transition: all 0.3s ease;
 }
 
-.date-filter-select:hover {
-    background: #374248;
-    border-color: #25d366;
+.filter-select:hover {
+    background: #2a3442;
+    border-color: #0084ff;
 }
 
-.date-filter-select:focus {
-    border-color: #25d366;
-}
-
-.header-actions {
-    display: flex;
-    gap: 1rem;
-}
-
-.header-action-btn {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: transparent;
-    border: none;
-    color: #aebac1;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-}
-
-.header-action-btn:hover {
-    background: rgba(255, 255, 255, 0.05);
+.filter-select:focus {
+    border-color: #0084ff;
 }
 
 /* Arama */
 .chat-search {
     padding: 0.75rem 1rem;
-    background: #111b21;
-    border-bottom: 1px solid #2a3942;
+    background: #0f1419;
+    border-bottom: 1px solid #1e2732;
+    position: relative;
 }
 
 .chat-search input {
     width: 100%;
     padding: 0.75rem 1rem 0.75rem 3rem;
-    background: #202c33;
+    background: #1a1d29;
     border: none;
     border-radius: 8px;
     color: #e9edef;
@@ -118,11 +97,7 @@
 }
 
 .chat-search input::placeholder {
-    color: #667781;
-}
-
-.chat-search {
-    position: relative;
+    color: #5a6979;
 }
 
 .chat-search i {
@@ -130,14 +105,14 @@
     left: 2rem;
     top: 50%;
     transform: translateY(-50%);
-    color: #667781;
+    color: #5a6979;
 }
 
 /* Sohbet Listesi */
 .chat-list {
     flex: 1;
     overflow-y: auto;
-    background: #111b21;
+    background: #0f1419;
 }
 
 .chat-list::-webkit-scrollbar {
@@ -145,18 +120,18 @@
 }
 
 .chat-list::-webkit-scrollbar-track {
-    background: #111b21;
+    background: #0f1419;
 }
 
 .chat-list::-webkit-scrollbar-thumb {
-    background: #374248;
+    background: #2a3442;
     border-radius: 3px;
 }
 
 .chat-item {
     padding: 1rem 1.5rem;
-    background: #111b21;
-    border-bottom: 1px solid #2a3942;
+    background: #0f1419;
+    border-bottom: 1px solid #1e2732;
     cursor: pointer;
     transition: background 0.2s ease;
     display: flex;
@@ -164,15 +139,15 @@
 }
 
 .chat-item:hover {
-    background: #202c33;
+    background: #1a1d29;
 }
 
 .chat-item.active {
-    background: #2a3942;
+    background: #1e2732;
 }
 
 .chat-item.unread {
-    background: #0b1014;
+    background: #0a0d12;
 }
 
 .chat-item.manual-mode {
@@ -184,18 +159,46 @@
     background: rgba(239, 68, 68, 0.1);
 }
 
+/* Avatar with Platform Badge */
+.chat-avatar-wrapper {
+    position: relative;
+    flex-shrink: 0;
+}
+
 .chat-avatar {
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
+    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
     display: flex;
     align-items: center;
     justify-content: center;
     color: white;
     font-size: 1.2rem;
     font-weight: 600;
-    flex-shrink: 0;
+}
+
+.platform-badge {
+    position: absolute;
+    bottom: -2px;
+    right: -2px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #0f1419;
+    font-size: 0.7rem;
+    color: white;
+}
+
+.platform-badge.platform-facebook {
+    background: #0084ff;
+}
+
+.platform-badge.platform-instagram {
+    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
 }
 
 .chat-info {
@@ -218,22 +221,28 @@
 
 .chat-time {
     font-size: 0.75rem;
-    color: #667781;
+    color: #5a6979;
 }
 
 .chat-preview {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    gap: 0.5rem;
+}
+
+.chat-username {
+    color: #8b9cbc;
+    font-size: 0.8rem;
+    margin-right: 0.5rem;
 }
 
 .chat-last-message {
-    color: #667781;
+    color: #5a6979;
     font-size: 0.875rem;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 250px;
+    flex: 1;
 }
 
 .chat-item.unread .chat-last-message {
@@ -242,7 +251,7 @@
 }
 
 .chat-unread-badge {
-    background: #25d366;
+    background: #0084ff;
     color: white;
     border-radius: 12px;
     padding: 0.15rem 0.5rem;
@@ -250,6 +259,7 @@
     font-weight: 700;
     min-width: 20px;
     text-align: center;
+    flex-shrink: 0;
 }
 
 /* Sağ Panel - Sohbet İçeriği */
@@ -257,7 +267,7 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    background: #0b141a;
+    background: #0a0d12;
     position: relative;
 }
 
@@ -268,7 +278,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><rect fill="%23202c33" width="100" height="100" opacity="0.05"/></svg>');
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><rect fill="%231a1d29" width="100" height="100" opacity="0.05"/></svg>');
     opacity: 0.3;
     pointer-events: none;
 }
@@ -280,14 +290,26 @@
     align-items: center;
     justify-content: center;
     height: 100%;
-    color: #667781;
+    color: #5a6979;
     z-index: 1;
 }
 
-.chat-empty i {
-    font-size: 5rem;
-    color: #374248;
+.empty-icon-wrapper {
+    display: flex;
+    gap: 1.5rem;
     margin-bottom: 2rem;
+}
+
+.empty-icon-wrapper i {
+    font-size: 4rem;
+}
+
+.empty-icon-wrapper i:first-child {
+    color: #0084ff;
+}
+
+.empty-icon-wrapper i:last-child {
+    color: #e4405f;
 }
 
 .chat-empty h3 {
@@ -297,14 +319,14 @@
 }
 
 .chat-empty p {
-    color: #667781;
+    color: #5a6979;
 }
 
 /* Aktif Sohbet Başlığı */
 .active-chat-header {
     padding: 1rem 1.5rem;
-    background: #202c33;
-    border-bottom: 1px solid #2a3942;
+    background: #1a1d29;
+    border-bottom: 1px solid #1e2732;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -323,14 +345,20 @@
     margin: 0;
 }
 
+.active-chat-username {
+    color: #8b9cbc;
+    font-size: 0.85rem;
+    margin-top: 0.15rem;
+}
+
 .active-chat-status {
-    color: #667781;
+    color: #5a6979;
     font-size: 0.875rem;
     margin-top: 0.25rem;
 }
 
 .active-chat-status.online {
-    color: #25d366;
+    color: #10b981;
 }
 
 /* Bot Kontrolü */
@@ -339,7 +367,7 @@
     align-items: center;
     gap: 1rem;
     padding: 0.5rem 1rem;
-    background: rgba(37, 211, 102, 0.1);
+    background: rgba(59, 130, 246, 0.1);
     border-radius: 8px;
 }
 
@@ -347,7 +375,7 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    color: #25d366;
+    color: #3b82f6;
     font-size: 0.875rem;
     font-weight: 600;
 }
@@ -355,7 +383,7 @@
 .bot-indicator {
     width: 8px;
     height: 8px;
-    background: #25d366;
+    background: #3b82f6;
     border-radius: 50%;
     animation: pulse 2s ease-in-out infinite;
 }
@@ -367,7 +395,7 @@
 
 .bot-toggle {
     padding: 0.5rem 1rem;
-    background: #25d366;
+    background: #3b82f6;
     border: none;
     border-radius: 8px;
     color: white;
@@ -377,7 +405,7 @@
 }
 
 .bot-toggle.inactive {
-    background: #667781;
+    background: #5a6979;
 }
 
 .bot-toggle:hover {
@@ -404,7 +432,7 @@
 }
 
 .messages-container::-webkit-scrollbar-thumb {
-    background: #374248;
+    background: #2a3442;
     border-radius: 3px;
 }
 
@@ -433,20 +461,20 @@
 .message-bubble {
     max-width: 65%;
     padding: 0.75rem 1rem;
-    border-radius: 8px;
+    border-radius: 18px;
     position: relative;
 }
 
 .message.received .message-bubble {
-    background: #202c33;
+    background: #1a1d29;
     color: #e9edef;
-    border-bottom-left-radius: 2px;
+    border-bottom-left-radius: 4px;
 }
 
 .message.sent .message-bubble {
-    background: #005c4b;
-    color: #e9edef;
-    border-bottom-right-radius: 2px;
+    background: #0084ff;
+    color: white;
+    border-bottom-right-radius: 4px;
 }
 
 .message-text {
@@ -457,7 +485,7 @@
 
 .message-time {
     font-size: 0.7rem;
-    color: #8696a0;
+    color: #8b9cbc;
     margin-top: 0.5rem;
     display: flex;
     align-items: center;
@@ -465,15 +493,19 @@
     justify-content: flex-end;
 }
 
+.message.sent .message-time {
+    color: rgba(255, 255, 255, 0.7);
+}
+
 .message.sent .message-time i {
-    color: #53bdeb;
+    color: rgba(255, 255, 255, 0.8);
 }
 
 /* Mesaj Girişi */
 .message-input-container {
     padding: 1rem 1.5rem;
-    background: #202c33;
-    border-top: 1px solid #2a3942;
+    background: #1a1d29;
+    border-top: 1px solid #1e2732;
     display: flex;
     gap: 1rem;
     align-items: center;
@@ -482,8 +514,8 @@
 
 .message-input-wrapper {
     flex: 1;
-    background: #2a3942;
-    border-radius: 8px;
+    background: #2a3442;
+    border-radius: 20px;
     display: flex;
     align-items: center;
     padding: 0.5rem 1rem;
@@ -499,7 +531,7 @@
 }
 
 .message-input-wrapper input::placeholder {
-    color: #667781;
+    color: #5a6979;
 }
 
 .message-input-wrapper input:focus {
@@ -509,7 +541,7 @@
 .emoji-btn {
     background: transparent;
     border: none;
-    color: #8696a0;
+    color: #8b9cbc;
     cursor: pointer;
     font-size: 1.5rem;
     padding: 0.25rem;
@@ -523,12 +555,11 @@
 .attach-btn {
     background: transparent;
     border: none;
-    color: #8696a0;
+    color: #8b9cbc;
     cursor: pointer;
     font-size: 1.5rem;
     padding: 0.25rem;
     transition: color 0.3s ease;
-    transform: rotate(45deg);
 }
 
 .attach-btn:hover {
@@ -539,7 +570,7 @@
     width: 45px;
     height: 45px;
     border-radius: 50%;
-    background: #25d366;
+    background: #0084ff;
     border: none;
     color: white;
     cursor: pointer;
@@ -551,12 +582,12 @@
 }
 
 .send-btn:hover {
-    background: #20b858;
+    background: #0066cc;
     transform: scale(1.05);
 }
 
 .send-btn:disabled {
-    background: #374248;
+    background: #2a3442;
     cursor: not-allowed;
     transform: scale(1);
 }
@@ -589,21 +620,21 @@
 /* Responsive */
 @media (max-width: 992px) {
     /* Sidebar adjustments for mobile */
-    body.whatsapp-page .sidebar {
+    body.meta-page .sidebar {
         transform: translateX(-100%);
         transition: transform 0.3s ease;
     }
 
-    body.whatsapp-page .sidebar.expanded {
+    body.meta-page .sidebar.expanded {
         transform: translateX(0);
     }
 
-    body.whatsapp-page .main-content {
+    body.meta-page .main-content {
         margin-left: 0;
         width: 100%;
     }
 
-    .whatsapp-container {
+    .meta-container {
         height: 100vh;
         position: relative;
     }
@@ -655,8 +686,13 @@
         font-size: 1.1rem;
     }
 
-    .date-filter-select {
-        font-size: 0.8rem;
+    .header-filters {
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+
+    .filter-select {
+        font-size: 0.75rem;
         padding: 0.4rem 0.75rem;
     }
 
@@ -668,7 +704,13 @@
     .chat-avatar {
         width: 45px;
         height: 45px;
-        font-size: 0.9rem;
+        font-size: 1rem;
+    }
+
+    .platform-badge {
+        width: 18px;
+        height: 18px;
+        font-size: 0.65rem;
     }
 
     .chat-name {

@@ -2,7 +2,7 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title><?php echo isset($page_title) ? setPageTitle($page_title) : SITE_NAME; ?></title>
     
     <!-- CSS -->
@@ -28,20 +28,25 @@
         <!-- Top Bar -->
         <div class="top-bar">
             <div class="top-bar-left">
+                <!-- Çıkış Butonu (Mobil) -->
+                <a href="logout.php" class="mobile-logout-btn" title="Çıkış Yap">
+                    <i class="fas fa-sign-out-alt"></i>
+                </a>
+
                 <!-- Logo -->
                 <div class="header-logo">
                     <img src="assets/img/logo.png" alt="Logo" onerror="this.style.display='none'">
                     <span>Eğitim Portalı</span>
                 </div>
             </div>
-            
+
             <div class="top-bar-right">
                 <!-- Bildirimler -->
                 <div class="notification-icon" id="notificationIcon">
                     <i class="fas fa-bell"></i>
                     <span class="notification-badge">3</span>
                 </div>
-                
+
                 <!-- Hamburger Menu (Mobil) -->
                 <button class="hamburger-btn" id="hamburgerBtn" onclick="toggleSidebar()">
                     <i class="fas fa-bars"></i>
