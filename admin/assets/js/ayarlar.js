@@ -376,8 +376,93 @@ function handleFaviconUpload(event) {
 // Admin düzenle
 function editAdmin(adminId) {
     console.log('Admin düzenleniyor:', adminId);
-    // Modal aç ve form doldur
-    showNotification('Admin düzenleme özelliği hazırlanıyor...', 'info');
+
+    // Demo data - gerçek uygulamada backend'den gelecek
+    const demoAdmins = {
+        1: { name: 'Ahmet Yılmaz', email: 'ahmet@example.com', role: 'admin' },
+        2: { name: 'Mehmet Demir', email: 'mehmet@example.com', role: 'moderator' }
+    };
+
+    const admin = demoAdmins[adminId];
+    if (admin) {
+        // Modal başlığını değiştir
+        document.querySelector('#addAdminModal .modal-header h2').textContent = 'Admin Düzenle';
+
+        // Formu doldur
+        document.getElementById('adminName').value = admin.name;
+        document.getElementById('adminEmail').value = admin.email;
+        document.getElementById('adminPassword').value = '';
+        document.getElementById('adminPassword').placeholder = 'Şifreyi değiştirmek için girin';
+        document.getElementById('adminRole').value = admin.role;
+
+        // Kaydet butonunu güncelle
+        const saveBtn = document.querySelector('#addAdminModal .btn-save');
+        saveBtn.innerHTML = '<i class="fas fa-save"></i> Güncelle';
+        saveBtn.onclick = () => updateAdmin(adminId);
+
+        // Modal'ı aç
+        document.getElementById('addAdminModal').classList.add('active');
+    }
+}
+
+// Admin güncelle
+function updateAdmin(adminId) {
+    const name = document.getElementById('adminName').value.trim();
+    const email = document.getElementById('adminEmail').value.trim();
+    const password = document.getElementById('adminPassword').value.trim();
+    const role = document.getElementById('adminRole').value;
+
+    if (!name || !email) {
+        showNotification('Lütfen tüm alanları doldurun', 'error');
+        return;
+    }
+
+    console.log('Admin güncelleniyor:', { id: adminId, name, email, password, role });
+
+    showNotification('Admin başarıyla güncellendi', 'success');
+    closeModal('addAdminModal');
+
+    // Formu sıfırla
+    document.querySelector('#addAdminModal .modal-header h2').textContent = 'Yeni Admin Ekle';
+    document.getElementById('adminPassword').placeholder = 'En az 6 karakter';
+    const saveBtn = document.querySelector('#addAdminModal .btn-save');
+    saveBtn.innerHTML = '<i class="fas fa-plus"></i> Ekle';
+    saveBtn.onclick = addAdmin;
+
+    setTimeout(() => {
+        location.reload();
+    }, 1000);
+}
+
+// Admin işlem geçmişini göster
+function viewAdminHistory(adminId) {
+    console.log('Admin işlem geçmişi gösteriliyor:', adminId);
+
+    // Demo data
+    const history = [
+        { date: '14.11.2025 10:30', action: 'Giriş yaptı', ip: '192.168.1.100' },
+        { date: '14.11.2025 09:15', action: 'Ayarları güncelledi', ip: '192.168.1.100' },
+        { date: '13.11.2025 14:20', action: 'Yeni kullanıcı ekledi', ip: '192.168.1.100' },
+        { date: '13.11.2025 11:45', action: 'Giriş yaptı', ip: '192.168.1.100' }
+    ];
+
+    let historyHtml = '<div style="padding: 1rem;">';
+    historyHtml += '<h3 style="margin-bottom: 1.5rem; color: #e9edef;">İşlem Geçmişi</h3>';
+    historyHtml += '<table class="admin-table"><thead><tr><th>TARİH</th><th>İŞLEM</th><th>IP ADRESİ</th></tr></thead><tbody>';
+
+    history.forEach(item => {
+        historyHtml += `<tr>
+            <td>${item.date}</td>
+            <td>${item.action}</td>
+            <td><span style="font-family: monospace; color: #3b82f6;">${item.ip}</span></td>
+        </tr>`;
+    });
+
+    historyHtml += '</tbody></table></div>';
+
+    // Geçici modal oluştur veya mevcut modalı kullan
+    showNotification('İşlem geçmişi özelliği hazırlanıyor...', 'info');
+    console.log(historyHtml);
 }
 
 // ============================================

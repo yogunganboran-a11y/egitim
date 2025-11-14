@@ -9,7 +9,7 @@ $admins = [
         'name' => 'Ahmet Yılmaz',
         'email' => 'ahmet@example.com',
         'role' => 'admin',
-        'role_label' => 'Admin',
+        'role_label' => 'Yönetici',
         'status' => 'active',
         'last_login' => '2 saat önce',
         'permissions' => ['dashboard', 'sales', 'customers', 'whatsapp', 'phone', 'courses', 'settings']
@@ -19,7 +19,7 @@ $admins = [
         'name' => 'Mehmet Demir',
         'email' => 'mehmet@example.com',
         'role' => 'moderator',
-        'role_label' => 'Moderatör',
+        'role_label' => 'Personel',
         'status' => 'active',
         'last_login' => '1 gün önce',
         'permissions' => ['dashboard', 'customers', 'whatsapp', 'courses']
@@ -75,8 +75,14 @@ $all_permissions = [
         
         <div class="form-grid">
             <div class="form-group">
-                <label>Site Adı <span class="required">*</span></label>
-                <input type="text" id="siteName" value="Panel Sistemi">
+                <label>Meta Başlık <span class="required">*</span></label>
+                <input type="text" id="siteName" value="Panel Sistemi" maxlength="60">
+                <small>Arama motorlarında gösterilecek başlık (50-60 karakter)</small>
+            </div>
+            <div class="form-group">
+                <label>Meta Açıklama <span class="required">*</span></label>
+                <textarea id="siteDescription" rows="3" maxlength="160">Panel sistemi açıklaması</textarea>
+                <small>Arama motorlarında gösterilecek açıklama (150-160 karakter)</small>
             </div>
             <div class="form-group">
                 <label>Site URL <span class="required">*</span></label>
@@ -88,11 +94,23 @@ $all_permissions = [
             </div>
             <div class="form-group">
                 <label>İletişim Telefon</label>
-                <input type="tel" id="contactPhone" value="+90 532 123 4567">
+                <input type="tel" id="contactPhone" placeholder="5XXXXXXXXX" maxlength="10" pattern="^5[0-9]{9}$">
+                <small>Format: 5XXXXXXXXX (10 rakam, 5 ile başlamalı)</small>
             </div>
             <div class="form-group">
                 <label>WhatsApp Numarası</label>
-                <input type="tel" id="whatsappPhone" value="+90 532 123 4567">
+                <input type="tel" id="whatsappPhone" placeholder="5XXXXXXXXX" maxlength="10" pattern="^5[0-9]{9}$">
+                <small>Format: 5XXXXXXXXX (10 rakam, 5 ile başlamalı)</small>
+            </div>
+            <div class="form-group">
+                <label>Instagram Kullanıcı Adı</label>
+                <input type="text" id="instagramUsername" placeholder="kullaniciadi">
+                <small>@ işareti olmadan sadece kullanıcı adı</small>
+            </div>
+            <div class="form-group">
+                <label>Facebook Kullanıcı Adı</label>
+                <input type="text" id="facebookUsername" placeholder="kullaniciadi">
+                <small>@ işareti olmadan sadece kullanıcı adı</small>
             </div>
         </div>
         
@@ -167,14 +185,13 @@ $all_permissions = [
                     </td>
                     <td><?php echo $admin['last_login']; ?></td>
                     <td>
-                        <button class="btn" onclick="editAdmin(<?php echo $admin['id']; ?>)" style="color: #3b82f6; margin-right: 0.5rem;">
+                        <button class="btn" onclick="editAdmin(<?php echo $admin['id']; ?>)" style="color: #3b82f6; margin-right: 0.5rem;" title="Düzenle">
                             <i class="fas fa-edit"></i>
                         </button>
-                        <label class="toggle-switch">
-                            <input type="checkbox" <?php echo $admin['status'] === 'active' ? 'checked' : ''; ?> onchange="toggleAdminStatus(<?php echo $admin['id']; ?>)">
-                            <span class="toggle-slider"></span>
-                        </label>
-                        <button class="btn" onclick="deleteAdmin(<?php echo $admin['id']; ?>)" style="margin-left: 0.5rem; color: #ef4444;">
+                        <button class="btn" onclick="viewAdminHistory(<?php echo $admin['id']; ?>)" style="color: #8b5cf6; margin-right: 0.5rem;" title="İşlem Geçmişi">
+                            <i class="fas fa-history"></i>
+                        </button>
+                        <button class="btn" onclick="deleteAdmin(<?php echo $admin['id']; ?>)" style="color: #ef4444;" title="Sil">
                             <i class="fas fa-trash"></i>
                         </button>
                     </td>
@@ -186,8 +203,8 @@ $all_permissions = [
         <div class="help-box">
             <h4><i class="fas fa-info-circle"></i> Yetki Seviyeleri</h4>
             <ul>
-                <li><strong>Admin:</strong> Tüm yetkilere sahiptir</li>
-                <li><strong>Moderatör:</strong> Belirlenen sayfalara erişim yetkisine sahiptir</li>
+                <li><strong>Yönetici:</strong> Tüm yetkilere sahiptir</li>
+                <li><strong>Personel:</strong> Belirlenen sayfalara erişim yetkisine sahiptir</li>
             </ul>
         </div>
     </div>
@@ -229,14 +246,10 @@ $all_permissions = [
                         </span>
                     </td>
                     <td>
-                        <button class="btn" onclick="editIP(1, 'whitelist')" style="color: #3b82f6; margin-right: 0.5rem;">
+                        <button class="btn" onclick="editIP(1, 'whitelist')" style="color: #3b82f6; margin-right: 0.5rem;" title="Düzenle">
                             <i class="fas fa-edit"></i>
                         </button>
-                        <label class="toggle-switch">
-                            <input type="checkbox" checked onchange="toggleIPStatus(1, 'whitelist')">
-                            <span class="toggle-slider"></span>
-                        </label>
-                        <button class="btn" onclick="deleteIP(1, 'whitelist')" style="margin-left: 0.5rem; color: #ef4444;">
+                        <button class="btn" onclick="deleteIP(1, 'whitelist')" style="color: #ef4444;" title="Sil">
                             <i class="fas fa-trash"></i>
                         </button>
                     </td>
@@ -251,14 +264,10 @@ $all_permissions = [
                         </span>
                     </td>
                     <td>
-                        <button class="btn" onclick="editIP(2, 'whitelist')" style="color: #3b82f6; margin-right: 0.5rem;">
+                        <button class="btn" onclick="editIP(2, 'whitelist')" style="color: #3b82f6; margin-right: 0.5rem;" title="Düzenle">
                             <i class="fas fa-edit"></i>
                         </button>
-                        <label class="toggle-switch">
-                            <input type="checkbox" checked onchange="toggleIPStatus(2, 'whitelist')">
-                            <span class="toggle-slider"></span>
-                        </label>
-                        <button class="btn" onclick="deleteIP(2, 'whitelist')" style="margin-left: 0.5rem; color: #ef4444;">
+                        <button class="btn" onclick="deleteIP(2, 'whitelist')" style="color: #ef4444;" title="Sil">
                             <i class="fas fa-trash"></i>
                         </button>
                     </td>
@@ -307,14 +316,10 @@ $all_permissions = [
                         </span>
                     </td>
                     <td>
-                        <button class="btn" onclick="editIP(101, 'blocklist')" style="color: #3b82f6; margin-right: 0.5rem;">
+                        <button class="btn" onclick="editIP(101, 'blocklist')" style="color: #3b82f6; margin-right: 0.5rem;" title="Düzenle">
                             <i class="fas fa-edit"></i>
                         </button>
-                        <label class="toggle-switch">
-                            <input type="checkbox" checked onchange="toggleIPStatus(101, 'blocklist')">
-                            <span class="toggle-slider"></span>
-                        </label>
-                        <button class="btn" onclick="deleteIP(101, 'blocklist')" style="margin-left: 0.5rem; color: #ef4444;">
+                        <button class="btn" onclick="deleteIP(101, 'blocklist')" style="color: #ef4444;" title="Sil">
                             <i class="fas fa-trash"></i>
                         </button>
                     </td>
@@ -428,7 +433,7 @@ $all_permissions = [
                 </div>
                 <div class="form-group">
                     <label>KDV Oranı <span class="required">*</span></label>
-                    <input type="number" id="parasutKdv" placeholder="18" value="18">
+                    <input type="number" id="parasutKdv" placeholder="18">
                 </div>
                 <div class="form-group">
                     <label>Kullanıcı Adı <span class="required">*</span></label>
@@ -498,7 +503,7 @@ $all_permissions = [
             
             <div class="sms-template-item">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                    <h4><i class="fas fa-certificate"></i> Sertifika Yükleme Mesajı</h4>
+                    <h4><i class="fas fa-file-alt"></i> Sertifika Yükleme Mesajı</h4>
                     <label class="toggle-switch">
                         <input type="checkbox" id="smsCertificateActive" checked>
                         <span class="toggle-slider"></span>
@@ -538,6 +543,11 @@ $all_permissions = [
                 <div class="form-group">
                     <label>Merchant Salt <span class="required">*</span></label>
                     <input type="password" id="paytrMerchantSalt" placeholder="Merchant Salt">
+                </div>
+                <div class="form-group">
+                    <label>Bildirim URL</label>
+                    <input type="url" id="paytrNotificationUrl" placeholder="https://example.com/paytr-callback" readonly>
+                    <small>PayTR'de bu URL'yi bildirim adresi olarak ayarlayın</small>
                 </div>
             </div>
             <div style="margin-top: 1.5rem; display: flex; gap: 1rem;">
@@ -857,34 +867,6 @@ $all_permissions = [
             </div>
         </div>
     </div>
-    
-    <div class="settings-card">
-        <div class="settings-card-header">
-            <h3><i class="fas fa-tags"></i> Meta Etiketleri</h3>
-        </div>
-        <div class="form-grid full">
-            <div class="form-group">
-                <label>Meta Başlık</label>
-                <input type="text" id="metaTitle" placeholder="Site başlığınızı girin..." maxlength="60">
-                <small>Arama motorlarında gösterilecek başlık (50-60 karakter önerilir)</small>
-            </div>
-            <div class="form-group">
-                <label>Meta Description</label>
-                <textarea id="metaDescription" placeholder="Site açıklamanızı girin..." rows="3" maxlength="160"></textarea>
-                <small>Arama motorlarında gösterilecek açıklama (150-160 karakter önerilir)</small>
-            </div>
-            <div class="form-group">
-                <label>Meta Keywords</label>
-                <textarea id="metaKeywords" placeholder="anahtar, kelimeler, virgülle, ayırın" rows="2"></textarea>
-                <small>Sitenizi tanımlayan anahtar kelimeleri virgülle ayırarak yazın</small>
-            </div>
-        </div>
-        <div style="margin-top: 1.5rem;">
-            <button class="btn-save" onclick="saveSEOSettings()">
-                <i class="fas fa-save"></i> Kaydet
-            </button>
-        </div>
-    </div>
 </div>
 
 <!-- Admin Ekleme Modal -->
@@ -912,8 +894,8 @@ $all_permissions = [
             <div class="form-group" style="margin-bottom: 1.5rem;">
                 <label>Yetki <span class="required">*</span></label>
                 <select id="adminRole" onchange="togglePermissions()">
-                    <option value="admin">Admin</option>
-                    <option value="moderator">Moderatör</option>
+                    <option value="admin">Yönetici</option>
+                    <option value="moderator">Personel</option>
                 </select>
             </div>
             <div id="permissionsSection" style="display: none; margin-bottom: 1.5rem;">
