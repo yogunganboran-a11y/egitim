@@ -28,20 +28,25 @@
         <!-- Top Bar -->
         <div class="top-bar">
             <div class="top-bar-left">
+                <!-- Çıkış Butonu (Mobil) -->
+                <a href="logout.php" class="mobile-logout-btn" title="Çıkış Yap">
+                    <i class="fas fa-sign-out-alt"></i>
+                </a>
+
                 <!-- Logo -->
                 <div class="header-logo">
                     <img src="assets/img/logo.png" alt="Logo" onerror="this.style.display='none'">
                     <span>Eğitim Portalı</span>
                 </div>
             </div>
-            
+
             <div class="top-bar-right">
                 <!-- Bildirimler -->
                 <div class="notification-icon" id="notificationIcon">
                     <i class="fas fa-bell"></i>
                     <span class="notification-badge">3</span>
                 </div>
-                
+
                 <!-- Hamburger Menu (Mobil) -->
                 <button class="hamburger-btn" id="hamburgerBtn" onclick="toggleSidebar()">
                     <i class="fas fa-bars"></i>

@@ -863,3 +863,167 @@ document.querySelectorAll('.modal').forEach(modal => {
         }
     });
 });
+// Doğum tarihi otomatik nokta ekleme
+document.addEventListener('DOMContentLoaded', function() {
+    const birthDateInput = document.getElementById('userBirthDate');
+    if (birthDateInput) {
+        birthDateInput.addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, ''); // Sadece rakamlar
+            if (value.length >= 2) {
+                value = value.substring(0, 2) + '.' + value.substring(2);
+            }
+            if (value.length >= 5) {
+                value = value.substring(0, 5) + '.' + value.substring(5);
+            }
+            e.target.value = value.substring(0, 10); // Max 10 karakter
+        });
+    }
+
+    // Telefon formatı (5XX XXX XX XX)
+    const phoneInput = document.getElementById('userPhone');
+    if (phoneInput) {
+        phoneInput.addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, ''); // Sadece rakamlar
+            
+            // 5 ile başlamalı
+            if (value.length > 0 && value.charAt(0) !== '5') {
+                value = value.substring(1);
+            }
+            
+            // Format: 5XX XXX XX XX
+            if (value.length > 0) {
+                let formatted = value.charAt(0);
+                if (value.length > 1) formatted += value.substring(1, 3);
+                if (value.length > 3) formatted += ' ' + value.substring(3, 6);
+                if (value.length > 6) formatted += ' ' + value.substring(6, 8);
+                if (value.length > 8) formatted += ' ' + value.substring(8, 10);
+                e.target.value = formatted;
+            }
+        });
+    }
+});
+
+// Firma toggle
+function toggleCompanyField() {
+    const toggle = document.getElementById('isCompanyToggle');
+    const companyInput = document.getElementById('userCompany');
+    if (toggle && companyInput) {
+        companyInput.style.display = toggle.checked ? 'block' : 'none';
+        if (!toggle.checked) {
+            companyInput.value = '';
+        }
+    }
+}
+
+// Detay modalını aç
+function openUserDetailModal(userId) {
+    // Backend'den kullanıcı detayını çek (şimdilik demo)
+    const modal = document.createElement('div');
+    modal.className = 'modal active';
+    modal.innerHTML = `
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Kullanıcı Detayları</h2>
+                <button class="close-modal" onclick="this.closest('.modal').remove()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div style="padding: 1.5rem;">
+                <h3 style="margin-bottom: 1rem; color: #3b82f6;">Kullanıcı Bilgileri</h3>
+                <div style="display: grid; gap: 0.75rem; margin-bottom: 1.5rem;">
+                    <p><strong>Ad Soyad:</strong> Ahmet Yılmaz</p>
+                    <p><strong>TCKN:</strong> 12345678901</p>
+                    <p><strong>Doğum Tarihi:</strong> 15.03.1990</p>
+                    <p><strong>Telefon:</strong> 0532 123 4567</p>
+                </div>
+                
+                <h3 style="margin-bottom: 1rem; color: #3b82f6;">Eğitim Bilgileri</h3>
+                <div style="display: flex; flex-direction: column; gap: 1rem;">
+                    <div style="background: rgba(59, 130, 246, 0.1); padding: 1rem; border-radius: 8px;">
+                        <p><strong>Eğitim:</strong> Temel Denizcilik</p>
+                        <p><strong>Kayıt Tarihi:</strong> 12.11.2025</p>
+                        <p><strong>Kayıt Belgesi:</strong> <i class="fas fa-file-pdf" style="color: #ef4444;"></i></p>
+                        <p><strong>Sertifika:</strong> <i class="fas fa-certificate" style="color: #10b981;"></i></p>
+                        <p><strong>Fatura:</strong> <i class="fas fa-file-invoice" style="color: #3b82f6;"></i></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(modal);
+}
+
+// SMS Gönder modalını aç
+function openSMSModal() {
+    const modal = document.createElement('div');
+    modal.className = 'modal active';
+    modal.id = 'smsModal';
+    modal.innerHTML = `
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Toplu SMS Gönder</h2>
+                <button class="close-modal" onclick="this.closest('.modal').remove()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div style="padding: 1.5rem;">
+                <div id="smsStep1" style="display: block;">
+                    <h3 style="margin-bottom: 1rem;">Alıcı Seçimi</h3>
+                    <div class="form-group">
+                        <label><input type="radio" name="receiverType" value="company" checked> Firma</label>
+                        <label style="margin-left: 1rem;"><input type="radio" name="receiverType" value="individual"> Bireysel</label>
+                    </div>
+                    <div id="companySelection" style="margin-top: 1rem;">
+                        <select class="form-control" multiple style="height: 150px;">
+                            <option>XYZ Maritime (5 kişi)</option>
+                            <option>Deniz Yıldızı A.Ş. (3 kişi)</option>
+                            <option>Mavi Dalga Ltd. (4 kişi)</option>
+                            <option>Kıyı Shipping (2 kişi)</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-primary" onclick="showSMSStep2()" style="margin-top: 1rem; width: 100%;">
+                        <i class="fas fa-arrow-right"></i> İlerle
+                    </button>
+                </div>
+                
+                <div id="smsStep2" style="display: none;">
+                    <h3 style="margin-bottom: 1rem;">Mesaj İçeriği</h3>
+                    <div class="form-group">
+                        <label class="form-label">Mesaj (PHP kodları kullanılabilir)</label>
+                        <textarea class="form-control" rows="6" placeholder="Merhaba {Ad} {Soyad}, ...">{Ad} {Soyad}, eğitiminiz için...</textarea>
+                        <small style="color: #8b9cbc; display: block; margin-top: 0.5rem;">
+                            Kullanılabilir değişkenler: {Ad}, {Soyad}, {TCKN}, {Telefon}, {EgitimAdi}
+                        </small>
+                    </div>
+                    <div style="display: flex; gap: 1rem;">
+                        <button class="btn btn-secondary" onclick="showSMSStep1()" style="flex: 1;">
+                            <i class="fas fa-arrow-left"></i> Geri
+                        </button>
+                        <button class="btn btn-success" onclick="sendSMS()" style="flex: 1;">
+                            <i class="fas fa-paper-plane"></i> Gönder
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(modal);
+}
+
+function showSMSStep2() {
+    document.getElementById('smsStep1').style.display = 'none';
+    document.getElementById('smsStep2').style.display = 'block';
+}
+
+function showSMSStep1() {
+    document.getElementById('smsStep1').style.display = 'block';
+    document.getElementById('smsStep2').style.display = 'none';
+}
+
+function sendSMS() {
+    showNotification('SMS gönderiliyor...', 'info');
+    setTimeout(() => {
+        showNotification('SMS başarıyla gönderildi', 'success');
+        document.getElementById('smsModal').remove();
+    }, 1500);
+}

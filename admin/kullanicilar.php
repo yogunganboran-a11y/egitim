@@ -45,6 +45,9 @@ $users = [
         <p class="page-subtitle">Tüm kullanıcıları ve sertifikaları yönetin</p>
     </div>
     <div class="page-actions">
+        <button class="btn btn-secondary" onclick="openSMSModal()">
+            <i class="fas fa-sms"></i> SMS Gönder
+        </button>
         <button class="btn btn-success" onclick="openAddUserModal()">
             <i class="fas fa-user-plus"></i> Müşteri Ekle
         </button>
@@ -206,6 +209,9 @@ $users = [
                     <td><?php echo $user['document_type']; ?></td>
                     <td>
                         <div class="action-buttons">
+                            <button class="btn-icon info" onclick="openUserDetailModal(<?php echo $user['id']; ?>)" title="Detay">
+                                <i class="fas fa-info-circle"></i>
+                            </button>
                             <button class="btn-icon edit" onclick="editUser(<?php echo $user['id']; ?>)" title="Düzenle">
                                 <i class="fas fa-edit"></i>
                             </button>
@@ -317,41 +323,57 @@ $users = [
             </button>
         </div>
         <form onsubmit="saveUser(event)">
-            <div class="form-group">
-                <label class="form-label">Ad</label>
-                <input type="text" class="form-control" id="userName" required>
+            <!-- Ad ve Soyad yan yana -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <div class="form-group">
+                    <label class="form-label">Ad</label>
+                    <input type="text" class="form-control" id="userName" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Soyad</label>
+                    <input type="text" class="form-control" id="userSurname" required>
+                </div>
             </div>
-            
-            <div class="form-group">
-                <label class="form-label">Soyad</label>
-                <input type="text" class="form-control" id="userSurname" required>
+
+            <!-- Doğum Tarihi ve Telefon yan yana -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <div class="form-group">
+                    <label class="form-label">Doğum Tarihi</label>
+                    <input type="text" class="form-control" id="userBirthDate" placeholder="GG.AA.YYYY" maxlength="10" inputmode="numeric" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Telefon</label>
+                    <input type="tel" class="form-control" id="userPhone" placeholder="5XX XXX XX XX" maxlength="13" inputmode="numeric" required>
+                </div>
             </div>
-            
-            <div class="form-group">
-                <label class="form-label">Belge Türü</label>
-                <select class="form-control" id="userDocumentType" required>
-                    <option value="">Seçiniz</option>
-                    <option value="Temel Denizcilik">Temel Denizcilik</option>
-                    <option value="İleri Navigasyon">İleri Navigasyon</option>
-                    <option value="Güvenlik Eğitimi">Güvenlik Eğitimi</option>
-                </select>
+
+            <!-- Belge Türü ve Firma toggle yan yana -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <div class="form-group">
+                    <label class="form-label">Belge Türü</label>
+                    <select class="form-control" id="userDocumentType" required>
+                        <option value="">Seçiniz</option>
+                        <option value="Temel Denizcilik">Temel Denizcilik</option>
+                        <option value="İleri Navigasyon">İleri Navigasyon</option>
+                        <option value="Güvenlik Eğitimi">Güvenlik Eğitimi</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Firma</label>
+                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                        <label class="checkbox-toggle" style="flex-shrink: 0;">
+                            <input type="checkbox" id="isCompanyToggle" onchange="toggleCompanyField()">
+                            <span class="checkbox-slider"></span>
+                        </label>
+                        <span style="font-size: 0.9rem; color: #8b9cbc;">Firma mı?</span>
+                    </div>
+                    <input type="text" class="form-control" id="userCompany" placeholder="Firma adı" style="display: none; margin-top: 0.5rem;">
+                </div>
             </div>
-            
-            <div class="form-group">
-                <label class="form-label">Firma Adı (Opsiyonel)</label>
-                <input type="text" class="form-control" id="userCompany">
-            </div>
-            
-            <div class="form-group">
-                <label class="form-label">Fiyat</label>
-                <input type="number" class="form-control" id="userPrice" required>
-            </div>
-            
-            <div class="form-group">
-                <label class="form-label">Telefon</label>
-                <input type="tel" class="form-control" id="userPhone" required>
-            </div>
-            
+
             <div style="display: flex; gap: 1rem; margin-top: 2rem;">
                 <button type="submit" class="btn btn-primary" style="flex: 1;">
                     <i class="fas fa-save"></i> Kaydet
