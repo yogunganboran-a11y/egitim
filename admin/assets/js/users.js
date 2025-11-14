@@ -543,23 +543,25 @@ function updatePagination() {
     const rows = document.querySelectorAll('.users-table tbody tr');
     const visibleRows = Array.from(rows).filter(row => row.style.display !== 'none');
     const totalItems = visibleRows.length;
-    const totalPages = Math.ceil(totalItems / itemsPerPage);
-    
+    const totalPages = totalItems > 0 ? Math.ceil(totalItems / itemsPerPage) : 0;
+
     // Excel butonundaki sayıyı güncelle
     const excelCount = document.getElementById('excelCount');
     if (excelCount && currentFilter === 'no-certificate') {
         excelCount.textContent = totalItems;
     }
-    
+
     // Toplam sayfa sayısını güncelle
     document.getElementById('totalPages').textContent = totalPages;
-    
+
     // Mevcut sayfa sınırını kontrol et
-    if (currentPage > totalPages) {
-        currentPage = Math.max(1, totalPages);
+    if (totalPages === 0) {
+        currentPage = 0;
+    } else if (currentPage > totalPages) {
+        currentPage = totalPages;
     }
-    
-    document.getElementById('currentPage').textContent = currentPage;
+
+    document.getElementById('currentPage').textContent = totalPages > 0 ? currentPage : 0;
     
     // Satırları sayfalara göre göster/gizle
     const startIndex = (currentPage - 1) * itemsPerPage;
@@ -580,14 +582,12 @@ function updatePagination() {
 // Toplu sertifika yükleme modalı aç
 function openBulkCertificateModal() {
     document.getElementById('bulkCertificateModal').classList.add('active');
-    
-    // Belge türü kontrolü - tek belge varsa otomatik seç
-    const documentTypeSelect = document.getElementById('bulkDocumentType');
-    if (documentTypeSelect.options.length === 2) { // "Seçiniz" + 1 belge
-        documentTypeSelect.selectedIndex = 1;
-    }
-    
-    switchUploadTab('tckn');
+
+    // Checkboxları temizle
+    document.querySelectorAll('.bulk-cert-type').forEach(cb => cb.checked = false);
+
+    // PDF tabını varsayılan olarak aç
+    switchUploadTab('pdf');
 }
 
 // Yükleme sekmesi değiştir
@@ -636,10 +636,11 @@ function handlePdfFiles(files) {
 
 // Sertifikaları yükle
 function uploadCertificates(files, type) {
-    const documentType = document.getElementById('bulkDocumentType').value;
-    
-    if (!documentType) {
-        showNotification('Lütfen belge türü seçin!', 'error');
+    // Seçili belge türlerini al
+    const selectedTypes = Array.from(document.querySelectorAll('.bulk-cert-type:checked')).map(cb => cb.value);
+
+    if (selectedTypes.length === 0) {
+        showNotification('Lütfen en az bir belge türü seçin!', 'error');
         return;
     }
     
@@ -683,21 +684,38 @@ function openAddUserModal() {
 // Müşteri kaydet
 function saveUser(e) {
     e.preventDefault();
-    
+
+    const tckn = document.getElementById('userTCKN').value;
+    const birthDate = document.getElementById('userBirthDate').value;
+    const phone = document.getElementById('userPhone').value;
+
+    // TCKN kontrolü (11 hane)
+    if (tckn.length !== 11 || !/^\d{11}$/.test(tckn)) {
+        showNotification('TC Kimlik Numarası 11 haneli olmalıdır!', 'error');
+        return;
+    }
+
     const formData = {
         name: document.getElementById('userName').value,
         surname: document.getElementById('userSurname').value,
+        tckn: tckn,
+        birthDate: birthDate,
         documentType: document.getElementById('userDocumentType').value,
-        company: document.getElementById('userCompany').value,
-        price: document.getElementById('userPrice').value,
-        phone: document.getElementById('userPhone').value
+        company: document.getElementById('userCompany').value || null,
+        phone: phone
     };
-    
+
     // Gerçek uygulamada AJAX ile kaydedilecek
     console.log('Yeni müşteri:', formData);
-    
+
     showNotification('Müşteri başarıyla eklendi', 'success');
     closeModal('userFormModal');
+
+    // Formu temizle
+    document.querySelector('#userFormModal form').reset();
+    document.getElementById('companyNameGroup').style.display = 'none';
+    document.getElementById('isCompanyToggle').checked = false;
+
     loadUsers();
 }
 
@@ -777,12 +795,29 @@ function removeCertificate(userId) {
 // Kullanıcı düzenle
 function editUser(userId) {
     // Gerçek uygulamada kullanıcı bilgileri AJAX ile yüklenecek
-    document.getElementById('userName').value = 'Ahmet';
-    document.getElementById('userSurname').value = 'Yılmaz';
-    document.getElementById('userPhone').value = '0532 123 4567';
-    document.getElementById('userDocumentType').value = 'Temel Denizcilik';
-    document.getElementById('userPrice').value = '1500';
-    
+    // Demo data
+    const userName = document.getElementById('userName');
+    const userSurname = document.getElementById('userSurname');
+    const userBirthDate = document.getElementById('userBirthDate');
+    const userPhone = document.getElementById('userPhone');
+    const userTCKN = document.getElementById('userTCKN');
+    const userDocumentType = document.getElementById('userDocumentType');
+    const userCompany = document.getElementById('userCompany');
+    const isCompanyToggle = document.getElementById('isCompanyToggle');
+    const companyNameGroup = document.getElementById('companyNameGroup');
+
+    if (userName) userName.value = 'Ahmet';
+    if (userSurname) userSurname.value = 'Yılmaz';
+    if (userBirthDate) userBirthDate.value = '15.03.1990';
+    if (userPhone) userPhone.value = '532 123 45 67';
+    if (userTCKN) userTCKN.value = '12345678901';
+    if (userDocumentType) userDocumentType.value = 'Temel Denizcilik';
+
+    // Firma bilgisi yoksa
+    if (userCompany) userCompany.value = '';
+    if (isCompanyToggle) isCompanyToggle.checked = false;
+    if (companyNameGroup) companyNameGroup.style.display = 'none';
+
     document.getElementById('userFormModal').classList.add('active');
 }
 
@@ -831,20 +866,25 @@ function changePage(page) {
 // Pagination butonlarını güncelle
 function updatePaginationButtons() {
     const totalPages = parseInt(document.getElementById('totalPages').textContent);
-    
+
     // Önceki/Sonraki butonlarını devre dışı bırak
-    document.getElementById('firstPage').disabled = currentPage === 1;
-    document.getElementById('prevPage').disabled = currentPage === 1;
-    document.getElementById('nextPage').disabled = currentPage === totalPages;
-    document.getElementById('lastPage').disabled = currentPage === totalPages;
-    
+    // Eğer sayfa yok ise (totalPages === 0) tüm butonları devre dışı bırak
+    const noPages = totalPages === 0;
+    document.getElementById('firstPage').disabled = noPages || currentPage === 1;
+    document.getElementById('prevPage').disabled = noPages || currentPage === 1;
+    document.getElementById('nextPage').disabled = noPages || currentPage === totalPages;
+    document.getElementById('lastPage').disabled = noPages || currentPage === totalPages;
+
     // Sayfa numaralarını oluştur
     const paginationNumbers = document.getElementById('paginationNumbers');
     paginationNumbers.innerHTML = '';
-    
+
+    // Eğer sayfa yoksa numara gösterme
+    if (totalPages === 0) return;
+
     let startPage = Math.max(1, currentPage - 2);
     let endPage = Math.min(totalPages, currentPage + 2);
-    
+
     for (let i = startPage; i <= endPage; i++) {
         const btn = document.createElement('button');
         btn.className = 'pagination-btn';
@@ -906,46 +946,94 @@ document.addEventListener('DOMContentLoaded', function() {
 // Firma toggle
 function toggleCompanyField() {
     const toggle = document.getElementById('isCompanyToggle');
-    const companyInput = document.getElementById('userCompany');
-    if (toggle && companyInput) {
-        companyInput.style.display = toggle.checked ? 'block' : 'none';
+    const companyGroup = document.getElementById('companyNameGroup');
+    if (toggle && companyGroup) {
+        companyGroup.style.display = toggle.checked ? 'block' : 'none';
         if (!toggle.checked) {
-            companyInput.value = '';
+            document.getElementById('userCompany').value = '';
         }
     }
 }
 
 // Detay modalını aç
 function openUserDetailModal(userId) {
-    // Backend'den kullanıcı detayını çek (şimdilik demo)
+    // Backend'den kullanıcı detayını çek (şimdilik demo data)
+    const educations = [
+        { name: 'Temel Denizcilik', date: '12.11.2025', hasRegistration: true, hasCertificate: true, hasInvoice: true },
+        { name: 'İleri Navigasyon', date: '05.01.2025', hasRegistration: true, hasCertificate: false, hasInvoice: true },
+        { name: 'Güvenlik Eğitimi', date: '20.03.2025', hasRegistration: true, hasCertificate: true, hasInvoice: false }
+    ];
+
     const modal = document.createElement('div');
     modal.className = 'modal active';
     modal.innerHTML = `
-        <div class="modal-content">
+        <div class="modal-content" style="max-width: 700px;">
             <div class="modal-header">
-                <h2>Kullanıcı Detayları</h2>
+                <h2><i class="fas fa-user-circle" style="color: var(--blue); margin-right: 0.5rem;"></i>Kullanıcı Detayları</h2>
                 <button class="close-modal" onclick="this.closest('.modal').remove()">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
             <div style="padding: 1.5rem;">
-                <h3 style="margin-bottom: 1rem; color: #3b82f6;">Kullanıcı Bilgileri</h3>
-                <div style="display: grid; gap: 0.75rem; margin-bottom: 1.5rem;">
-                    <p><strong>Ad Soyad:</strong> Ahmet Yılmaz</p>
-                    <p><strong>TCKN:</strong> 12345678901</p>
-                    <p><strong>Doğum Tarihi:</strong> 15.03.1990</p>
-                    <p><strong>Telefon:</strong> 0532 123 4567</p>
-                </div>
-                
-                <h3 style="margin-bottom: 1rem; color: #3b82f6;">Eğitim Bilgileri</h3>
-                <div style="display: flex; flex-direction: column; gap: 1rem;">
-                    <div style="background: rgba(59, 130, 246, 0.1); padding: 1rem; border-radius: 8px;">
-                        <p><strong>Eğitim:</strong> Temel Denizcilik</p>
-                        <p><strong>Kayıt Tarihi:</strong> 12.11.2025</p>
-                        <p><strong>Kayıt Belgesi:</strong> <i class="fas fa-file-pdf" style="color: #ef4444;"></i></p>
-                        <p><strong>Sertifika:</strong> <i class="fas fa-certificate" style="color: #10b981;"></i></p>
-                        <p><strong>Fatura:</strong> <i class="fas fa-file-invoice" style="color: #3b82f6;"></i></p>
+                <!-- Kullanıcı Bilgileri Card -->
+                <div style="background: linear-gradient(135deg, rgba(30, 45, 68, 0.5) 0%, rgba(26, 41, 66, 0.4) 100%); border: 1px solid rgba(59, 130, 246, 0.2); border-radius: 12px; padding: 1.25rem; margin-bottom: 1.5rem;">
+                    <h3 style="margin-bottom: 1rem; color: var(--blue); font-size: 1.1rem; display: flex; align-items: center; gap: 0.5rem;">
+                        <i class="fas fa-info-circle"></i>
+                        Kullanıcı Bilgileri
+                    </h3>
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.875rem; font-size: 0.95rem;">
+                        <div>
+                            <span style="color: var(--text-secondary); display: block; margin-bottom: 0.25rem; font-size: 0.85rem;">Ad Soyad</span>
+                            <strong style="color: var(--text-primary);">Ahmet Yılmaz</strong>
+                        </div>
+                        <div>
+                            <span style="color: var(--text-secondary); display: block; margin-bottom: 0.25rem; font-size: 0.85rem;">TCKN</span>
+                            <strong style="color: var(--text-primary);">12345678901</strong>
+                        </div>
+                        <div>
+                            <span style="color: var(--text-secondary); display: block; margin-bottom: 0.25rem; font-size: 0.85rem;">Doğum Tarihi</span>
+                            <strong style="color: var(--text-primary);">15.03.1990</strong>
+                        </div>
+                        <div>
+                            <span style="color: var(--text-secondary); display: block; margin-bottom: 0.25rem; font-size: 0.85rem;">Telefon</span>
+                            <strong style="color: var(--text-primary);">0532 123 4567</strong>
+                        </div>
                     </div>
+                </div>
+
+                <!-- Eğitim Bilgileri -->
+                <h3 style="margin-bottom: 1rem; color: var(--blue); font-size: 1.1rem; display: flex; align-items: center; gap: 0.5rem;">
+                    <i class="fas fa-graduation-cap"></i>
+                    Eğitim Bilgileri
+                </h3>
+
+                <!-- Scrollable Education Cards -->
+                <div style="max-height: 400px; overflow-y: auto; padding-right: 0.5rem;">
+                    ${educations.map(edu => `
+                        <div style="background: linear-gradient(135deg, rgba(30, 45, 68, 0.5) 0%, rgba(26, 41, 66, 0.4) 100%); border: 1px solid rgba(59, 130, 246, 0.2); border-radius: 12px; padding: 1.25rem; margin-bottom: 1rem;">
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
+                                <div>
+                                    <h4 style="color: var(--text-primary); font-size: 1rem; margin-bottom: 0.5rem;">${edu.name}</h4>
+                                    <p style="color: var(--text-secondary); font-size: 0.875rem; display: flex; align-items: center; gap: 0.5rem;">
+                                        <i class="far fa-calendar-alt"></i>
+                                        ${edu.date}
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                                <button class="btn btn-sm" style="padding: 0.4rem 0.875rem; font-size: 0.85rem; background: ${edu.hasRegistration ? 'linear-gradient(135deg, rgba(239, 68, 68, 0.2) 0%, rgba(220, 38, 38, 0.1) 100%)' : 'rgba(100, 100, 100, 0.2)'}; border-color: ${edu.hasRegistration ? 'rgba(239, 68, 68, 0.3)' : 'rgba(139, 156, 188, 0.2)'}; color: ${edu.hasRegistration ? '#ef4444' : 'var(--text-muted)'};" ${!edu.hasRegistration ? 'disabled' : ''}>
+                                    <i class="fas fa-file-pdf"></i> Kayıt
+                                </button>
+                                <button class="btn btn-sm" style="padding: 0.4rem 0.875rem; font-size: 0.85rem; background: ${edu.hasCertificate ? 'linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(5, 150, 105, 0.1) 100%)' : 'rgba(100, 100, 100, 0.2)'}; border-color: ${edu.hasCertificate ? 'rgba(16, 185, 129, 0.3)' : 'rgba(139, 156, 188, 0.2)'}; color: ${edu.hasCertificate ? '#10b981' : 'var(--text-muted)'};" ${!edu.hasCertificate ? 'disabled' : ''}>
+                                    <i class="fas fa-certificate"></i> Sertifika
+                                </button>
+                                <button class="btn btn-sm" style="padding: 0.4rem 0.875rem; font-size: 0.85rem; background: ${edu.hasInvoice ? 'linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(37, 99, 235, 0.1) 100%)' : 'rgba(100, 100, 100, 0.2)'}; border-color: ${edu.hasInvoice ? 'rgba(59, 130, 246, 0.3)' : 'rgba(139, 156, 188, 0.2)'}; color: ${edu.hasInvoice ? 'var(--blue)' : 'var(--text-muted)'};" ${!edu.hasInvoice ? 'disabled' : ''}>
+                                    <i class="fas fa-file-invoice"></i> Fatura
+                                </button>
+                            </div>
+                        </div>
+                    `).join('')}
                 </div>
             </div>
         </div>
@@ -961,41 +1049,83 @@ function openSMSModal() {
     modal.innerHTML = `
         <div class="modal-content">
             <div class="modal-header">
-                <h2>Toplu SMS Gönder</h2>
+                <h2><i class="fas fa-sms" style="color: var(--blue); margin-right: 0.5rem;"></i>Toplu SMS Gönder</h2>
                 <button class="close-modal" onclick="this.closest('.modal').remove()">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
             <div style="padding: 1.5rem;">
                 <div id="smsStep1" style="display: block;">
-                    <h3 style="margin-bottom: 1rem;">Alıcı Seçimi</h3>
-                    <div class="form-group">
-                        <label><input type="radio" name="receiverType" value="company" checked> Firma</label>
-                        <label style="margin-left: 1rem;"><input type="radio" name="receiverType" value="individual"> Bireysel</label>
+                    <h3 style="margin-bottom: 1rem; color: var(--blue);">Alıcı Seçimi</h3>
+
+                    <!-- Tip Seçimi -->
+                    <div class="form-group" style="background: linear-gradient(135deg, rgba(30, 45, 68, 0.5) 0%, rgba(26, 41, 66, 0.4) 100%); border: 1px solid rgba(59, 130, 246, 0.2); border-radius: 12px; padding: 1rem; margin-bottom: 1.5rem;">
+                        <label style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; cursor: pointer; color: var(--text-primary);">
+                            <input type="radio" name="receiverType" value="company" checked onchange="toggleSMSReceiverType()" style="width: 18px; height: 18px; cursor: pointer;">
+                            <span style="font-size: 0.95rem; font-weight: 500;"><i class="fas fa-building" style="margin-right: 0.5rem; color: var(--blue);"></i>Firma</span>
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 0.75rem; cursor: pointer; color: var(--text-primary);">
+                            <input type="radio" name="receiverType" value="individual" onchange="toggleSMSReceiverType()" style="width: 18px; height: 18px; cursor: pointer;">
+                            <span style="font-size: 0.95rem; font-weight: 500;"><i class="fas fa-user" style="margin-right: 0.5rem; color: var(--blue);"></i>Bireysel</span>
+                        </label>
                     </div>
-                    <div id="companySelection" style="margin-top: 1rem;">
-                        <select class="form-control" multiple style="height: 150px;">
-                            <option>XYZ Maritime (5 kişi)</option>
-                            <option>Deniz Yıldızı A.Ş. (3 kişi)</option>
-                            <option>Mavi Dalga Ltd. (4 kişi)</option>
-                            <option>Kıyı Shipping (2 kişi)</option>
-                        </select>
+
+                    <!-- Firma Seçimi -->
+                    <div id="companySelection">
+                        <label class="form-label">Firma Seçin</label>
+                        <div style="background: linear-gradient(135deg, rgba(30, 45, 68, 0.5) 0%, rgba(26, 41, 66, 0.4) 100%); border: 1px solid rgba(59, 130, 246, 0.2); border-radius: 12px; padding: 1rem; max-height: 250px; overflow-y: auto;">
+                            <label class="checkbox-item" style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; cursor: pointer;">
+                                <input type="checkbox" class="sms-company" value="XYZ Maritime" style="width: 18px; height: 18px; cursor: pointer;">
+                                <span style="color: var(--text-primary); font-size: 0.95rem;">XYZ Maritime <span style="color: var(--text-secondary);">(5 kişi)</span></span>
+                            </label>
+                            <label class="checkbox-item" style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; cursor: pointer;">
+                                <input type="checkbox" class="sms-company" value="Deniz Yıldızı A.Ş." style="width: 18px; height: 18px; cursor: pointer;">
+                                <span style="color: var(--text-primary); font-size: 0.95rem;">Deniz Yıldızı A.Ş. <span style="color: var(--text-secondary);">(3 kişi)</span></span>
+                            </label>
+                            <label class="checkbox-item" style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; cursor: pointer;">
+                                <input type="checkbox" class="sms-company" value="Mavi Dalga Ltd." style="width: 18px; height: 18px; cursor: pointer;">
+                                <span style="color: var(--text-primary); font-size: 0.95rem;">Mavi Dalga Ltd. <span style="color: var(--text-secondary);">(4 kişi)</span></span>
+                            </label>
+                            <label class="checkbox-item" style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0; cursor: pointer;">
+                                <input type="checkbox" class="sms-company" value="Kıyı Shipping" style="width: 18px; height: 18px; cursor: pointer;">
+                                <span style="color: var(--text-primary); font-size: 0.95rem;">Kıyı Shipping <span style="color: var(--text-secondary);">(2 kişi)</span></span>
+                            </label>
+                        </div>
                     </div>
-                    <button class="btn btn-primary" onclick="showSMSStep2()" style="margin-top: 1rem; width: 100%;">
+
+                    <!-- Bireysel Filtre -->
+                    <div id="individualSelection" style="display: none;">
+                        <label class="form-label">Bireysel Müşteri Filtresi</label>
+                        <div style="background: linear-gradient(135deg, rgba(30, 45, 68, 0.5) 0%, rgba(26, 41, 66, 0.4) 100%); border: 1px solid rgba(59, 130, 246, 0.2); border-radius: 12px; padding: 1rem;">
+                            <label class="checkbox-item" style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; cursor: pointer;">
+                                <input type="checkbox" id="smsIndividualWithCert" checked style="width: 18px; height: 18px; cursor: pointer;">
+                                <span style="color: var(--text-primary); font-size: 0.95rem;">Sertifikalı Müşteriler</span>
+                            </label>
+                            <label class="checkbox-item" style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0; cursor: pointer;">
+                                <input type="checkbox" id="smsIndividualWithoutCert" style="width: 18px; height: 18px; cursor: pointer;">
+                                <span style="color: var(--text-primary); font-size: 0.95rem;">Sertifikasız Müşteriler</span>
+                            </label>
+                        </div>
+                        <small style="color: var(--text-secondary); display: block; margin-top: 0.5rem;">
+                            Görünen ${document.querySelectorAll('.users-table tbody tr:not([style*="display: none"])').length} kişiye SMS gönderilecektir.
+                        </small>
+                    </div>
+
+                    <button class="btn btn-primary" onclick="showSMSStep2()" style="margin-top: 1.5rem; width: 100%;">
                         <i class="fas fa-arrow-right"></i> İlerle
                     </button>
                 </div>
-                
+
                 <div id="smsStep2" style="display: none;">
-                    <h3 style="margin-bottom: 1rem;">Mesaj İçeriği</h3>
+                    <h3 style="margin-bottom: 1rem; color: var(--blue);">Mesaj İçeriği</h3>
                     <div class="form-group">
-                        <label class="form-label">Mesaj (PHP kodları kullanılabilir)</label>
-                        <textarea class="form-control" rows="6" placeholder="Merhaba {Ad} {Soyad}, ...">{Ad} {Soyad}, eğitiminiz için...</textarea>
-                        <small style="color: #8b9cbc; display: block; margin-top: 0.5rem;">
-                            Kullanılabilir değişkenler: {Ad}, {Soyad}, {TCKN}, {Telefon}, {EgitimAdi}
+                        <label class="form-label">Mesaj Metni</label>
+                        <textarea class="form-control" id="smsMessage" rows="6" placeholder="Merhaba {Ad} {Soyad}, ...">{Ad} {Soyad}, eğitiminiz için...</textarea>
+                        <small style="color: var(--text-secondary); display: block; margin-top: 0.5rem;">
+                            <i class="fas fa-info-circle"></i> Kullanılabilir değişkenler: {Ad}, {Soyad}, {TCKN}, {Telefon}, {EgitimAdi}
                         </small>
                     </div>
-                    <div style="display: flex; gap: 1rem;">
+                    <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
                         <button class="btn btn-secondary" onclick="showSMSStep1()" style="flex: 1;">
                             <i class="fas fa-arrow-left"></i> Geri
                         </button>
@@ -1008,6 +1138,21 @@ function openSMSModal() {
         </div>
     `;
     document.body.appendChild(modal);
+}
+
+// SMS Alıcı Tipi Toggle
+function toggleSMSReceiverType() {
+    const receiverType = document.querySelector('input[name="receiverType"]:checked').value;
+    const companySelection = document.getElementById('companySelection');
+    const individualSelection = document.getElementById('individualSelection');
+
+    if (receiverType === 'company') {
+        companySelection.style.display = 'block';
+        individualSelection.style.display = 'none';
+    } else {
+        companySelection.style.display = 'none';
+        individualSelection.style.display = 'block';
+    }
 }
 
 function showSMSStep2() {
