@@ -261,10 +261,18 @@ body {
     transition: all 0.3s ease;
 }
 
-.sidebar-toggle {
+.header-top {
     position: fixed;
     top: 1.5rem;
     left: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    z-index: 1001;
+    transition: all 0.3s ease;
+}
+
+.sidebar-toggle {
     width: 45px;
     height: 45px;
     border-radius: 12px;
@@ -275,17 +283,36 @@ body {
     font-size: 1.2rem;
     cursor: pointer;
     transition: all 0.3s ease;
-    z-index: 1001;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-shrink: 0;
 }
 
 .sidebar-toggle:hover {
     background: linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(59, 130, 246, 0.1) 100%);
     border-color: var(--blue);
     transform: scale(1.1);
+}
+
+.header-logo {
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    height: 45px;
+}
+
+.sidebar.expanded ~ .main-content .header-logo {
+    display: flex;
+    align-items: center;
+    opacity: 1;
+}
+
+.header-logo-img {
+    height: 40px;
+    width: auto;
+    object-fit: contain;
 }
 
 /* Page Header */
@@ -528,20 +555,36 @@ body {
         padding: 1rem;
         padding-top: 5rem;
     }
-    
+
     .sidebar {
         transform: translateX(-100%);
         width: 280px;
     }
-    
+
     .sidebar.expanded {
         transform: translateX(0);
     }
-    
-    .sidebar-toggle {
+
+    .header-top {
         top: 1rem;
         left: auto;
         right: 1rem;
+    }
+
+    .sidebar-toggle {
+        top: auto;
+        left: auto;
+        right: auto;
+    }
+
+    /* Show logo on mobile when sidebar is expanded */
+    .sidebar.expanded ~ .main-content .header-logo {
+        display: flex;
+        opacity: 1;
+    }
+
+    .header-logo-img {
+        height: 35px;
     }
     
     .page-header {

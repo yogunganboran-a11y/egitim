@@ -84,6 +84,11 @@ $current_page = basename($_SERVER['PHP_SELF']);
 
         <!-- Main Content -->
         <main class="main-content" id="mainContent">
-            <button class="sidebar-toggle" id="sidebarToggle">
-                <i class="fas fa-bars"></i>
-            </button>
+            <div class="header-top">
+                <button class="sidebar-toggle" id="sidebarToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="header-logo" id="headerLogo">
+                    <img src="assets/img/logo.png" alt="Logo" class="header-logo-img" onerror="this.style.display='none'">
+                </div>
+            </div>
