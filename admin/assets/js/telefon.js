@@ -15,24 +15,43 @@ function searchCalls() {
     applyFilters();
 }
 
+// Telefon numarasını normalize et (boşluk ve başındaki 0'ı kaldır)
+function normalizePhone(phone) {
+    return phone.replace(/\s/g, '').replace(/^0/, '');
+}
+
 // Filtrele - Birleştirilmiş fonksiyon
 function applyFilters() {
-    const searchTerm = document.getElementById('callSearch').value.toLowerCase().replace(/\s/g, '');
+    const searchTerm = document.getElementById('callSearch').value.toLowerCase().trim();
     const typeFilter = document.getElementById('typeFilter').value;
     const dateFrom = document.getElementById('dateFrom').value;
     const dateTo = document.getElementById('dateTo').value;
-    
+
     allCalls.forEach(row => {
         row.removeAttribute('data-hidden-by-search');
         row.removeAttribute('data-hidden-by-filter');
         row.removeAttribute('data-hidden-by-date');
     });
-    
+
     // Arama filtresi
     if (searchTerm) {
+        const normalizedSearchPhone = normalizePhone(searchTerm);
+        const normalizedSearchText = searchTerm.replace(/\s/g, '');
+
         allCalls.forEach(row => {
-            const text = row.textContent.toLowerCase().replace(/\s/g, '');
-            if (!text.includes(searchTerm)) {
+            const cells = row.querySelectorAll('td');
+            const phone = cells[2] ? cells[2].textContent : '';
+            const name = cells[1] ? cells[1].textContent.toLowerCase() : '';
+            const callType = row.textContent.toLowerCase();
+
+            const normalizedPhone = normalizePhone(phone);
+
+            // Match on phone (with normalization) or name (case-insensitive)
+            const matchesPhone = normalizedPhone.includes(normalizedSearchPhone);
+            const matchesName = name.includes(searchTerm);
+            const matchesOther = callType.replace(/\s/g, '').includes(normalizedSearchText);
+
+            if (!matchesPhone && !matchesName && !matchesOther) {
                 row.setAttribute('data-hidden-by-search', 'true');
             }
         });
