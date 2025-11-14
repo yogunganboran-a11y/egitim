@@ -115,6 +115,7 @@ function togglePlay() {
     } else {
         video.pause();
         playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+        playOverlay.style.display = 'flex';
     }
 }
 
@@ -149,6 +150,11 @@ function adjustFullscreenLayout() {
             videoControls.style.width = '90%';
             videoControls.style.maxWidth = '500px';
             videoControls.style.zIndex = '10000';
+            videoControls.style.opacity = '1';
+            videoControls.style.visibility = 'visible';
+            videoControls.style.display = 'flex';
+            videoControls.style.background = 'linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.4) 70%, transparent 100%)';
+            videoControls.style.padding = '1.5rem 1rem';
         } else {
             // Landscape mode
             videoControls.style.position = 'fixed';
@@ -158,6 +164,10 @@ function adjustFullscreenLayout() {
             videoControls.style.width = '90%';
             videoControls.style.maxWidth = '800px';
             videoControls.style.zIndex = '10000';
+            videoControls.style.opacity = '1';
+            videoControls.style.visibility = 'visible';
+            videoControls.style.display = 'flex';
+            videoControls.style.background = 'linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.4) 70%, transparent 100%)';
         }
     } else {
         videoControls.style.position = '';
@@ -167,11 +177,17 @@ function adjustFullscreenLayout() {
         videoControls.style.width = '';
         videoControls.style.maxWidth = '';
         videoControls.style.zIndex = '';
+        videoControls.style.opacity = '';
+        videoControls.style.visibility = '';
+        videoControls.style.display = '';
+        videoControls.style.background = '';
+        videoControls.style.padding = '';
     }
 }
 
 video.addEventListener('pause', () => {
     playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+    playOverlay.style.display = 'flex';
 });
 
 video.addEventListener('play', () => {

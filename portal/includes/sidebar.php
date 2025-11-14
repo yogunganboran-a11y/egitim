@@ -7,6 +7,11 @@
     <!-- Logo -->
     <div class="sidebar-logo">
         <img src="assets/img/logo.png" alt="Logo" onerror="this.style.display='none'">
+        <!-- Notification Icon (Desktop only) -->
+        <div class="sidebar-notification-icon" id="sidebarNotificationIcon">
+            <i class="fas fa-bell"></i>
+            <span class="notification-badge">3</span>
+        </div>
     </div>
     
     <!-- Navigation Menu -->
@@ -22,7 +27,7 @@
         </a>
         
         <a href="sertifikalarim.php" class="nav-item <?php echo basename($_SERVER['PHP_SELF']) == 'sertifikalarim.php' ? 'active' : ''; ?>">
-            <i class="fas fa-file-certificate"></i>
+            <i class="fas fa-file-alt"></i>
             <span>Sertifikalarım</span>
         </a>
         

@@ -19,10 +19,10 @@
             </a>
             <a href="kayit.php" class="bottom-nav-item <?php echo basename($_SERVER['PHP_SELF']) == 'kayit.php' ? 'active' : ''; ?>">
                 <i class="fas fa-plus-circle"></i>
-                <span>Yeni Eğitim</span>
+                <span>Eğitimler</span>
             </a>
             <a href="sertifikalarim.php" class="bottom-nav-item <?php echo basename($_SERVER['PHP_SELF']) == 'sertifikalarim.php' ? 'active' : ''; ?>">
-                <i class="fas fa-file-certificate"></i>
+                <i class="fas fa-file-alt"></i>
                 <span>Sertifikalar</span>
             </a>
             <a href="profil.php" class="bottom-nav-item <?php echo basename($_SERVER['PHP_SELF']) == 'profil.php' ? 'active' : ''; ?>">

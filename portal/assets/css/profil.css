@@ -663,7 +663,10 @@
 /* Mobil telefon düzeltmesi */
 @media (max-width: 768px) {
     .info-value {
-        font-size: 0.95rem !important;
+        font-size: 0.75rem !important;
         text-decoration: none !important;
+        pointer-events: none !important;
+        cursor: default !important;
+        word-break: break-all;
     }
 }

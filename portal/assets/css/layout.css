@@ -41,12 +41,67 @@ body {
     padding: 2rem 1.5rem;
     text-align: center;
     border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
 }
 
 .sidebar-logo img {
     width: 80px;
     height: 80px;
     filter: drop-shadow(0 4px 12px rgba(59, 130, 246, 0.6));
+}
+
+/* Sidebar Notification Icon (Desktop only) */
+.sidebar-notification-icon {
+    display: none;
+    position: relative;
+    width: 45px;
+    height: 45px;
+    background: rgba(59, 130, 246, 0.1);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    border-radius: 12px;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.sidebar-notification-icon:hover {
+    background: rgba(59, 130, 246, 0.2);
+    border-color: rgba(59, 130, 246, 0.5);
+}
+
+.sidebar-notification-icon i {
+    color: #3b82f6;
+    font-size: 1.2rem;
+}
+
+.sidebar-notification-icon .notification-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    color: white;
+    font-size: 0.7rem;
+    font-weight: 700;
+    min-width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9px;
+    padding: 0 0.3rem;
+    border: 2px solid var(--sidebar-bg);
+}
+
+/* Show sidebar notification only on desktop */
+@media (min-width: 993px) {
+    .sidebar-notification-icon {
+        display: flex;
+    }
 }
 
 .sidebar-nav {
@@ -465,7 +520,7 @@ body {
     }
     
     .hamburger-btn {
-        display: block;
+        display: none; /* Hamburger menü mobilde gizli */
     }
     
     .header-logo span {
