@@ -68,6 +68,10 @@ $current_page = basename($_SERVER['PHP_SELF']);
                     <i class="fas fa-phone"></i>
                     <span>Telefon</span>
                 </a>
+                <a href="geri-arama-listesi.php" class="nav-item <?php echo $current_page == 'geri-arama-listesi.php' ? 'active' : ''; ?>">
+                    <i class="fas fa-phone-volume"></i>
+                    <span>Geri Arama Listesi</span>
+                </a>
                 <a href="egitimler.php" class="nav-item <?php echo $current_page == 'egitimler.php' ? 'active' : ''; ?>">
                     <i class="fas fa-graduation-cap"></i>
                     <span>Eğitimler</span>
