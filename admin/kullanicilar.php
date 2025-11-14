@@ -78,7 +78,7 @@ $users = [
                 <i class="fas fa-users"></i> Tümü
             </button>
             <button class="btn btn-secondary btn-sm" onclick="setFilter('no-certificate', event)">
-                <i class="fas fa-certificate"></i> Sertifikasız
+                <i class="fas fa-file-alt"></i> Sertifikasız
             </button>
             <button class="btn btn-secondary btn-sm" onclick="openBulkCertificateModal()">
                 <i class="fas fa-upload"></i> Toplu Sertifika Yükle
@@ -272,41 +272,41 @@ $users = [
         </div>
         
         <div class="form-group">
-            <label class="form-label">Belge Türü</label>
-            <select class="form-control" id="bulkDocumentType" required>
-                <option value="">Seçiniz</option>
+            <label class="form-label">Belge Türü (Birden fazla seçilebilir)</label>
+            <select class="form-control" id="bulkDocumentType" multiple size="3" required style="height: auto;">
                 <option value="Temel Denizcilik">Temel Denizcilik</option>
                 <option value="İleri Navigasyon">İleri Navigasyon</option>
                 <option value="Güvenlik Eğitimi">Güvenlik Eğitimi</option>
             </select>
+            <small style="color: #8b9cbc; margin-top: 0.5rem; display: block;">Ctrl/Cmd tuşu ile birden fazla seçim yapabilirsiniz</small>
         </div>
-        
+
         <div class="upload-tabs">
-            <div class="upload-tab active" onclick="switchUploadTab('tckn', event)">
-                <i class="fas fa-id-card"></i> Dosya Adı TCKN
-            </div>
-            <div class="upload-tab" onclick="switchUploadTab('pdf', event)">
+            <div class="upload-tab active" onclick="switchUploadTab('pdf', event)">
                 <i class="fas fa-file-pdf"></i> PDF İçeriğinden
             </div>
+            <div class="upload-tab" onclick="switchUploadTab('tckn', event)">
+                <i class="fas fa-id-card"></i> Dosya Adı TCKN
+            </div>
         </div>
-        
-        <!-- TCKN Upload -->
-        <div id="tcknUploadArea" class="upload-area" onclick="selectTcknFiles()">
-            <i class="fas fa-cloud-upload-alt"></i>
-            <p>Dosyaları buraya sürükleyip bırakın veya tıklayın</p>
-            <p class="file-info">Dosya adı TCKN olmalı (örnek: 12345678901.pdf)</p>
-            <p class="file-info">Maksimum dosya boyutu: 10MB</p>
-        </div>
-        <input type="file" id="tcknFileInput" multiple accept=".pdf" style="display: none;" onchange="handleTcknFiles(this.files)">
-        
-        <!-- PDF Upload -->
-        <div id="pdfUploadArea" class="upload-area" onclick="selectPdfFiles()" style="display: none;">
+
+        <!-- PDF Upload (Varsayılan) -->
+        <div id="pdfUploadArea" class="upload-area" onclick="selectPdfFiles()">
             <i class="fas fa-cloud-upload-alt"></i>
             <p>Dosyaları buraya sürükleyip bırakın veya tıklayın</p>
             <p class="file-info">PDF içeriğinden TCKN okunacak</p>
             <p class="file-info">Maksimum dosya boyutu: 10MB</p>
         </div>
         <input type="file" id="pdfFileInput" multiple accept=".pdf" style="display: none;" onchange="handlePdfFiles(this.files)">
+
+        <!-- TCKN Upload -->
+        <div id="tcknUploadArea" class="upload-area" onclick="selectTcknFiles()" style="display: none;">
+            <i class="fas fa-cloud-upload-alt"></i>
+            <p>Dosyaları buraya sürükleyip bırakın veya tıklayın</p>
+            <p class="file-info">Dosya adı TCKN olmalı (örnek: 12345678901.pdf)</p>
+            <p class="file-info">Maksimum dosya boyutu: 10MB</p>
+        </div>
+        <input type="file" id="tcknFileInput" multiple accept=".pdf" style="display: none;" onchange="handleTcknFiles(this.files)">
         
         <!-- Upload Progress -->
         <div id="uploadProgress" class="upload-progress"></div>
