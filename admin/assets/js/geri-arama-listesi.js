@@ -21,18 +21,46 @@ function filterCallbacks(filter) {
 
 // Kural ekleme modalı
 function openAddRuleModal() {
-    alert('Yeni kural ekleme modalı açılacak (Backend entegrasyonu gerekli)');
+    document.getElementById('ruleModalTitle').textContent = 'Yeni Kural Ekle';
+    document.getElementById('ruleName').value = '';
+    document.getElementById('ruleCondition').value = '';
+    document.getElementById('ruleDelay').value = '';
+    document.getElementById('ruleMaxAttempts').value = '';
+    document.getElementById('ruleAttemptPeriod').value = 'day';
+    document.getElementById('ruleTimeStart').value = '09:00';
+    document.getElementById('ruleTimeEnd').value = '21:00';
+    document.getElementById('ruleActive').checked = true;
+    document.getElementById('ruleModal').classList.add('active');
 }
 
 // Kural düzenleme
 function editRule(ruleId) {
-    alert('Kural #' + ruleId + ' düzenleme modalı açılacak (Backend entegrasyonu gerekli)');
+    document.getElementById('ruleModalTitle').textContent = 'Kural Düzenle';
+    // Demo data - gerçek uygulamada backend'den gelecek
+    document.getElementById('ruleName').value = 'WhatsApp Satın Almadı';
+    document.getElementById('ruleCondition').value = 'whatsapp_no_purchase';
+    document.getElementById('ruleDelay').value = '15';
+    document.getElementById('ruleMaxAttempts').value = '3';
+    document.getElementById('ruleAttemptPeriod').value = 'day';
+    document.getElementById('ruleTimeStart').value = '09:00';
+    document.getElementById('ruleTimeEnd').value = '21:00';
+    document.getElementById('ruleActive').checked = true;
+    document.getElementById('ruleModal').classList.add('active');
+}
+
+// Kural kaydet
+function saveRule(e) {
+    e.preventDefault();
+    const ruleName = document.getElementById('ruleName').value;
+    alert('Kural "' + ruleName + '" kaydedildi (Backend entegrasyonu gerekli)');
+    closeModal('ruleModal');
 }
 
 // Kural silme
 function deleteRule(ruleId) {
     if (confirm('Bu kuralı silmek istediğinizden emin misiniz?')) {
         alert('Kural #' + ruleId + ' silindi (Backend entegrasyonu gerekli)');
+        // Gerçek uygulamada backend'e istek gönderilecek ve kart silinecek
     }
 }
 

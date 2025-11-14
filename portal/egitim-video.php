@@ -106,19 +106,7 @@ playOverlayBtn.addEventListener('click', () => {
     playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
 });
 
-// Video click - always toggle play/pause
-video.addEventListener('click', togglePlay);
-playPauseBtn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    togglePlay();
-});
-
-videoWrapper.addEventListener('click', (e) => {
-    if (e.target === videoWrapper || e.target === video) {
-        togglePlay();
-    }
-});
-
+// Toggle play/pause function
 function togglePlay() {
     if (video.paused) {
         video.play();
@@ -129,6 +117,20 @@ function togglePlay() {
         playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
     }
 }
+
+// Play/pause button click
+playPauseBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    togglePlay();
+});
+
+// Video click - toggle play/pause (but not if clicking controls)
+video.addEventListener('click', (e) => {
+    // Kontrollere tıklanmadıysa toggle yap
+    if (!e.target.closest('.video-controls')) {
+        togglePlay();
+    }
+});
 
 // Mobil tam ekran düzeltmesi
 document.addEventListener('fullscreenchange', adjustFullscreenLayout);

@@ -204,6 +204,78 @@ include 'includes/header.php';
     </div>
 </div>
 
+<!-- KURAL EKLEME/DÜZENLEME MODAL -->
+<div class="modal" id="ruleModal">
+    <div class="modal-content" style="max-width: 700px;">
+        <div class="modal-header">
+            <h2><i class="fas fa-cogs"></i> <span id="ruleModalTitle">Yeni Kural Ekle</span></h2>
+            <button class="close-modal" onclick="closeModal('ruleModal')">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <form onsubmit="saveRule(event)" style="padding: 1.5rem;">
+            <div class="form-group">
+                <label class="form-label">Kural Adı</label>
+                <input type="text" id="ruleName" class="form-control" placeholder="Örn: WhatsApp Satın Almadı" required>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Koşul Tipi</label>
+                <select id="ruleCondition" class="form-control" required>
+                    <option value="">Seçiniz</option>
+                    <option value="whatsapp_no_purchase">WhatsApp'tan yazdı, satın almadı</option>
+                    <option value="call_no_purchase">Arandı ama satın almadı</option>
+                    <option value="form_no_purchase">Form doldurdu, satın almadı</option>
+                    <option value="cart_abandoned">Sepete ekledi, satın almadı</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Bekleme Süresi (dakika)</label>
+                <input type="number" id="ruleDelay" class="form-control" placeholder="15" min="1" required>
+                <small style="color: var(--text-secondary);">Koşul gerçekleştikten kaç dakika sonra arama yapılacak</small>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Maksimum Deneme Sayısı</label>
+                <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1rem;">
+                    <input type="number" id="ruleMaxAttempts" class="form-control" placeholder="3" min="1" max="10" required>
+                    <select id="ruleAttemptPeriod" class="form-control" required>
+                        <option value="day">/ gün</option>
+                        <option value="week">/ hafta</option>
+                        <option value="month">/ ay</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Arama Saatleri</label>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <input type="time" id="ruleTimeStart" class="form-control" value="09:00" required>
+                    <input type="time" id="ruleTimeEnd" class="form-control" value="21:00" required>
+                </div>
+                <small style="color: var(--text-secondary);">Bu saat aralığında arama yapılacak</small>
+            </div>
+
+            <div class="form-group">
+                <label style="display: flex; align-items: center; gap: 0.75rem; cursor: pointer;">
+                    <input type="checkbox" id="ruleActive" checked style="width: 18px; height: 18px;">
+                    <span style="color: var(--text-primary);">Kural aktif</span>
+                </label>
+            </div>
+
+            <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                <button type="submit" class="btn btn-primary" style="flex: 1;">
+                    <i class="fas fa-save"></i> Kaydet
+                </button>
+                <button type="button" class="btn btn-secondary" onclick="closeModal('ruleModal')" style="flex: 1;">
+                    <i class="fas fa-times"></i> İptal
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
 <!-- DETAY MODAL -->
 <div class="modal" id="callbackDetailModal">
     <div class="modal-content" style="max-width: 900px;">
