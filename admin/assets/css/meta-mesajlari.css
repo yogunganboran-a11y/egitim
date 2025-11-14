@@ -78,6 +78,11 @@
     border-color: #0084ff;
 }
 
+/* Mobil Arama ve Filtreler */
+.mobile-search-filters {
+    display: none; /* Desktop'ta gizli */
+}
+
 /* Arama */
 .chat-search {
     padding: 0.75rem 1rem;
@@ -686,14 +691,61 @@
         font-size: 1.1rem;
     }
 
+    /* Desktop filtreleri gizle */
     .header-filters {
-        flex-direction: column;
-        gap: 0.25rem;
+        display: none;
     }
 
-    .filter-select {
+    /* Desktop chat-search gizle */
+    .chat-search:not(.mobile-search) {
+        display: none;
+    }
+
+    /* Mobil arama ve filtreler göster */
+    .mobile-search-filters {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.75rem 1rem;
+        background: #0f1419;
+        border-bottom: 1px solid #1e2732;
+    }
+
+    .mobile-search {
+        flex: 0 0 50%;
+        padding: 0;
+        border: none;
+        position: relative;
+    }
+
+    .mobile-search input {
+        width: 100%;
+        padding: 0.75rem 1rem 0.75rem 2.5rem;
+        background: #1a1d29;
+        border: none;
+        border-radius: 8px;
+        color: #e9edef;
+        font-size: 0.85rem;
+    }
+
+    .mobile-search i {
+        left: 1rem;
+    }
+
+    .mobile-filters {
+        flex: 0 0 calc(50% - 0.5rem);
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    .mobile-filter {
+        flex: 1;
         font-size: 0.75rem;
-        padding: 0.4rem 0.75rem;
+        padding: 0.75rem 0.5rem;
+        background: #1a1d29;
+        border: 1px solid #2a3442;
+        border-radius: 8px;
+        color: #e9edef;
     }
 
     /* Adjust chat items for mobile */

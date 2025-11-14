@@ -103,9 +103,26 @@ document.body.classList.add('meta-page');
             </div>
         </div>
 
-        <div class="chat-search">
-            <i class="fas fa-search"></i>
-            <input type="text" id="chatSearch" placeholder="Sohbet ara..." onkeyup="searchChats()">
+        <!-- Mobilde: Arama (%50) + Filtreler (%25 + %25) -->
+        <div class="mobile-search-filters">
+            <div class="chat-search mobile-search">
+                <i class="fas fa-search"></i>
+                <input type="text" id="chatSearch" placeholder="Sohbet ara..." onkeyup="searchChats()">
+            </div>
+            <div class="mobile-filters">
+                <select id="platformFilterMobile" class="filter-select mobile-filter" onchange="filterByPlatform()">
+                    <option value="all" selected>Tüm</option>
+                    <option value="facebook">FB</option>
+                    <option value="instagram">IG</option>
+                </select>
+                <select id="dateFilterMobile" class="filter-select mobile-filter" onchange="filterByDate()">
+                    <option value="today" selected>Bugün</option>
+                    <option value="yesterday">Dün</option>
+                    <option value="week">Hafta</option>
+                    <option value="month">Ay</option>
+                    <option value="all">Tümü</option>
+                </select>
+            </div>
         </div>
 
         <div class="chat-list">
