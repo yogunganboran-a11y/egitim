@@ -654,3 +654,10 @@
         font-size: 0.8rem;
     }
 }
+/* Mobil telefon düzeltmesi */
+@media (max-width: 768px) {
+    .info-value {
+        font-size: 0.95rem !important;
+        text-decoration: none !important;
+    }
+}
