@@ -317,11 +317,12 @@ body {
     padding: 0.5rem;
 }
 
-/* Notification */
+/* Notification - Top bar notification (Hidden on desktop, visible on mobile) */
 .notification-icon {
     position: relative;
     cursor: pointer;
     padding: 0.5rem;
+    display: none; /* Desktop'ta gizli, mobilde görünür olacak */
 }
 
 .notification-icon > i {
@@ -350,8 +351,8 @@ body {
 
 .notification-dropdown {
     position: fixed;
-    top: 90px;
-    right: 2rem;
+    top: 180px; /* Desktop'ta sidebar notification altında açılsın */
+    left: 280px; /* Sidebar genişliği + padding */
     width: 380px;
     background: linear-gradient(135deg, rgba(30, 45, 68, 0.98) 0%, rgba(26, 41, 66, 0.95) 100%);
     backdrop-filter: blur(20px);
@@ -526,8 +527,16 @@ body {
     .header-logo span {
         display: none;
     }
-    
+
+    /* Mobilde top bar notification göster */
+    .notification-icon {
+        display: block;
+    }
+
+    /* Mobilde notification dropdown top bar'ın altında açılsın */
     .notification-dropdown {
+        top: 90px;
+        left: auto;
         right: 1rem;
         width: calc(100vw - 2rem);
     }
