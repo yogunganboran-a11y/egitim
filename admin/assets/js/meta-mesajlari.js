@@ -49,19 +49,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // İlk sohbeti otomatik seç
-    setTimeout(() => {
-        const firstChat = document.querySelector('.chat-item');
-        if (firstChat) {
-            const chatId = firstChat.getAttribute('data-chat-id');
-            const platform = firstChat.getAttribute('data-platform');
-            selectChat(chatId, platform);
-        }
-
-        // Varsayılan filtreleri uygula
-        filterByDate();
-        filterByPlatform();
-    }, 100);
 });
 
 // Check if mobile view
@@ -155,11 +142,6 @@ function loadChatContent(chatId, platform) {
     if (statusElement) {
         if (chatData.online) {
             statusElement.textContent = 'Çevrimiçi';
-            statusElement.classList.add('online');
-        } else {
-            statusElement.textContent = 'Son görülme: ' + chatData.lastSeen;
-            statusElement.classList.remove('online');
-        }
     }
 
     // Bot durumunu güncelle

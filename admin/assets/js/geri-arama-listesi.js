@@ -1,218 +1,151 @@
-// Geri Arama Listesi - JavaScript
-
-let currentPage = 1;
-let itemsPerPage = 25;
-let allRows = [];
-let sortDirection = {
-    name: 'asc',
-    reason: 'asc',
-    priority: 'desc',
-    score: 'desc',
-    date: 'desc'
-};
-
-// Sayfa yüklendiğinde
-document.addEventListener('DOMContentLoaded', function() {
-    allRows = Array.from(document.querySelectorAll('#callbackTableBody tr'));
-
-    // Varsayılan filtreyi uygula (Bekleyen)
-    applyFilters();
-
-    // İstatistikleri güncelle
-    updateStats();
-});
-
-// Filtreleri uygula
-function applyFilters() {
-    const statusFilter = document.getElementById('statusFilter').value;
-    const priorityFilter = document.getElementById('priorityFilter').value;
-    const sourceFilter = document.getElementById('sourceFilter').value;
-    const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-
-    allRows.forEach(row => {
-        let show = true;
-
-        // Durum filtresi
-        if (statusFilter !== 'all' && row.dataset.status !== statusFilter) {
-            show = false;
+// Filtre değiştirme
+function filterCallbacks(filter) {
+    const buttons = document.querySelectorAll('.filter-btn');
+    buttons.forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.getAttribute('data-filter') === filter) {
+            btn.classList.add('active');
         }
-
-        // Öncelik filtresi
-        if (priorityFilter !== 'all' && row.dataset.priority !== priorityFilter) {
-            show = false;
-        }
-
-        // Kaynak filtresi
-        if (sourceFilter !== 'all' && row.dataset.source !== sourceFilter) {
-            show = false;
-        }
-
-        // Arama filtresi
-        if (searchTerm) {
-            const name = row.dataset.name.toLowerCase();
-            const phone = row.dataset.phone.toLowerCase();
-            if (!name.includes(searchTerm) && !phone.includes(searchTerm)) {
-                show = false;
-            }
-        }
-
-        row.style.display = show ? '' : 'none';
     });
 
-    currentPage = 1;
-    updatePagination();
+    const rows = document.querySelectorAll('.callback-row');
+    rows.forEach(row => {
+        const status = row.getAttribute('data-status');
+        if (filter === 'all' || status === filter) {
+            row.style.display = '';
+        } else {
+            row.style.display = 'none';
+        }
+    });
 }
 
-// Filtreleri temizle
-function clearFilters() {
-    document.getElementById('statusFilter').value = 'pending';
-    document.getElementById('priorityFilter').value = 'all';
-    document.getElementById('sourceFilter').value = 'all';
-    document.getElementById('searchInput').value = '';
-
-    applyFilters();
-    showNotification('Filtreler temizlendi', 'success');
+// Kural ekleme modalı
+function openAddRuleModal() {
+    alert('Yeni kural ekleme modalı açılacak (Backend entegrasyonu gerekli)');
 }
 
-// İstatistikleri güncelle
-function updateStats() {
-    const pending = allRows.filter(row => row.dataset.status === 'pending').length;
-    const called = allRows.filter(row => row.dataset.status === 'called').length;
-    const completed = allRows.filter(row => row.dataset.status === 'completed').length;
-    const failed = allRows.filter(row => row.dataset.status === 'failed').length;
-
-    document.getElementById('statPending').textContent = pending;
-    document.getElementById('statCalled').textContent = called;
-    document.getElementById('statCompleted').textContent = completed;
-    document.getElementById('statFailed').textContent = failed;
+// Kural düzenleme
+function editRule(ruleId) {
+    alert('Kural #' + ruleId + ' düzenleme modalı açılacak (Backend entegrasyonu gerekli)');
 }
 
-// Durum güncelle
-function updateStatus(id, newStatus) {
-    const row = document.querySelector(`tr[data-id="${id}"]`);
-    if (!row) return;
-
-    row.dataset.status = newStatus;
-
-    // Select elementinin rengini güncelle
-    const select = row.querySelector('.status-select');
-    select.className = `status-select status-${newStatus}`;
-
-    // İstatistikleri güncelle
-    updateStats();
-
-    // Filtreleri yeniden uygula
-    applyFilters();
-
-    // Backend'e gönder
-    console.log('Durum güncelleniyor:', { id, newStatus });
-
-    showNotification('Durum güncellendi', 'success');
+// Kural silme
+function deleteRule(ruleId) {
+    if (confirm('Bu kuralı silmek istediğinizden emin misiniz?')) {
+        alert('Kural #' + ruleId + ' silindi (Backend entegrasyonu gerekli)');
+    }
 }
 
-// Müşteriyi ara
-function callCustomer(phone) {
-    window.location.href = `tel:${phone}`;
-    showNotification(`${phone} aranıyor...`, 'info');
-}
+// Arama detayı görüntüleme
+function viewCallbackDetail(callbackId) {
+    const modal = document.getElementById('callbackDetailModal');
+    const content = document.getElementById('callbackDetailContent');
 
-// WhatsApp aç
-function openWhatsApp(phone) {
-    const cleanPhone = phone.replace(/\D/g, '');
-    const whatsappUrl = `https://wa.me/90${cleanPhone}`;
-    window.open(whatsappUrl, '_blank');
-    showNotification('WhatsApp açılıyor...', 'info');
-}
-
-// Detayları göster
-function showDetails(id) {
-    const row = document.querySelector(`tr[data-id="${id}"]`);
-    if (!row) return;
-
-    const name = row.querySelector('.name-cell strong').textContent;
-    const phone = row.dataset.phone;
-    const source = row.dataset.source;
-    const reason = row.querySelector('.reason-text').textContent;
-    const priority = row.dataset.priority;
-    const score = row.querySelector('.score-text').textContent;
-    const detectedAt = row.querySelector('.date-cell').textContent;
-    const status = row.dataset.status;
-
-    const modal = document.getElementById('detailModal');
-    const content = document.getElementById('detailModalContent');
-
-    const priorityLabels = { high: 'Yüksek', medium: 'Orta', low: 'Düşük' };
-    const statusLabels = { pending: 'Bekleyor', called: 'Arandı', completed: 'Tamamlandı', failed: 'Ulaşılamadı' };
-    const sourceLabels = { whatsapp: 'WhatsApp', phone: 'Telefon' };
-
+    // Örnek detay içeriği
     content.innerHTML = `
-        <div style="display: grid; gap: 1.5rem;">
-            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;">
+        <div style="padding: 1.5rem;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2rem;">
                 <div>
-                    <div style="color: #8b9cbc; font-size: 0.875rem; margin-bottom: 0.5rem;">İsim</div>
-                    <div style="color: #e9edef; font-size: 1.1rem; font-weight: 600;">${name}</div>
+                    <h3 style="color: var(--blue); margin-bottom: 1rem;">
+                        <i class="fas fa-user"></i> Müşteri Bilgileri
+                    </h3>
+                    <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                        <div>
+                            <span style="color: var(--text-secondary);">Ad Soyad:</span>
+                            <strong style="color: var(--text-primary); margin-left: 0.5rem;">Ahmet Yılmaz</strong>
+                        </div>
+                        <div>
+                            <span style="color: var(--text-secondary);">Telefon:</span>
+                            <strong style="color: var(--text-primary); margin-left: 0.5rem;">0532 123 4567</strong>
+                        </div>
+                        <div>
+                            <span style="color: var(--text-secondary);">Kaynak:</span>
+                            <strong style="color: var(--text-primary); margin-left: 0.5rem;">
+                                <i class="fab fa-whatsapp" style="color: #25d366;"></i> WhatsApp
+                            </strong>
+                        </div>
+                    </div>
                 </div>
+
                 <div>
-                    <div style="color: #8b9cbc; font-size: 0.875rem; margin-bottom: 0.5rem;">Telefon</div>
-                    <div style="color: #3b82f6; font-size: 1.1rem; font-weight: 600; font-family: monospace;">${phone}</div>
+                    <h3 style="color: var(--blue); margin-bottom: 1rem;">
+                        <i class="fas fa-chart-line"></i> AI Değerlendirme
+                    </h3>
+                    <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                        <div>
+                            <span style="color: var(--text-secondary);">Satın Alma Olasılığı:</span>
+                            <strong style="color: #10b981; margin-left: 0.5rem;">85%</strong>
+                        </div>
+                        <div>
+                            <span style="color: var(--text-secondary);">Öncelik:</span>
+                            <strong style="color: #ef4444; margin-left: 0.5rem;">Yüksek</strong>
+                        </div>
+                        <div>
+                            <span style="color: var(--text-secondary);">Deneme Sayısı:</span>
+                            <strong style="color: var(--text-primary); margin-left: 0.5rem;">1/3</strong>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;">
-                <div>
-                    <div style="color: #8b9cbc; font-size: 0.875rem; margin-bottom: 0.5rem;">Kaynak</div>
-                    <div style="color: #e9edef;">${sourceLabels[source]}</div>
+            <h3 style="color: var(--blue); margin-bottom: 1rem;">
+                <i class="fas fa-history"></i> Süreç Timeline
+            </h3>
+
+            <div style="position: relative; padding-left: 2rem;">
+                <div style="position: absolute; left: 0.5rem; top: 0; bottom: 0; width: 2px; background: linear-gradient(180deg, #3b82f6 0%, rgba(59, 130, 246, 0.2) 100%);"></div>
+
+                <div class="timeline-item" style="position: relative; padding: 1rem; margin-bottom: 1.5rem; background: rgba(59, 130, 246, 0.05); border-left: 3px solid #3b82f6; border-radius: 8px; margin-left: 1rem;">
+                    <div style="position: absolute; left: -2.5rem; top: 1rem; width: 12px; height: 12px; background: #3b82f6; border-radius: 50%; border: 3px solid #1e2d44;"></div>
+                    <div style="font-weight: 600; color: var(--text-primary); margin-bottom: 0.5rem;">WhatsApp Mesajı</div>
+                    <div style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.5rem;">14.11.2025 - 10:30</div>
+                    <div style="color: var(--text-secondary); font-size: 0.9rem;">"Denizcilik eğitimi hakkında bilgi almak istiyorum. Fiyatlar nedir?"</div>
                 </div>
-                <div>
-                    <div style="color: #8b9cbc; font-size: 0.875rem; margin-bottom: 0.5rem;">Öncelik</div>
-                    <div style="color: #e9edef;">${priorityLabels[priority]}</div>
+
+                <div class="timeline-item" style="position: relative; padding: 1rem; margin-bottom: 1.5rem; background: rgba(16, 185, 129, 0.05); border-left: 3px solid #10b981; border-radius: 8px; margin-left: 1rem;">
+                    <div style="position: absolute; left: -2.5rem; top: 1rem; width: 12px; height: 12px; background: #10b981; border-radius: 50%; border: 3px solid #1e2d44;"></div>
+                    <div style="font-weight: 600; color: var(--text-primary); margin-bottom: 0.5rem;">AI Yanıt Gönderildi</div>
+                    <div style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.5rem;">14.11.2025 - 10:31</div>
+                    <div style="color: var(--text-secondary); font-size: 0.9rem;">"Temel Denizcilik eğitimimiz 1500 TL..."</div>
+                </div>
+
+                <div class="timeline-item" style="position: relative; padding: 1rem; margin-bottom: 1.5rem; background: rgba(245, 158, 11, 0.05); border-left: 3px solid #f59e0b; border-radius: 8px; margin-left: 1rem;">
+                    <div style="position: absolute; left: -2.5rem; top: 1rem; width: 12px; height: 12px; background: #f59e0b; border-radius: 50%; border: 3px solid #1e2d44;"></div>
+                    <div style="font-weight: 600; color: var(--text-primary); margin-bottom: 0.5rem;">Kural Tetiklendi</div>
+                    <div style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.5rem;">14.11.2025 - 16:30</div>
+                    <div style="color: var(--text-secondary); font-size: 0.9rem;">"WhatsApp Satın Almadı" kuralı aktif - 15 dakika sonra arama planlandı</div>
+                </div>
+
+                <div class="timeline-item" style="position: relative; padding: 1rem; background: rgba(59, 130, 246, 0.05); border-left: 3px solid #60a5fa; border-radius: 8px; margin-left: 1rem; border-style: dashed;">
+                    <div style="position: absolute; left: -2.5rem; top: 1rem; width: 12px; height: 12px; background: #60a5fa; border-radius: 50%; border: 3px solid #1e2d44; animation: pulse 2s infinite;"></div>
+                    <div style="font-weight: 600; color: var(--blue); margin-bottom: 0.5rem;">
+                        <i class="fas fa-clock"></i> Arama Bekliyor
+                    </div>
+                    <div style="color: var(--text-secondary); font-size: 0.9rem;">Planlanan: 14.11.2025 - 16:45</div>
                 </div>
             </div>
 
-            <div>
-                <div style="color: #8b9cbc; font-size: 0.875rem; margin-bottom: 0.5rem;">Arama Sebebi</div>
-                <div style="color: #e9edef; line-height: 1.6; background: rgba(59, 130, 246, 0.05); padding: 1rem; border-radius: 8px; border-left: 3px solid #3b82f6;">
-                    ${reason}
-                </div>
-            </div>
-
-            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;">
-                <div>
-                    <div style="color: #8b9cbc; font-size: 0.875rem; margin-bottom: 0.5rem;">AI Skoru</div>
-                    <div style="color: #3b82f6; font-size: 1.5rem; font-weight: 700;">${score}</div>
-                </div>
-                <div>
-                    <div style="color: #8b9cbc; font-size: 0.875rem; margin-bottom: 0.5rem;">Durum</div>
-                    <div style="color: #e9edef;">${statusLabels[status]}</div>
-                </div>
-            </div>
-
-            <div>
-                <div style="color: #8b9cbc; font-size: 0.875rem; margin-bottom: 0.5rem;">Tespit Zamanı</div>
-                <div style="color: #e9edef;">${detectedAt}</div>
-            </div>
-
-            <div style="display: flex; gap: 1rem; padding-top: 1rem; border-top: 1px solid rgba(59, 130, 246, 0.2);">
-                <button class="btn btn-primary" onclick="callCustomer('${phone}'); closeModal('detailModal');" style="flex: 1;">
-                    <i class="fas fa-phone"></i> Ara
-                </button>
-                <button class="btn btn-secondary" onclick="openWhatsApp('${phone}'); closeModal('detailModal');" style="flex: 1;">
-                    <i class="fab fa-whatsapp"></i> WhatsApp
-                </button>
-            </div>
-
-            <div style="background: rgba(59, 130, 246, 0.05); padding: 1rem; border-radius: 8px; border-left: 3px solid #3b82f6;">
-                <div style="font-weight: 600; color: #3b82f6; margin-bottom: 0.5rem;">
-                    <i class="fas fa-robot"></i> AI Analiz Notları
-                </div>
-                <div style="color: #8b9cbc; font-size: 0.9rem; line-height: 1.6;">
-                    Bu müşteri ${source === 'whatsapp' ? 'WhatsApp' : 'telefon'} üzerinden ${reason.toLowerCase()} Bu nedenle geri arama yapılması önerilmektedir. AI skoru %${score.replace('%', '')} olarak hesaplanmıştır.
-                </div>
+            <div style="margin-top: 2rem; padding: 1rem; background: rgba(59, 130, 246, 0.05); border-radius: 8px;">
+                <h4 style="color: var(--blue); margin-bottom: 0.75rem;">
+                    <i class="fas fa-brain"></i> AI Özeti
+                </h4>
+                <p style="color: var(--text-secondary); line-height: 1.6;">
+                    Müşteri denizcilik eğitimi hakkında bilgi almak istiyor. Fiyat sordu ancak satın almadı. 
+                    Satın alma olasılığı yüksek. İlk görüşmede ilgi gösterdi, muhtemelen karşılaştırma yapıyor.
+                    15 dakika içinde aranması öneriliyor.
+                </p>
             </div>
         </div>
     `;
 
     modal.classList.add('active');
+}
+
+// Aramayı iptal et
+function cancelCallback(callbackId) {
+    if (confirm('Bu aramayı iptal etmek istediğinizden emin misiniz?')) {
+        alert('Arama #' + callbackId + ' iptal edildi (Backend entegrasyonu gerekli)');
+    }
 }
 
 // Modal kapat
@@ -221,243 +154,8 @@ function closeModal(modalId) {
 }
 
 // Modal dışına tıklayınca kapat
-document.addEventListener('click', function(e) {
+document.addEventListener('click', (e) => {
     if (e.target.classList.contains('modal')) {
         e.target.classList.remove('active');
     }
 });
-
-// Geri aramayı sil
-function deleteCallback(id) {
-    if (!confirm('Bu geri arama kaydını silmek istediğinizden emin misiniz?')) {
-        return;
-    }
-
-    const row = document.querySelector(`tr[data-id="${id}"]`);
-    if (row) {
-        row.style.animation = 'fadeOut 0.3s ease';
-        setTimeout(() => {
-            row.remove();
-            allRows = Array.from(document.querySelectorAll('#callbackTableBody tr'));
-            updateStats();
-            updatePagination();
-        }, 300);
-    }
-
-    console.log('Geri arama siliniyor:', id);
-    showNotification('Kayıt silindi', 'success');
-}
-
-// AI analizi yenile
-function refreshAIAnalysis() {
-    showNotification('AI analizi yenileniyor...', 'info');
-
-    // Demo için simülasyon
-    setTimeout(() => {
-        showNotification('AI analizi tamamlandı', 'success');
-    }, 2000);
-
-    console.log('AI analizi yenileniyor');
-}
-
-// Excel'e aktar
-function exportToExcel() {
-    const visibleRows = allRows.filter(row => row.style.display !== 'none');
-
-    if (visibleRows.length === 0) {
-        showNotification('Dışa aktarılacak veri bulunamadı', 'error');
-        return;
-    }
-
-    let csv = 'İsim,Telefon,Kaynak,Arama Sebebi,Öncelik,AI Skoru,Tespit Zamanı,Durum\\n';
-
-    visibleRows.forEach(row => {
-        const name = row.querySelector('.name-cell strong').textContent;
-        const phone = row.dataset.phone;
-        const source = row.dataset.source === 'whatsapp' ? 'WhatsApp' : 'Telefon';
-        const reason = row.querySelector('.reason-text').textContent;
-        const priority = row.dataset.priority === 'high' ? 'Yüksek' :
-                        row.dataset.priority === 'medium' ? 'Orta' : 'Düşük';
-        const score = row.querySelector('.score-text').textContent;
-        const date = row.querySelector('.date-cell').textContent;
-        const status = row.querySelector('.status-select').selectedOptions[0].text;
-
-        csv += `"${name}","${phone}","${source}","${reason}","${priority}","${score}","${date}","${status}"\\n`;
-    });
-
-    const blob = new Blob(['\\ufeff' + csv], { type: 'text/csv;charset=utf-8;' });
-    const link = document.createElement('a');
-    const url = URL.createObjectURL(blob);
-    const date = new Date().toISOString().split('T')[0];
-
-    link.setAttribute('href', url);
-    link.setAttribute('download', `geri-arama-listesi-${date}.csv`);
-    link.style.visibility = 'hidden';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-
-    showNotification('Excel dosyası indirildi', 'success');
-}
-
-// Tablo sıralama
-function sortTable(column) {
-    const tbody = document.getElementById('callbackTableBody');
-
-    // Sıralama yönünü değiştir
-    sortDirection[column] = sortDirection[column] === 'asc' ? 'desc' : 'asc';
-
-    // Sırala
-    allRows.sort((a, b) => {
-        let aValue, bValue;
-
-        if (column === 'name') {
-            aValue = a.dataset.name;
-            bValue = b.dataset.name;
-        } else if (column === 'reason') {
-            aValue = a.querySelector('.reason-text').textContent;
-            bValue = b.querySelector('.reason-text').textContent;
-        } else if (column === 'priority') {
-            const priorityOrder = { high: 3, medium: 2, low: 1 };
-            aValue = priorityOrder[a.dataset.priority];
-            bValue = priorityOrder[b.dataset.priority];
-        } else if (column === 'score') {
-            aValue = parseInt(a.querySelector('.score-text').textContent);
-            bValue = parseInt(b.querySelector('.score-text').textContent);
-        } else if (column === 'date') {
-            aValue = a.querySelector('.date-cell').textContent;
-            bValue = b.querySelector('.date-cell').textContent;
-        }
-
-        if (sortDirection[column] === 'asc') {
-            return aValue > bValue ? 1 : -1;
-        } else {
-            return aValue < bValue ? 1 : -1;
-        }
-    });
-
-    // Tabloyu güncelle
-    tbody.innerHTML = '';
-    allRows.forEach(row => tbody.appendChild(row));
-
-    // Sıralama ikonlarını güncelle
-    document.querySelectorAll('.sortable .sort-icon').forEach(icon => {
-        icon.className = 'fas fa-sort sort-icon';
-    });
-
-    const activeIcon = document.querySelector(`.sortable[onclick*="${column}"] .sort-icon`);
-    if (activeIcon) {
-        activeIcon.className = `fas fa-sort-${sortDirection[column] === 'asc' ? 'up' : 'down'} sort-icon active`;
-    }
-
-    // Sayfayı güncelle
-    updatePagination();
-    showNotification(`${column === 'name' ? 'İsim' :
-                     column === 'reason' ? 'Sebep' :
-                     column === 'priority' ? 'Öncelik' :
-                     column === 'score' ? 'Skor' : 'Tarih'} sıralandı`, 'success');
-}
-
-// Pagination güncelle
-function updatePagination() {
-    const visibleRows = allRows.filter(row => row.style.display !== 'none');
-    const totalItems = visibleRows.length;
-    const totalPages = Math.max(1, Math.ceil(totalItems / itemsPerPage));
-
-    if (currentPage > totalPages) {
-        currentPage = totalPages;
-    }
-    if (currentPage < 1) {
-        currentPage = 1;
-    }
-
-    // Tüm satırları gizle
-    allRows.forEach(row => {
-        if (row.style.display !== 'none') {
-            row.style.display = 'none';
-            row.setAttribute('data-pagination-hidden', 'true');
-        }
-    });
-
-    // Sadece mevcut sayfa için görünür satırları göster
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
-
-    visibleRows.forEach((row, index) => {
-        if (index >= startIndex && index < endIndex) {
-            row.style.display = '';
-            row.removeAttribute('data-pagination-hidden');
-        }
-    });
-
-    // Bilgileri güncelle
-    document.getElementById('totalItems').textContent = totalItems;
-
-    // Butonları güncelle
-    updatePaginationButtons(totalPages);
-}
-
-// Sayfa değiştir
-function changePage(page) {
-    const totalPages = parseInt(document.querySelector('.pagination-numbers').childElementCount) || 1;
-
-    if (page === 'prev') {
-        if (currentPage > 1) currentPage--;
-    } else if (page === 'next') {
-        if (currentPage < totalPages) currentPage++;
-    } else if (page === 'last') {
-        currentPage = totalPages;
-    } else if (typeof page === 'number') {
-        currentPage = page;
-    }
-
-    updatePagination();
-}
-
-// Sayfa başına öğe sayısını değiştir
-function changeItemsPerPage() {
-    itemsPerPage = parseInt(document.getElementById('itemsPerPage').value);
-    currentPage = 1;
-    updatePagination();
-}
-
-// Pagination butonlarını güncelle
-function updatePaginationButtons(totalPages) {
-    document.getElementById('firstPage').disabled = currentPage === 1;
-    document.getElementById('prevPage').disabled = currentPage === 1;
-    document.getElementById('nextPage').disabled = currentPage >= totalPages;
-    document.getElementById('lastPage').disabled = currentPage >= totalPages;
-
-    const paginationNumbers = document.getElementById('paginationNumbers');
-    paginationNumbers.innerHTML = '';
-
-    let startPage = Math.max(1, currentPage - 2);
-    let endPage = Math.min(totalPages, currentPage + 2);
-
-    if (endPage - startPage < 4) {
-        if (startPage === 1) {
-            endPage = Math.min(totalPages, startPage + 4);
-        } else if (endPage === totalPages) {
-            startPage = Math.max(1, endPage - 4);
-        }
-    }
-
-    for (let i = startPage; i <= endPage; i++) {
-        const btn = document.createElement('button');
-        btn.className = 'pagination-btn';
-        if (i === currentPage) btn.classList.add('active');
-        btn.textContent = i;
-        btn.onclick = () => changePage(i);
-        paginationNumbers.appendChild(btn);
-    }
-}
-
-// Fade out animasyonu
-const style = document.createElement('style');
-style.textContent = `
-    @keyframes fadeOut {
-        from { opacity: 1; transform: scale(1); }
-        to { opacity: 0; transform: scale(0.95); }
-    }
-`;
-document.head.appendChild(style);
