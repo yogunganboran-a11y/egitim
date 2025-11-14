@@ -120,33 +120,6 @@ videoWrapper.addEventListener('click', (e) => {
 });
 
 function togglePlay() {
-
-// Video'ya tıklayınca oynat/duraklat
-video.addEventListener('click', (e) => {
-    if (!e.target.closest('.video-controls')) {
-        togglePlay();
-    }
-});
-
-// Mobil tam ekran düzeltmesi
-document.addEventListener('fullscreenchange', adjustFullscreenLayout);
-document.addEventListener('webkitfullscreenchange', adjustFullscreenLayout);
-
-function adjustFullscreenLayout() {
-    if (isFullscreen()) {
-        videoControls.style.bottom = '0';
-        videoControls.style.transform = 'translateX(-50%)';
-        videoControls.style.left = '50%';
-        videoControls.style.width = '90%';
-        videoControls.style.maxWidth = '800px';
-    } else {
-        videoControls.style.bottom = '';
-        videoControls.style.transform = '';
-        videoControls.style.left = '';
-        videoControls.style.width = '';
-        videoControls.style.maxWidth = '';
-    }
-}
     if (video.paused) {
         video.play();
         playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
@@ -154,6 +127,44 @@ function adjustFullscreenLayout() {
     } else {
         video.pause();
         playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+    }
+}
+
+// Mobil tam ekran düzeltmesi
+document.addEventListener('fullscreenchange', adjustFullscreenLayout);
+document.addEventListener('webkitfullscreenchange', adjustFullscreenLayout);
+
+function adjustFullscreenLayout() {
+    const isInFullscreen = isFullscreen();
+
+    if (isInFullscreen) {
+        // Mobil portrait mode için özel düzenleme
+        if (window.innerHeight > window.innerWidth) {
+            videoControls.style.position = 'fixed';
+            videoControls.style.bottom = '20px';
+            videoControls.style.left = '50%';
+            videoControls.style.transform = 'translateX(-50%)';
+            videoControls.style.width = '90%';
+            videoControls.style.maxWidth = '500px';
+            videoControls.style.zIndex = '10000';
+        } else {
+            // Landscape mode
+            videoControls.style.position = 'fixed';
+            videoControls.style.bottom = '0';
+            videoControls.style.left = '50%';
+            videoControls.style.transform = 'translateX(-50%)';
+            videoControls.style.width = '90%';
+            videoControls.style.maxWidth = '800px';
+            videoControls.style.zIndex = '10000';
+        }
+    } else {
+        videoControls.style.position = '';
+        videoControls.style.bottom = '';
+        videoControls.style.left = '';
+        videoControls.style.transform = '';
+        videoControls.style.width = '';
+        videoControls.style.maxWidth = '';
+        videoControls.style.zIndex = '';
     }
 }
 
