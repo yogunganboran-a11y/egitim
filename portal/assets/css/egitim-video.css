@@ -252,3 +252,24 @@ input:checked + .slider:before {
         min-width: 90px;
     }
 }
+/* Mobil tam ekran düzeltmesi - dikey ekranda ortalama */
+@media (max-width: 992px) and (orientation: portrait) {
+    .video-wrapper.manual-fullscreen {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+    
+    .video-wrapper.manual-fullscreen .video-player {
+        max-height: 100vh;
+        max-width: 100vw;
+        object-fit: contain;
+    }
+    
+    .video-wrapper.manual-fullscreen .video-controls {
+        width: 100%;
+        position: absolute;
+        bottom: 0;
+    }
+}

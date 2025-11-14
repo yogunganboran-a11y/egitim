@@ -608,3 +608,21 @@
         font-size: 0.9rem;
     }
 }
+
+/* Status item'ları tıklanabilir yap */
+.status-item {
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.status-item.completed:hover,
+.status-item.in-progress:hover,
+.status-item.pending:hover {
+    transform: translateX(5px);
+    background: rgba(59, 130, 246, 0.1);
+}
+
+.status-item.locked {
+    cursor: not-allowed;
+    opacity: 0.6;
+}

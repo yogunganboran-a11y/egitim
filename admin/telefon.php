@@ -81,7 +81,7 @@ $outgoing_calls = count(array_filter($calls, fn($c) => $c['type'] === 'outgoing'
                 <div class="stat-value" id="totalCalls"><?php echo $total_calls; ?></div>
             </div>
             <div class="stat-icon-circle">
-                <i class="fas fa-phone"></i>
+                <i class="fas fa-phone-alt"></i>
             </div>
         </div>
     </div>
@@ -105,7 +105,7 @@ $outgoing_calls = count(array_filter($calls, fn($c) => $c['type'] === 'outgoing'
                 <div class="stat-value" id="outgoingCalls"><?php echo $outgoing_calls; ?></div>
             </div>
             <div class="stat-icon-circle">
-                <i class="fas fa-phone"></i>
+                <i class="fas fa-phone-alt"></i>
             </div>
         </div>
     </div>
