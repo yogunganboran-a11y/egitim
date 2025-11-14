@@ -227,6 +227,12 @@ function openStatusModal(requestId) {
             <div class="status-option" onclick="selectStatus('Alındı', this)">Alındı</div>
             <div class="status-option" onclick="selectStatus('Çözüldü', this)">Çözüldü</div>
         `;
+    } else if (currentCategory === 'iletisim') {
+        statusOptions = `
+            <div class="status-option" onclick="selectStatus('İletişime Geçildi', this)">İletişime Geçildi</div>
+            <div class="status-option" onclick="selectStatus('Ulaşılamadı', this)">Ulaşılamadı</div>
+            <div class="status-option" onclick="selectStatus('Sonlandırıldı', this)">Sonlandırıldı</div>
+        `;
     }
     
     content.innerHTML = `

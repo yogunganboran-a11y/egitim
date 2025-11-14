@@ -678,6 +678,18 @@ function uploadCertificates(files, type) {
 
 // Müşteri ekle modalı aç
 function openAddUserModal() {
+    // Modal başlığını "Müşteri Ekle" yap
+    const modalHeader = document.querySelector('#userFormModal .modal-header h2');
+    if (modalHeader) modalHeader.textContent = 'Müşteri Ekle';
+
+    // Form alanlarını temizle
+    const form = document.querySelector('#userFormModal form');
+    if (form) form.reset();
+
+    // Firma alanını gizle
+    const companyNameGroup = document.getElementById('companyNameGroup');
+    if (companyNameGroup) companyNameGroup.style.display = 'none';
+
     document.getElementById('userFormModal').classList.add('active');
 }
 
@@ -794,6 +806,10 @@ function removeCertificate(userId) {
 
 // Kullanıcı düzenle
 function editUser(userId) {
+    // Modal başlığını değiştir
+    const modalHeader = document.querySelector('#userFormModal .modal-header h2');
+    if (modalHeader) modalHeader.textContent = 'Müşteri Düzenle';
+
     // Gerçek uygulamada kullanıcı bilgileri AJAX ile yüklenecek
     // Demo data
     const userName = document.getElementById('userName');
@@ -1023,10 +1039,10 @@ function openUserDetailModal(userId) {
 
                             <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
                                 <button class="btn btn-sm" style="padding: 0.4rem 0.875rem; font-size: 0.85rem; background: ${edu.hasRegistration ? 'linear-gradient(135deg, rgba(239, 68, 68, 0.2) 0%, rgba(220, 38, 38, 0.1) 100%)' : 'rgba(100, 100, 100, 0.2)'}; border-color: ${edu.hasRegistration ? 'rgba(239, 68, 68, 0.3)' : 'rgba(139, 156, 188, 0.2)'}; color: ${edu.hasRegistration ? '#ef4444' : 'var(--text-muted)'};" ${!edu.hasRegistration ? 'disabled' : ''}>
-                                    <i class="fas fa-file-pdf"></i> Kayıt
+                                    <i class="fas fa-file-contract"></i> Kayıt
                                 </button>
                                 <button class="btn btn-sm" style="padding: 0.4rem 0.875rem; font-size: 0.85rem; background: ${edu.hasCertificate ? 'linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(5, 150, 105, 0.1) 100%)' : 'rgba(100, 100, 100, 0.2)'}; border-color: ${edu.hasCertificate ? 'rgba(16, 185, 129, 0.3)' : 'rgba(139, 156, 188, 0.2)'}; color: ${edu.hasCertificate ? '#10b981' : 'var(--text-muted)'};" ${!edu.hasCertificate ? 'disabled' : ''}>
-                                    <i class="fas fa-certificate"></i> Sertifika
+                                    <i class="fas fa-file-pdf"></i> Sertifika
                                 </button>
                                 <button class="btn btn-sm" style="padding: 0.4rem 0.875rem; font-size: 0.85rem; background: ${edu.hasInvoice ? 'linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(37, 99, 235, 0.1) 100%)' : 'rgba(100, 100, 100, 0.2)'}; border-color: ${edu.hasInvoice ? 'rgba(59, 130, 246, 0.3)' : 'rgba(139, 156, 188, 0.2)'}; color: ${edu.hasInvoice ? 'var(--blue)' : 'var(--text-muted)'};" ${!edu.hasInvoice ? 'disabled' : ''}>
                                     <i class="fas fa-file-invoice"></i> Fatura
@@ -1073,20 +1089,27 @@ function openSMSModal() {
                     <!-- Firma Seçimi -->
                     <div id="companySelection">
                         <label class="form-label">Firma Seçin</label>
-                        <div style="background: linear-gradient(135deg, rgba(30, 45, 68, 0.5) 0%, rgba(26, 41, 66, 0.4) 100%); border: 1px solid rgba(59, 130, 246, 0.2); border-radius: 12px; padding: 1rem; max-height: 250px; overflow-y: auto;">
-                            <label class="checkbox-item" style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; cursor: pointer;">
+
+                        <!-- Firma Arama -->
+                        <div style="position: relative; margin-bottom: 1rem;">
+                            <i class="fas fa-search" style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-secondary);"></i>
+                            <input type="text" id="companySearchInput" placeholder="Firma ara..." onkeyup="filterCompanies()" style="width: 100%; padding: 0.875rem 1rem 0.875rem 3rem; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(59, 130, 246, 0.2); border-radius: 12px; color: #ffffff; font-size: 0.95rem;">
+                        </div>
+
+                        <div id="companyCheckboxList" style="background: linear-gradient(135deg, rgba(30, 45, 68, 0.5) 0%, rgba(26, 41, 66, 0.4) 100%); border: 1px solid rgba(59, 130, 246, 0.2); border-radius: 12px; padding: 1rem; max-height: 250px; overflow-y: auto;">
+                            <label class="checkbox-item company-item" style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; cursor: pointer;">
                                 <input type="checkbox" class="sms-company" value="XYZ Maritime" style="width: 18px; height: 18px; cursor: pointer;">
                                 <span style="color: var(--text-primary); font-size: 0.95rem;">XYZ Maritime <span style="color: var(--text-secondary);">(5 kişi)</span></span>
                             </label>
-                            <label class="checkbox-item" style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; cursor: pointer;">
+                            <label class="checkbox-item company-item" style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; cursor: pointer;">
                                 <input type="checkbox" class="sms-company" value="Deniz Yıldızı A.Ş." style="width: 18px; height: 18px; cursor: pointer;">
                                 <span style="color: var(--text-primary); font-size: 0.95rem;">Deniz Yıldızı A.Ş. <span style="color: var(--text-secondary);">(3 kişi)</span></span>
                             </label>
-                            <label class="checkbox-item" style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; cursor: pointer;">
+                            <label class="checkbox-item company-item" style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; cursor: pointer;">
                                 <input type="checkbox" class="sms-company" value="Mavi Dalga Ltd." style="width: 18px; height: 18px; cursor: pointer;">
                                 <span style="color: var(--text-primary); font-size: 0.95rem;">Mavi Dalga Ltd. <span style="color: var(--text-secondary);">(4 kişi)</span></span>
                             </label>
-                            <label class="checkbox-item" style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0; cursor: pointer;">
+                            <label class="checkbox-item company-item" style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0; cursor: pointer;">
                                 <input type="checkbox" class="sms-company" value="Kıyı Shipping" style="width: 18px; height: 18px; cursor: pointer;">
                                 <span style="color: var(--text-primary); font-size: 0.95rem;">Kıyı Shipping <span style="color: var(--text-secondary);">(2 kişi)</span></span>
                             </label>
@@ -1153,6 +1176,22 @@ function toggleSMSReceiverType() {
         companySelection.style.display = 'none';
         individualSelection.style.display = 'block';
     }
+}
+
+// Firma arama filtresi
+function filterCompanies() {
+    const input = document.getElementById('companySearchInput');
+    const filter = input.value.toUpperCase();
+    const items = document.querySelectorAll('.company-item');
+
+    items.forEach(item => {
+        const text = item.textContent || item.innerText;
+        if (text.toUpperCase().indexOf(filter) > -1) {
+            item.style.display = 'flex';
+        } else {
+            item.style.display = 'none';
+        }
+    });
 }
 
 function showSMSStep2() {
