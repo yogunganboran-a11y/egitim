@@ -273,12 +273,21 @@ $users = [
         
         <div class="form-group">
             <label class="form-label">Belge Türü (Birden fazla seçilebilir)</label>
-            <select class="form-control" id="bulkDocumentType" multiple size="3" required style="height: auto;">
-                <option value="Temel Denizcilik">Temel Denizcilik</option>
-                <option value="İleri Navigasyon">İleri Navigasyon</option>
-                <option value="Güvenlik Eğitimi">Güvenlik Eğitimi</option>
-            </select>
-            <small style="color: #8b9cbc; margin-top: 0.5rem; display: block;">Ctrl/Cmd tuşu ile birden fazla seçim yapabilirsiniz</small>
+            <div style="background: linear-gradient(135deg, rgba(30, 45, 68, 0.5) 0%, rgba(26, 41, 66, 0.4) 100%); border: 1px solid rgba(59, 130, 246, 0.2); border-radius: 12px; padding: 1rem;">
+                <label class="checkbox-item" style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; cursor: pointer;">
+                    <input type="checkbox" class="bulk-cert-type" value="Temel Denizcilik" style="width: 18px; height: 18px; cursor: pointer;">
+                    <span style="color: var(--text-primary); font-size: 0.95rem;">Temel Denizcilik</span>
+                </label>
+                <label class="checkbox-item" style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; cursor: pointer;">
+                    <input type="checkbox" class="bulk-cert-type" value="İleri Navigasyon" style="width: 18px; height: 18px; cursor: pointer;">
+                    <span style="color: var(--text-primary); font-size: 0.95rem;">İleri Navigasyon</span>
+                </label>
+                <label class="checkbox-item" style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0; cursor: pointer;">
+                    <input type="checkbox" class="bulk-cert-type" value="Güvenlik Eğitimi" style="width: 18px; height: 18px; cursor: pointer;">
+                    <span style="color: var(--text-primary); font-size: 0.95rem;">Güvenlik Eğitimi</span>
+                </label>
+            </div>
+            <small style="color: #8b9cbc; margin-top: 0.5rem; display: block;">Birden fazla belge türü seçebilirsiniz</small>
         </div>
 
         <div class="upload-tabs">
@@ -349,7 +358,19 @@ $users = [
                 </div>
             </div>
 
-            <!-- Belge Türü ve Firma toggle yan yana -->
+            <!-- Başlık ve Firma Toggle Yan Yana -->
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <h3 style="color: #8b9cbc; font-size: 0.95rem; margin: 0;">Belge Bilgileri</h3>
+                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                    <label class="checkbox-toggle" style="flex-shrink: 0;">
+                        <input type="checkbox" id="isCompanyToggle" onchange="toggleCompanyField()">
+                        <span class="checkbox-slider"></span>
+                    </label>
+                    <span style="font-size: 0.9rem; color: #8b9cbc;">Firma mı?</span>
+                </div>
+            </div>
+
+            <!-- Belge Türü ve TCKN yan yana -->
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
                 <div class="form-group">
                     <label class="form-label">Belge Türü</label>
@@ -362,16 +383,16 @@ $users = [
                 </div>
 
                 <div class="form-group">
-                    <label class="form-label">Firma</label>
-                    <div style="display: flex; align-items: center; gap: 0.5rem;">
-                        <label class="checkbox-toggle" style="flex-shrink: 0;">
-                            <input type="checkbox" id="isCompanyToggle" onchange="toggleCompanyField()">
-                            <span class="checkbox-slider"></span>
-                        </label>
-                        <span style="font-size: 0.9rem; color: #8b9cbc;">Firma mı?</span>
-                    </div>
-                    <input type="text" class="form-control" id="userCompany" placeholder="Firma adı" style="display: none; margin-top: 0.5rem;">
+                    <label class="form-label">TC Kimlik Numarası</label>
+                    <input type="text" class="form-control" id="userTCKN" placeholder="11 haneli TC kimlik no" maxlength="11" pattern="[0-9]{11}" inputmode="numeric" required>
+                    <small style="color: #8b9cbc; font-size: 0.8rem; margin-top: 0.25rem; display: block;">11 hane</small>
                 </div>
+            </div>
+
+            <!-- Firma Adı (Koşullu Görünür) -->
+            <div class="form-group" id="companyNameGroup" style="display: none;">
+                <label class="form-label">Firma Adı</label>
+                <input type="text" class="form-control" id="userCompany" placeholder="Firma adını girin">
             </div>
 
             <div style="display: flex; gap: 1rem; margin-top: 2rem;">

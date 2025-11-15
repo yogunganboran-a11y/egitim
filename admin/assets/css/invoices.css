@@ -257,30 +257,41 @@
         flex-direction: column;
         align-items: stretch;
     }
-    
+
     .search-invoice {
         max-width: 100%;
     }
-    
+
     .date-filter-container {
         flex-direction: column;
         align-items: stretch;
     }
-    
+
+    .invoices-table {
+        padding: 1rem;
+        overflow-x: scroll;
+        -webkit-overflow-scrolling: touch;
+    }
+
     .table-container {
         overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
     }
-    
+
+    .invoices-table .table {
+        min-width: 800px;
+    }
+
     .invoices-table .table th,
     .invoices-table .table td {
         font-size: 0.75rem;
         padding: 0.75rem 0.5rem;
     }
-    
+
     .pagination {
         flex-wrap: wrap;
     }
-    
+
     .pagination-numbers {
         order: -1;
         width: 100%;

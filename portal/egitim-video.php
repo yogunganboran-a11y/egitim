@@ -106,19 +106,7 @@ playOverlayBtn.addEventListener('click', () => {
     playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
 });
 
-// Video click - always toggle play/pause
-video.addEventListener('click', togglePlay);
-playPauseBtn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    togglePlay();
-});
-
-videoWrapper.addEventListener('click', (e) => {
-    if (e.target === videoWrapper || e.target === video) {
-        togglePlay();
-    }
-});
-
+// Toggle play/pause function
 function togglePlay() {
     if (video.paused) {
         video.play();
@@ -127,11 +115,79 @@ function togglePlay() {
     } else {
         video.pause();
         playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+        playOverlay.style.display = 'flex';
+    }
+}
+
+// Play/pause button click
+playPauseBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    togglePlay();
+});
+
+// Video click - toggle play/pause (but not if clicking controls)
+video.addEventListener('click', (e) => {
+    // Kontrollere tıklanmadıysa toggle yap
+    if (!e.target.closest('.video-controls')) {
+        togglePlay();
+    }
+});
+
+// Mobil tam ekran düzeltmesi
+document.addEventListener('fullscreenchange', adjustFullscreenLayout);
+document.addEventListener('webkitfullscreenchange', adjustFullscreenLayout);
+
+function adjustFullscreenLayout() {
+    const isInFullscreen = isFullscreen();
+
+    if (isInFullscreen) {
+        // Mobil portrait mode için özel düzenleme
+        if (window.innerHeight > window.innerWidth) {
+            videoControls.style.position = 'fixed';
+            videoControls.style.bottom = '20px';
+            videoControls.style.left = '50%';
+            videoControls.style.transform = 'translateX(-50%)';
+            videoControls.style.width = '90%';
+            videoControls.style.maxWidth = '500px';
+            videoControls.style.zIndex = '10000';
+            videoControls.style.opacity = '1';
+            videoControls.style.visibility = 'visible';
+            videoControls.style.display = 'flex';
+            videoControls.style.background = 'linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.4) 70%, transparent 100%)';
+            videoControls.style.padding = '1.5rem 1rem';
+        } else {
+            // Landscape mode
+            videoControls.style.position = 'fixed';
+            videoControls.style.bottom = '0';
+            videoControls.style.left = '50%';
+            videoControls.style.transform = 'translateX(-50%)';
+            videoControls.style.width = '90%';
+            videoControls.style.maxWidth = '800px';
+            videoControls.style.zIndex = '10000';
+            videoControls.style.opacity = '1';
+            videoControls.style.visibility = 'visible';
+            videoControls.style.display = 'flex';
+            videoControls.style.background = 'linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.4) 70%, transparent 100%)';
+        }
+    } else {
+        videoControls.style.position = '';
+        videoControls.style.bottom = '';
+        videoControls.style.left = '';
+        videoControls.style.transform = '';
+        videoControls.style.width = '';
+        videoControls.style.maxWidth = '';
+        videoControls.style.zIndex = '';
+        videoControls.style.opacity = '';
+        videoControls.style.visibility = '';
+        videoControls.style.display = '';
+        videoControls.style.background = '';
+        videoControls.style.padding = '';
     }
 }
 
 video.addEventListener('pause', () => {
     playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+    playOverlay.style.display = 'flex';
 });
 
 video.addEventListener('play', () => {

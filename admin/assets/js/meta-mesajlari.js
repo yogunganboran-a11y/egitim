@@ -49,19 +49,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // İlk sohbeti otomatik seç
-    setTimeout(() => {
-        const firstChat = document.querySelector('.chat-item');
-        if (firstChat) {
-            const chatId = firstChat.getAttribute('data-chat-id');
-            const platform = firstChat.getAttribute('data-platform');
-            selectChat(chatId, platform);
-        }
-
-        // Varsayılan filtreleri uygula
-        filterByDate();
-        filterByPlatform();
-    }, 100);
 });
 
 // Check if mobile view
@@ -155,10 +142,6 @@ function loadChatContent(chatId, platform) {
     if (statusElement) {
         if (chatData.online) {
             statusElement.textContent = 'Çevrimiçi';
-            statusElement.classList.add('online');
-        } else {
-            statusElement.textContent = 'Son görülme: ' + chatData.lastSeen;
-            statusElement.classList.remove('online');
         }
     }
 
@@ -552,7 +535,21 @@ function searchChats() {
 
 // Platforma göre filtrele
 function filterByPlatform() {
-    const platformFilter = document.getElementById('platformFilter').value;
+    // Mobil ve desktop filtreleri senkronize et
+    const platformFilterDesktop = document.getElementById('platformFilter');
+    const platformFilterMobile = document.getElementById('platformFilterMobile');
+
+    const platformFilter = platformFilterDesktop ? platformFilterDesktop.value : (platformFilterMobile ? platformFilterMobile.value : 'all');
+
+    // Diğer filtreyi de senkronize et
+    if (platformFilterDesktop && platformFilterMobile) {
+        if (event && event.target.id === 'platformFilter') {
+            platformFilterMobile.value = platformFilter;
+        } else if (event && event.target.id === 'platformFilterMobile') {
+            platformFilterDesktop.value = platformFilter;
+        }
+    }
+
     const chats = document.querySelectorAll('.chat-item');
 
     chats.forEach(chat => {
@@ -574,7 +571,21 @@ function filterByPlatform() {
 
 // Tarihe göre filtrele
 function filterByDate() {
-    const dateFilter = document.getElementById('dateFilter').value;
+    // Mobil ve desktop filtreleri senkronize et
+    const dateFilterDesktop = document.getElementById('dateFilter');
+    const dateFilterMobile = document.getElementById('dateFilterMobile');
+
+    const dateFilter = dateFilterDesktop ? dateFilterDesktop.value : (dateFilterMobile ? dateFilterMobile.value : 'today');
+
+    // Diğer filtreyi de senkronize et
+    if (dateFilterDesktop && dateFilterMobile) {
+        if (event && event.target.id === 'dateFilter') {
+            dateFilterMobile.value = dateFilter;
+        } else if (event && event.target.id === 'dateFilterMobile') {
+            dateFilterDesktop.value = dateFilter;
+        }
+    }
+
     const chats = document.querySelectorAll('.chat-item');
 
     const now = new Date();
@@ -599,7 +610,9 @@ function filterByDate() {
         }
 
         // Platform filtresini de kontrol et
-        const platformFilter = document.getElementById('platformFilter').value;
+        const platformFilterDesktop = document.getElementById('platformFilter');
+        const platformFilterMobile = document.getElementById('platformFilterMobile');
+        const platformFilter = platformFilterDesktop ? platformFilterDesktop.value : (platformFilterMobile ? platformFilterMobile.value : 'all');
         const platform = chat.getAttribute('data-platform');
 
         if (platformFilter !== 'all' && platform !== platformFilter) {

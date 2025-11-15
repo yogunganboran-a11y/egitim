@@ -80,45 +80,6 @@ for ($i = 0; $i < 30; $i++) {
             </h1>
             <p class="page-subtitle">Tüm bildirimlerinizi bu sayfadan görüntüleyebilirsiniz</p>
         </div>
-        <div class="page-actions">
-            <button class="btn btn-secondary" onclick="markAllAsRead()">
-                <i class="fas fa-check-double"></i>
-                Tümünü Okundu İşaretle
-            </button>
-            <button class="btn btn-outline" onclick="clearAll()">
-                <i class="fas fa-trash"></i>
-                Tümünü Temizle
-            </button>
-        </div>
-    </div>
-
-    <!-- Filtreler -->
-    <div class="filter-tabs">
-        <button class="filter-tab active" data-filter="all" onclick="filterNotifications('all')">
-            <i class="fas fa-list"></i>
-            Tümü <span class="tab-count"><?php echo count($notifications); ?></span>
-        </button>
-        <button class="filter-tab" data-filter="unread" onclick="filterNotifications('unread')">
-            <i class="fas fa-bell"></i>
-            Okunmamış <span class="tab-count">8</span>
-        </button>
-        <button class="filter-tab" data-filter="success" onclick="filterNotifications('success')">
-            <i class="fas fa-check-circle"></i>
-            Başarılı
-        </button>
-        <button class="filter-tab" data-filter="info" onclick="filterNotifications('info')">
-            <i class="fas fa-info-circle"></i>
-            Bilgi
-        </button>
-        <button class="filter-tab" data-filter="warning" onclick="filterNotifications('warning')">
-            <i class="fas fa-exclamation-triangle"></i>
-            Uyarı
-        </button>
-        <button class="filter-tab" data-filter="error" onclick="filterNotifications('error')">
-            <i class="fas fa-times-circle"></i>
-            Hata
-        </button>
-    </div>
 
     <!-- Bildirim Listesi -->
     <div class="notifications-list" id="notificationsList">
@@ -147,14 +108,6 @@ for ($i = 0; $i < 30; $i++) {
                 </div>
             </div>
 
-            <div class="notification-actions">
-                <button class="notification-action-btn" onclick="markAsRead(<?php echo $notif['id']; ?>)" title="Okundu İşaretle">
-                    <i class="fas fa-check"></i>
-                </button>
-                <button class="notification-action-btn" onclick="deleteNotification(<?php echo $notif['id']; ?>)" title="Sil">
-                    <i class="fas fa-trash"></i>
-                </button>
-            </div>
         </div>
         <?php endforeach; ?>
     </div>

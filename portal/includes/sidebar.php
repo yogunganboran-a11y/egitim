@@ -7,6 +7,11 @@
     <!-- Logo -->
     <div class="sidebar-logo">
         <img src="assets/img/logo.png" alt="Logo" onerror="this.style.display='none'">
+        <!-- Notification Icon (Desktop only) -->
+        <div class="sidebar-notification-icon" id="sidebarNotificationIcon">
+            <i class="fas fa-bell"></i>
+            <span class="notification-badge">3</span>
+        </div>
     </div>
     
     <!-- Navigation Menu -->

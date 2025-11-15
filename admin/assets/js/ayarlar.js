@@ -678,3 +678,11 @@ function ignoreSuspiciousIP(ipId) {
     });
     */
 }
+// İşlem Geçmişi Modal
+function viewAdminHistory(adminId) {
+    document.getElementById('adminHistoryModal').classList.add('active');
+}
+
+function closeModal(modalId) {
+    document.getElementById(modalId).classList.remove('active');
+}

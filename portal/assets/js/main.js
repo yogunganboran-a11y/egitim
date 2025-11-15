@@ -30,19 +30,30 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Bildirim toggle
     const notificationIcon = document.getElementById('notificationIcon');
+    const sidebarNotificationIcon = document.getElementById('sidebarNotificationIcon');
     const notificationDropdown = document.getElementById('notificationDropdown');
-    
+
     if (notificationIcon && notificationDropdown) {
         notificationIcon.addEventListener('click', function(e) {
             e.stopPropagation();
             notificationDropdown.classList.toggle('active');
         });
-        
+
         // Dışarı tıklandığında kapat
         document.addEventListener('click', function(e) {
-            if (!notificationIcon.contains(e.target) && !notificationDropdown.contains(e.target)) {
+            if (!notificationIcon.contains(e.target) &&
+                !sidebarNotificationIcon?.contains(e.target) &&
+                !notificationDropdown.contains(e.target)) {
                 notificationDropdown.classList.remove('active');
             }
+        });
+    }
+
+    // Sidebar notification icon (desktop)
+    if (sidebarNotificationIcon && notificationDropdown) {
+        sidebarNotificationIcon.addEventListener('click', function(e) {
+            e.stopPropagation();
+            notificationDropdown.classList.toggle('active');
         });
     }
     

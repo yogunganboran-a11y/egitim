@@ -529,12 +529,18 @@
     }
     
     .info-value {
-        font-size: 0.95rem;
+        font-size: 0.85rem;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-        text-decoration: none;
+        text-decoration: none !important;
         word-break: keep-all;
+    }
+
+    /* Telefon özel düzenleme */
+    .info-card .info-content .info-value {
+        text-decoration: none !important;
+        border-bottom: none !important;
     }
 
     .info-card {
@@ -652,5 +658,15 @@
     .btn-download-doc {
         padding: 0.6rem 0.95rem;
         font-size: 0.8rem;
+    }
+}
+/* Mobil telefon düzeltmesi */
+@media (max-width: 768px) {
+    .info-value {
+        font-size: 0.75rem !important;
+        text-decoration: none !important;
+        pointer-events: none !important;
+        cursor: default !important;
+        word-break: break-all;
     }
 }
