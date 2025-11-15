@@ -1,0 +1,34 @@
+# Dosyalar Klasörü Güvenliği
+# Sadece belirli dosya türlerine erişime izin ver
+
+# Dizin listelemeyi kapat
+Options -Indexes
+
+# PHP execution'ı engelle
+php_flag engine off
+
+# Sadece PDF, JPG, JPEG, PNG dosyalarına erişime izin ver
+<FilesMatch "\.(pdf|jpg|jpeg|png)$">
+    Order Allow,Deny
+    Allow from all
+</FilesMatch>
+
+# Diğer dosyaları engelle
+<FilesMatch "\.">
+    Order Deny,Allow
+    Deny from all
+</FilesMatch>
+
+# PDF ve resim dosyalarına izin ver (override)
+<FilesMatch "\.(pdf|jpg|jpeg|png)$">
+    Order Allow,Deny
+    Allow from all
+</FilesMatch>
+
+# Cache kontrolü (isteğe bağlı)
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType application/pdf "access plus 1 month"
+    ExpiresByType image/jpeg "access plus 1 month"
+    ExpiresByType image/png "access plus 1 month"
+</IfModule>

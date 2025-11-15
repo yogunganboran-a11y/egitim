@@ -1,0 +1,20 @@
+# Sertifikalar Klasörü
+# Sadece PDF dosyalarına erişim
+
+Options -Indexes
+php_flag engine off
+
+<FilesMatch "\.pdf$">
+    Order Allow,Deny
+    Allow from all
+</FilesMatch>
+
+<FilesMatch "\.">
+    Order Deny,Allow
+    Deny from all
+</FilesMatch>
+
+<FilesMatch "\.pdf$">
+    Order Allow,Deny
+    Allow from all
+</FilesMatch>

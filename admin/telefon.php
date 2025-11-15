@@ -36,7 +36,7 @@ $outgoing_calls = count(array_filter($calls, fn($c) => $c['type'] === 'outgoing'
 <link rel="stylesheet" href="assets/css/telefon.css">
 
 <div class="page-header">
-    <h1><i class="fas fa-phone-alt"></i> Telefon Aramaları</h1>
+    <h1><i class="fas fa-phone"></i> Telefon Aramaları</h1>
     <p class="page-subtitle">Gelen ve giden çağrı kayıtları</p>
 </div>
 
@@ -81,7 +81,7 @@ $outgoing_calls = count(array_filter($calls, fn($c) => $c['type'] === 'outgoing'
                 <div class="stat-value" id="totalCalls"><?php echo $total_calls; ?></div>
             </div>
             <div class="stat-icon-circle">
-                <i class="fas fa-phone-alt"></i>
+                <i class="fas fa-phone"></i>
             </div>
         </div>
     </div>
@@ -93,7 +93,7 @@ $outgoing_calls = count(array_filter($calls, fn($c) => $c['type'] === 'outgoing'
                 <div class="stat-value" id="incomingCalls"><?php echo $incoming_calls; ?></div>
             </div>
             <div class="stat-icon-circle">
-                <i class="fas fa-phone-alt"></i>
+                <i class="fas fa-phone"></i>
             </div>
         </div>
     </div>
@@ -105,7 +105,7 @@ $outgoing_calls = count(array_filter($calls, fn($c) => $c['type'] === 'outgoing'
                 <div class="stat-value" id="outgoingCalls"><?php echo $outgoing_calls; ?></div>
             </div>
             <div class="stat-icon-circle">
-                <i class="fas fa-phone-alt"></i>
+                <i class="fas fa-phone"></i>
             </div>
         </div>
     </div>

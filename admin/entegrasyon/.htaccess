@@ -1,0 +1,19 @@
+# Admin Entegrasyon Klasörü Güvenliği
+# Bu klasördeki dosyalara doğrudan erişimi engeller
+
+# PHP dosyalarına erişimi engelle
+<FilesMatch "\.(php|php3|php4|php5|phtml)$">
+    Order Deny,Allow
+    Deny from all
+</FilesMatch>
+
+# Dizin listelemeyi kapat
+Options -Indexes
+
+# Sadece belirli IP'lerden erişim (isteğe bağlı)
+# <Limit GET POST>
+#     Order deny,allow
+#     Deny from all
+#     Allow from 127.0.0.1
+#     Allow from ::1
+# </Limit>

@@ -95,7 +95,6 @@ function updateTableHeaders(category) {
     } else if (category === 'iletisim') {
         headers = `
             <th>TARİH</th>
-            <th>KAYNAK</th>
             <th>TELEFON</th>
             <th>AD SOYAD</th>
             <th>TALEP DETAYI</th>
@@ -160,7 +159,6 @@ function renderTable() {
             html += '<td><button class="status-btn ' + request.statusClass + '" onclick="openStatusModal(' + request.id + ')">' + request.status + '</button></td>';
         } else if (currentCategory === 'iletisim') {
             html += '<td>' + request.date + '</td>';
-            html += '<td>' + renderSourceIcon(request.source, request.phone) + '</td>';
             html += '<td>' + request.phone + '</td>';
             html += '<td>' + request.fullName + '</td>';
             html += '<td>' + request.requestDetail + '</td>';
@@ -228,6 +226,12 @@ function openStatusModal(requestId) {
         statusOptions = `
             <div class="status-option" onclick="selectStatus('Alındı', this)">Alındı</div>
             <div class="status-option" onclick="selectStatus('Çözüldü', this)">Çözüldü</div>
+        `;
+    } else if (currentCategory === 'iletisim') {
+        statusOptions = `
+            <div class="status-option" onclick="selectStatus('İletişime Geçildi', this)">İletişime Geçildi</div>
+            <div class="status-option" onclick="selectStatus('Ulaşılamadı', this)">Ulaşılamadı</div>
+            <div class="status-option" onclick="selectStatus('Sonlandırıldı', this)">Sonlandırıldı</div>
         `;
     }
     

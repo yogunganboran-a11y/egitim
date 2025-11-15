@@ -719,28 +719,39 @@
         flex-direction: column;
         align-items: stretch;
     }
-    
+
     .search-ip {
         max-width: 100%;
     }
-    
+
     .filters-row {
         flex-direction: column;
         align-items: stretch;
     }
-    
+
     .ip-stats {
         grid-template-columns: 1fr;
     }
-    
+
     .detail-grid {
         grid-template-columns: 1fr;
     }
-    
+
+    .ip-table {
+        padding: 1rem;
+        overflow-x: scroll;
+        -webkit-overflow-scrolling: touch;
+    }
+
     .table-container {
         overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
     }
-    
+
+    .ip-table .table {
+        min-width: 900px;
+    }
+
     .ip-table .table th,
     .ip-table .table td {
         font-size: 0.75rem;

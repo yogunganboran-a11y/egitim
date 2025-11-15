@@ -728,4 +728,16 @@
         width: 35px;
         height: 35px;
     }
+
+    /* Footer mobilde sabitlenmeli */
+    .message-input-container {
+        position: sticky;
+        bottom: 0;
+        padding: 0.75rem 1rem;
+        z-index: 100;
+    }
+
+    .message-input-wrapper input {
+        font-size: 0.9rem;
+    }
 }
