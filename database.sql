@@ -544,30 +544,4 @@ CREATE TABLE IF NOT EXISTS `sms_history` (
   CONSTRAINT `fk_sms_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- ===================================
--- VERİTABANI OLUŞTURMA TAMAMLANDI
--- ===================================
--- TOPLAM: 23 TABLO
--- 1. admins
--- 2. admin_permissions
--- 3. users
--- 4. courses (certificate_time TIME olarak güncellendi)
--- 5. test_questions
--- 6. test_options
--- 7. enrollments
--- 8. support_tickets
--- 9. support_notes
--- 10. callback_requests
--- 11. callback_rules
--- 12. phone_calls (YENİ)
--- 13. phone_transcripts (YENİ)
--- 14. whatsapp_chat (YENİ)
--- 15. whatsapp_messages (YENİ)
--- 16. meta_chat (YENİ)
--- 17. meta_messages (YENİ)
--- 18. ip_tracking
--- 19. ip_blacklist
--- 20. ip_whitelist
--- 21. settings
--- 22. ai_instructions
--- 23. sms_history
+
